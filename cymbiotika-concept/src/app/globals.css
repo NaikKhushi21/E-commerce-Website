@@ -1,0 +1,528 @@
+@import "tailwindcss";
+
+:root {
+  /* === LAB PEARL (default — editorial / reading sections) ====================
+     Cool, clean, scientific calm. Eggshell + sky + mint + amber accent. */
+
+  --bg: #ffffff;
+  --card: rgba(255, 255, 255, 0.85);
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-elevated: #ffffff;
+  --text: #0c1f1c;
+  --muted: rgba(12, 31, 28, 0.6);
+
+  --primary: #0c1f1c;          /* deep forest green — used as button bg */
+  --on-primary: #ffffff;        /* foreground when sat on --primary */
+  --secondary: #6e7a82;         /* cool stone */
+  --accent: #e5b773;            /* warm amber/gold — connective accent across both palettes */
+  --accent-soft: #f5d7a8;
+  --accent-cool: #95b5d3;       /* pale lab sky */
+  --accent-mint: #9bd3c2;       /* cool mint */
+  --accent-violet: #b89cf0;     /* used inside aurora scope */
+  --accent-coral: #ff8a7e;      /* used inside aurora scope */
+
+  --line: rgba(12, 31, 28, 0.12);
+  --line-strong: rgba(12, 31, 28, 0.22);
+  --glass: rgba(255, 255, 255, 0.6);
+
+  /* Motion design tokens — apply consistently across all animations */
+  --easing-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --easing-snap: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-micro: 150ms;
+  --dur-base: 320ms;
+  --dur-heavy: 700ms;
+
+  /* Legacy aliases — kept stable so existing components don't break. */
+  --forest: var(--primary);
+  --forest-soft: color-mix(in srgb, var(--secondary) 48%, var(--primary));
+  --sage: var(--accent-mint);
+  --sage-soft: color-mix(in srgb, var(--accent-mint) 24%, var(--text));
+  --sand: var(--accent-soft);
+  --charcoal: var(--surface-elevated);
+  --accent-lime: var(--accent-mint);
+  --accent-orange: var(--accent);
+  --brand-mint: var(--accent-mint);
+  --brand-gold: var(--accent);
+  --highlight: var(--accent-soft);
+  --accent-mineral: var(--accent-cool);
+  --accent-titanium: var(--accent-mint);
+  --accent-teal: var(--accent-mint);
+
+  --font-body: "Avenir Next", "Avenir", "Gill Sans", "Segoe UI", sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+}
+
+/* === AURORA (cinematic scope — wrap immersive sections in this class) =====
+   Deep forest with bioluminescent accents. Gold remains the connective
+   thread to the soft palette so the two modes feel like the same brand. */
+.theme-aurora {
+  --bg: #0c1f1c;
+  --card: rgba(255, 255, 255, 0.06);
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-elevated: rgba(255, 255, 255, 0.10);
+  --text: #ecf2ee;
+  --muted: rgba(236, 242, 238, 0.6);
+
+  --primary: #ecf2ee;
+  --on-primary: #0c1f1c;
+  --secondary: #6fdcd0;
+  --accent: #f5b75f;
+  --accent-soft: #ffd089;
+  --accent-cool: #6fdcd0;
+  --accent-mint: #74e0c2;
+  --accent-violet: #b89cf0;
+  --accent-coral: #ff8a7e;
+
+  --line: rgba(236, 242, 238, 0.12);
+  --line-strong: rgba(236, 242, 238, 0.24);
+  --glass: rgba(255, 255, 255, 0.06);
+
+  /* Re-bind legacy aliases inside the dark scope. */
+  --forest: var(--primary);
+  --forest-soft: color-mix(in srgb, var(--secondary) 48%, var(--primary));
+  --accent-teal: var(--accent-cool);
+  --accent-mineral: var(--accent-cool);
+  --accent-titanium: var(--accent-mint);
+  --brand-mint: var(--accent-mint);
+}
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-sans: var(--font-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(229, 183, 115, 0.14), transparent 42%),
+    radial-gradient(circle at 88% 92%, rgba(149, 181, 211, 0.16), transparent 44%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), sans-serif;
+  transition:
+    background var(--dur-heavy) var(--easing-premium),
+    color var(--dur-base) var(--easing-premium);
+}
+
+body {
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.06;
+  background-image: radial-gradient(rgba(28, 39, 48, 0.4) 0.45px, transparent 0.45px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+}
+
+html {
+  font-size: 100%;
+}
+
+.font-display {
+  font-family: var(--font-display), serif;
+}
+
+/* ===== View Transitions (product card → product detail hero morph) ========
+   The product image on a card and the product image on the detail page each
+   carry a unique `view-transition-name` keyed on the handle (`ph-<handle>`).
+   When the user clicks the card, Next 16's experimental.viewTransition flag
+   wraps the soft navigation in `document.startViewTransition()`, the browser
+   pairs the matching old/new elements by name, and morphs size + position
+   between them. Other cards have unique names that don't match anything on
+   the destination, so they simply fade out via the default root transition. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Named morph transitions (e.g. product card → detail) keep their own
+     timing — they need to be longer to read as a morph. */
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 420ms;
+    animation-timing-function: var(--easing-premium);
+  }
+
+  /* Root transition: outgoing page fades out fast, incoming page slides up
+     gently while fading in. Asymmetric durations produce the "fresh page
+     arriving" feel without blocking interaction. */
+  ::view-transition-old(root) {
+    animation: 220ms cubic-bezier(0.4, 0, 0.6, 1) both rt-fade-out;
+  }
+  ::view-transition-new(root) {
+    animation: 380ms var(--easing-premium) both rt-slide-up-fade-in;
+  }
+}
+
+@keyframes rt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes rt-slide-up-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 38%, transparent);
+  color: var(--on-primary);
+}
+
+.micro-copy {
+  font-size: 0.72rem;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+
+.display-title {
+  font-family: var(--font-display), serif;
+  line-height: 0.98;
+  letter-spacing: -0.012em;
+}
+
+.body-copy {
+  line-height: 1.56;
+  color: color-mix(in srgb, var(--text) 84%, transparent);
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.state-breathing-gradient {
+  background:
+    radial-gradient(65% 45% at 20% 10%, color-mix(in srgb, var(--accent-soft) 28%, transparent) 0%, transparent 74%),
+    radial-gradient(54% 40% at 80% 85%, color-mix(in srgb, var(--accent-mineral) 26%, transparent) 0%, transparent 74%);
+  opacity: 0.24;
+  animation: ambientBreathe 12s var(--easing-premium) infinite;
+}
+
+.state-ambient-particle {
+  animation-name: ambientDrift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0.3;
+}
+
+.interactive-light:hover .interactive-light-glow {
+  opacity: 1;
+}
+
+.ambient-orb {
+  animation: ambientFloat 20s var(--easing-premium) infinite alternate;
+}
+
+.ambient-orb-delayed {
+  animation: ambientFloat 26s var(--easing-premium) infinite alternate-reverse;
+}
+
+.absorption-particle {
+  animation: absorptionFlow 2.8s linear infinite;
+}
+
+.absorption-particle-delay-1 {
+  animation-delay: 0.35s;
+}
+
+.absorption-particle-delay-2 {
+  animation-delay: 0.7s;
+}
+
+@keyframes ambientFloat {
+  0% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+    opacity: 0.44;
+  }
+  100% {
+    transform: translate3d(4%, 3%, 0) scale(1.08);
+    opacity: 0.64;
+  }
+}
+
+@keyframes absorptionFlow {
+  0% {
+    transform: translate3d(-26px, 18px, 0) scale(0.65);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.65;
+  }
+  70% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(150px, -76px, 0) scale(1.05);
+    opacity: 0;
+  }
+}
+
+@keyframes ambientBreathe {
+  0% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.22;
+  }
+}
+
+@keyframes ambientDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.8);
+    opacity: 0.12;
+  }
+  12% {
+    opacity: 0.26;
+  }
+  88% {
+    opacity: 0.24;
+  }
+  100% {
+    transform: translate3d(28px, -36px, 0) scale(1.12);
+    opacity: 0.06;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:root {
+  --rhythm-orb: #d7c3a7;
+  --rhythm-glow: rgba(215, 195, 167, 0.62);
+}
+
+.rhythm-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 8%, color-mix(in srgb, var(--rhythm-glow) 44%, transparent) 0%, transparent 34%),
+    radial-gradient(circle at 86% 86%, rgba(178, 195, 205, 0.18) 0%, transparent 38%);
+}
+
+.rhythm-background__light {
+  position: absolute;
+  width: 52vw;
+  height: 52vw;
+  min-width: 420px;
+  min-height: 420px;
+  border-radius: 999px;
+  filter: blur(20px);
+  opacity: 0.16;
+  mix-blend-mode: normal;
+  animation: rhythmDrift 38s var(--easing-premium) infinite alternate;
+}
+
+.rhythm-background__light--one {
+  left: -18vw;
+  top: 8vh;
+  background: radial-gradient(circle, var(--rhythm-glow) 0%, transparent 68%);
+}
+
+.rhythm-background__light--two {
+  right: -14vw;
+  bottom: -8vh;
+  background: radial-gradient(circle, rgba(244, 229, 205, 0.6) 0%, transparent 70%);
+  animation-direction: alternate-reverse;
+  animation-duration: 32s;
+}
+
+.rhythm-background__grain {
+  position: absolute;
+  inset: -20%;
+  opacity: 0.045;
+  background-image: radial-gradient(rgba(18, 18, 18, 0.22) 0.55px, transparent 0.55px);
+  background-size: 3px 3px;
+  animation: none;
+  mix-blend-mode: soft-light;
+}
+
+.living-orb__core {
+  position: absolute;
+  width: 54%;
+  height: 54%;
+  border-radius: 48% 52% 42% 58% / 52% 42% 58% 48%;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.92), transparent 31%),
+    radial-gradient(circle at 64% 70%, rgba(255, 255, 255, 0.26), transparent 46%),
+    color-mix(in srgb, var(--rhythm-orb) 72%, white);
+  box-shadow: inset 0 0 26px rgba(255, 255, 255, 0.54), 0 0 28px var(--rhythm-glow);
+  animation: orbMorph 8s var(--easing-premium) infinite, biologicalPulse 5.8s ease-in-out infinite;
+}
+
+.museum-object {
+  animation: museumFloat 8s ease-in-out infinite;
+}
+
+.museum-object-spin {
+  animation: objectRotate 18s linear infinite;
+}
+
+.museum-dust {
+  animation: ambientDrift 13s linear infinite;
+}
+
+.signal-pulse {
+  animation: signalPulse 4.8s ease-in-out infinite;
+}
+
+.density-cloud {
+  animation: densityDrift 15s var(--easing-premium) infinite alternate;
+}
+
+@keyframes rhythmDrift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(0.96);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.34;
+  }
+  100% {
+    transform: translate3d(5%, 4%, 0) scale(1.08);
+    opacity: 0.25;
+  }
+}
+
+@keyframes grainDrift {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-3%, 2%, 0); }
+}
+
+@keyframes orbMorph {
+  0%, 100% { border-radius: 48% 52% 42% 58% / 52% 42% 58% 48%; }
+  33% { border-radius: 58% 42% 55% 45% / 44% 58% 42% 56%; }
+  66% { border-radius: 42% 58% 48% 52% / 58% 44% 56% 42%; }
+}
+
+@keyframes biologicalPulse {
+  0%, 100% { transform: scale(0.96); opacity: 0.86; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes museumFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -14px, 0); }
+}
+
+@keyframes objectRotate {
+  0% { transform: rotate(-1.5deg) scale(1); }
+  50% { transform: rotate(1.8deg) scale(1.018); }
+  100% { transform: rotate(-1.5deg) scale(1); }
+}
+
+@keyframes signalPulse {
+  0%, 100% { transform: scaleX(0.86); opacity: 0.16; filter: blur(0.2px); }
+  50% { transform: scaleX(1.08); opacity: 0.82; filter: blur(0); }
+}
+
+@keyframes densityDrift {
+  0% { transform: translate3d(-2%, 2%, 0) scale(0.96); }
+  100% { transform: translate3d(3%, -4%, 0) scale(1.08); }
+}
+
+/* ===== UI smoothness primitives =============================================
+   Purely additive rules to make scroll/swipe/transition feel buttery.
+   None of these change layout or content — they only address jank, hitching,
+   tap delay, and visual stutter that compound across components. */
+
+/* Kill the iOS gray tap-flash and any stray text-selection on UI chrome. */
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 300ms tap delay → gone. Keeps double-tap zoom enabled on text. */
+button,
+a,
+[role="button"],
+[role="radio"],
+[role="tab"],
+input[type="button"],
+input[type="submit"] {
+  touch-action: manipulation;
+}
+
+/* Type rendering: better stroke quality, subpixel-accurate kerning. */
+html,
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+}
+
+/* Nested scroll regions (drawers, modals, carousels) shouldn't propagate
+   their scroll energy back to the page — feels "stuck" otherwise. */
+dialog,
+[role="dialog"] {
+  overscroll-behavior: contain;
+}
+
+/* Universal reduced-motion respect — overrides any component animation that
+   forgot to honor the preference, instead of relying on each one to opt in. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

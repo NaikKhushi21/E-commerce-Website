@@ -1,0 +1,27 @@
+import { IngredientCloud } from "@/components/science/IngredientCloud";
+import { ScienceExperiments } from "@/components/science/ScienceExperiments";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { getIngredientAtlas } from "@/lib/sanity-ingredients";
+
+export default async function SciencePage() {
+  const atlas = await getIngredientAtlas();
+
+  return (
+    <div className="space-y-12 pb-14 md:space-y-16">
+      <SectionHeader
+        as="h1"
+        eyebrow="Science"
+        title="Research you move through."
+        right={
+          <p className="max-w-md text-sm leading-relaxed text-[var(--muted)] md:text-base">
+            A living field of ingredient signals, review density, protocol gravity, and absorption behavior.
+          </p>
+        }
+      />
+
+      <IngredientCloud atlas={atlas} />
+
+      <ScienceExperiments atlas={atlas} />
+    </div>
+  );
+}

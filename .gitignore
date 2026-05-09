@@ -1,0 +1,34 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+
+# Dependencies (each subproject also has its own gitignore for safety)
+node_modules/
+.pnp
+.pnp.*
+
+# Build output
+.next/
+dist/
+out/
+build/
+
+# Caches
+.sanity/
+.cache/
+
+# Env / secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
