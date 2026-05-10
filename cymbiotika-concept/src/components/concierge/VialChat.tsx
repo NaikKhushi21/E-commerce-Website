@@ -10,14 +10,7 @@ import type { Product } from "@/data/products";
 
 type Recommendation = {
   reason: string;
-  product: {
-    id: string;
-    handle: string;
-    title: string;
-    price: number;
-    currency: Product["currency"];
-    featuredImage: string;
-  };
+  product: Product;
 };
 
 type Message =
@@ -198,18 +191,7 @@ export function VialChat() {
                       key={i}
                       message={m}
                       onAdd={(rec) => {
-                        addItem({
-                          id: rec.product.id,
-                          handle: rec.product.handle,
-                          title: rec.product.title,
-                          price: rec.product.price,
-                          currency: rec.product.currency,
-                          featuredImage: rec.product.featuredImage,
-                          images: [rec.product.featuredImage],
-                          description: "",
-                          benefits: [],
-                          variants: [],
-                        } as unknown as Product);
+                        addItem(rec.product);
                         openCart();
                       }}
                     />

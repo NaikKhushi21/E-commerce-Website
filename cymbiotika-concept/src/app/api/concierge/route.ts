@@ -185,33 +185,13 @@ export async function POST(request: Request) {
 
   const parsed = parseModelResponse(raw);
 
-  type Recommendation = {
-    reason: string;
-    product: {
-      id: string;
-      handle: string;
-      title: string;
-      price: number;
-      currency: Product["currency"];
-      featuredImage: string;
-    };
-  };
+  type Recommendation = { reason: string; product: Product };
 
   const recommendations: Recommendation[] = parsed.recommendations
     .map(({ handle, reason }): Recommendation | null => {
       const product = productByHandle.get(handle);
       if (!product) return null;
-      return {
-        reason,
-        product: {
-          id: product.id,
-          handle: product.handle,
-          title: product.title,
-          price: product.price,
-          currency: product.currency,
-          featuredImage: product.featuredImage,
-        },
-      };
+      return { reason, product };
     })
     .filter((r): r is Recommendation => r !== null);
 

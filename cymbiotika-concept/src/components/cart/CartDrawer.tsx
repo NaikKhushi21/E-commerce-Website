@@ -90,7 +90,9 @@ export function CartDrawer() {
     }> = [];
     for (let i = 0; i < cartProducts.length; i += 1) {
       for (let j = i + 1; j < cartProducts.length; j += 1) {
-        const shared = cartProducts[i].goals.filter((g) => cartProducts[j].goals.includes(g));
+        const goalsA = cartProducts[i].goals ?? [];
+        const goalsB = cartProducts[j].goals ?? [];
+        const shared = goalsA.filter((g) => goalsB.includes(g));
         const color =
           shared.length > 0 ? GOAL_COLOR[shared[0]] ?? "#d7c3a7" : "rgba(255,255,255,0.16)";
         result.push({ a: i, b: j, shared, color });
