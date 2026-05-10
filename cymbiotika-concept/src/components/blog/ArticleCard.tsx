@@ -25,7 +25,15 @@ export function ArticleCard({ post, compact = false, index = 0 }: ArticleCardPro
       className={`group relative overflow-hidden rounded-[2rem] border border-white/45 bg-[var(--primary)] shadow-[0_8px_22px_rgba(18,18,18,0.06)] transition duration-700 [transition-timing-function:var(--easing-premium)] hover:-translate-y-2 hover:shadow-[0_14px_30px_rgba(18,18,18,0.10)] ${tall ? "md:row-span-2" : ""}`}
     >
       <Link href={`/blog/${post.slug}`} className="block">
-        <div className={`relative ${compact ? "h-[520px]" : tall ? "h-[680px]" : "h-[540px]"}`}>
+        <div
+          className={`relative ${
+            compact
+              ? "h-[440px] sm:h-[480px] md:h-[520px]"
+              : tall
+                ? "h-[520px] sm:h-[600px] md:h-[680px]"
+                : "h-[460px] sm:h-[500px] md:h-[540px]"
+          }`}
+        >
           {post.heroType === "video" ? (
             <AutoplayVideo
               src={post.heroSrc}
@@ -56,7 +64,7 @@ export function ArticleCard({ post, compact = false, index = 0 }: ArticleCardPro
               <span>{post.readTime}</span>
             </div>
             <h3
-              className={`display-title line-clamp-5 max-w-[16ch] text-white ${compact ? "text-3xl md:text-4xl" : tall ? "text-5xl md:text-6xl" : "text-4xl md:text-5xl"}`}
+              className={`display-title line-clamp-4 max-w-[18ch] text-white sm:line-clamp-5 sm:max-w-[16ch] ${compact ? "text-2xl sm:text-3xl md:text-4xl" : tall ? "text-4xl sm:text-5xl md:text-6xl" : "text-3xl sm:text-4xl md:text-5xl"}`}
               style={{
                 textShadow:
                   "0 1px 2px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.5), 0 0 32px rgba(0,0,0,0.28)",
@@ -65,13 +73,13 @@ export function ArticleCard({ post, compact = false, index = 0 }: ArticleCardPro
               {post.title}
             </h3>
             <p
-              className="mt-4 max-w-md translate-y-3 text-sm leading-relaxed text-white/82 opacity-0 transition duration-700 [transition-timing-function:var(--easing-premium)] group-hover:translate-y-0 group-hover:opacity-100 md:text-base"
+              className="mt-4 line-clamp-3 max-w-md text-sm leading-relaxed text-white/82 transition duration-700 [transition-timing-function:var(--easing-premium)] md:text-base [@media(hover:hover)]:translate-y-3 [@media(hover:hover)]:opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
               style={{ textShadow: "0 1px 6px rgba(0,0,0,0.55)" }}
             >
               {post.excerpt}
             </p>
             <p
-              className="mt-6 text-xs uppercase tracking-[0.16em] text-white underline underline-offset-4"
+              className="mt-5 text-xs uppercase tracking-[0.16em] text-white underline underline-offset-4 md:mt-6"
               style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
             >
               Open cover story

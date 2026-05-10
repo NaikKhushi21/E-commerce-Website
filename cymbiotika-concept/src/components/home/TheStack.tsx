@@ -119,7 +119,7 @@ export function TheStack({ products }: { products: Product[] }) {
   return (
     <section
       className="theme-aurora relative isolate overflow-hidden rounded-[2.4rem] border border-[var(--line)] bg-[var(--bg)] p-6 text-[var(--text)] shadow-[0_30px_90px_rgba(12,31,28,0.35)] md:p-12"
-      aria-label="The Stack — protocol mixer"
+      aria-label="The Stack — routine mixer"
     >
       {/* Atmosphere — gold + teal accent washes only; the green base shows through */}
       <div
@@ -140,7 +140,7 @@ export function TheStack({ products }: { products: Product[] }) {
               Drag formulas in. Watch them work together.
             </h2>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
-              A protocol mixer. Drop any combination into the tray — synergy threads draw between
+              A routine mixer. Drop any combination into the tray — synergy threads draw between
               compatible pairs, coverage bars show what your stack delivers.
             </p>
           </div>

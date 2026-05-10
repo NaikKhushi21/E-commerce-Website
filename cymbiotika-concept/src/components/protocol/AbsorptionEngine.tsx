@@ -136,7 +136,7 @@ export function AbsorptionEngine({ products }: { products: Product[] }) {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="micro-copy text-[var(--muted)]">Absorption Engine</p>
-          <h3 className="mt-2 text-3xl text-[var(--forest)] md:text-4xl">Design your protocol timing flow.</h3>
+          <h3 className="mt-2 text-3xl text-[var(--forest)] md:text-4xl">Design your routine timing flow.</h3>
           <p className="mt-2 max-w-2xl text-sm text-[var(--muted)] md:text-base">
             Drag formulas between windows to shape rhythm, compatibility, and daily consistency.
           </p>

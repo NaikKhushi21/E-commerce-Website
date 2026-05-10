@@ -56,6 +56,16 @@ const PADDING = 56;
 const MIN_RADIUS = 16;
 const MAX_RADIUS = 46;
 
+// Responsive radius range based on container width. Narrow viewports get
+// smaller bubbles so categories/synergy modes have room to actually cluster
+// instead of just packing into a single tight blob.
+function radiusRangeForWidth(w: number): readonly [number, number] {
+  if (w < 480) return [9, 22] as const;
+  if (w < 768) return [11, 28] as const;
+  if (w < 1024) return [13, 36] as const;
+  return [MIN_RADIUS, MAX_RADIUS] as const;
+}
+
 export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEntry> }) {
   const [mode, setMode] = useState<Mode>("library");
   const [size, setSize] = useState({ width: 800, height: 540 });
@@ -78,12 +88,14 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
     };
   }, [ingredients]);
 
-  const radiusScale = useMemo(
-    () => scaleSqrt().domain([0, stats.maxSynergy]).range([MIN_RADIUS, MAX_RADIUS]),
-    [stats.maxSynergy],
-  );
+  const radiusScale = useMemo(() => {
+    const [minR, maxR] = radiusRangeForWidth(size.width);
+    return scaleSqrt().domain([0, stats.maxSynergy]).range([minR, maxR]);
+  }, [stats.maxSynergy, size.width]);
 
-  // Initialize bubbles once when ingredients change
+  // Initialize bubbles once when ingredients change.
+  // size + radiusScale intentionally excluded — initial only. Re-running on
+  // resize would scramble x/y positions every time the viewport changes.
   useEffect(() => {
     bubblesRef.current = ingredients.map((ing) => ({
       key: ing.key,
@@ -98,7 +110,22 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
       targetX: size.width / 2,
       targetY: size.height / 2,
     }));
-  }, [ingredients, radiusScale]); // size intentionally excluded — initial only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ingredients]);
+
+  // When the viewport resizes (and therefore the radius scale changes),
+  // update each bubble's radius in place so the cloud re-packs at the new
+  // size — without resetting positions.
+  useEffect(() => {
+    const synergyByKey = new Map(ingredients.map((i) => [i.key, i.synergies?.length ?? 0]));
+    bubblesRef.current.forEach((b) => {
+      const synergyCount = synergyByKey.get(b.key);
+      if (synergyCount !== undefined) {
+        b.radius = radiusScale(synergyCount);
+      }
+    });
+    simulationRef.current?.alpha(0.5).restart();
+  }, [radiusScale, ingredients]);
 
   // Track container width
   useEffect(() => {
@@ -107,7 +134,10 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
     const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const w = Math.max(entry.contentRect.width, 320);
-        const h = Math.min(Math.max(w * 0.62, 460), 660);
+        // Narrower viewports get a taller-relative-to-width canvas so the
+        // bubbles have vertical room to spread into category clusters.
+        const aspect = w < 480 ? 1.4 : w < 768 ? 1.0 : 0.62;
+        const h = Math.min(Math.max(w * aspect, 460), 720);
         setSize({ width: w, height: h });
       }
     });
@@ -175,11 +205,26 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
         .on("tick", () => setTickCounter((n) => (n + 1) % 1_000_000));
     }
 
+    // Custom containment force — runs every tick after collide and clamps each
+    // bubble's center so its full radius stays inside the container bounds.
+    // Without this, collide can push bubbles past the container edge on narrow
+    // viewports and they get clipped by `overflow-hidden`.
+    const containmentForce = () => {
+      const w = size.width;
+      const h = size.height;
+      bubbles.forEach((b) => {
+        const r = b.radius + 1;
+        if (typeof b.x === "number") b.x = Math.max(r, Math.min(w - r, b.x));
+        if (typeof b.y === "number") b.y = Math.max(r, Math.min(h - r, b.y));
+      });
+    };
+
     simulationRef.current
       .nodes(bubbles)
       .force("x", forceX<Bubble>((b) => b.targetX).strength(xStrength))
       .force("y", forceY<Bubble>((b) => b.targetY).strength(yStrength))
       .force("collide", forceCollide<Bubble>((b) => b.radius + 2).strength(0.9))
+      .force("contain", containmentForce)
       .alpha(0.7)
       .restart();
   }, [mode, size, stats.categories, stats.maxBreadth, stats.maxSynergy]);
@@ -355,9 +400,17 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
           </AnimatePresence>
         </aside>
 
+        <MobileChart
+          ingredients={ingredients}
+          categories={stats.categories}
+          mode={mode}
+          hovered={hovered}
+          setHovered={setHovered}
+        />
+
         <div
           ref={containerRef}
-          className="relative w-full overflow-hidden rounded-[1.6rem] border border-[var(--line)] bg-[var(--surface)]"
+          className="relative hidden w-full overflow-hidden rounded-[1.6rem] border border-[var(--line)] bg-[var(--surface)] md:block"
           style={{ height: size.height }}
         >
         {/* axes (synergy mode) */}
@@ -430,9 +483,9 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
               <span
                 className="px-1 leading-tight"
                 style={{
-                  fontSize: Math.max(9, Math.min(12, b.radius * 0.32)),
+                  fontSize: Math.max(8, Math.min(12, b.radius * 0.42)),
                   letterSpacing: "0.02em",
-                  opacity: b.radius < 22 ? 0 : 0.92,
+                  opacity: b.radius < 13 ? 0 : 0.92,
                 }}
               >
                 {compactName(b.name)}
@@ -491,3 +544,435 @@ function compactName(name: string): string {
   if (trimmed.length <= 14) return trimmed;
   return trimmed.slice(0, 12) + "…";
 }
+
+// ---------- Mobile chart view ----------
+// The bubble cloud is a desktop idiom. Below md we render proper charts with
+// axes — one chart per mode, each picked for the insight that mode conveys:
+//
+//   Library      → Donut chart of category distribution (5–6 slices, count)
+//   Categories   → Vertical bar chart, x=category, y=ingredient count + total score
+//   Synergy map  → Vertical bar chart, x=top 12 ingredients (rotated labels),
+//                  y=synergy + goal-breadth score
+//
+// Each chart updates the shared `hovered` state on tap so the desktop aside
+// stays in sync if the viewport changes mid-session.
+
+function ingredientScore(i: IngredientEntry): number {
+  return Math.max(1, (i.synergies?.length ?? 0) + new Set(i.goals).size);
+}
+
+function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
+  const rad = ((angleDeg - 90) * Math.PI) / 180;
+  return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)] as const;
+}
+
+function donutSlicePath(
+  cx: number,
+  cy: number,
+  rOuter: number,
+  rInner: number,
+  startAngle: number,
+  endAngle: number,
+) {
+  const [x1, y1] = polarToCartesian(cx, cy, rOuter, startAngle);
+  const [x2, y2] = polarToCartesian(cx, cy, rOuter, endAngle);
+  const [x3, y3] = polarToCartesian(cx, cy, rInner, endAngle);
+  const [x4, y4] = polarToCartesian(cx, cy, rInner, startAngle);
+  const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+  return `M ${x1} ${y1} A ${rOuter} ${rOuter} 0 ${largeArc} 1 ${x2} ${y2} L ${x3} ${y3} A ${rInner} ${rInner} 0 ${largeArc} 0 ${x4} ${y4} Z`;
+}
+
+function MobileChart({
+  ingredients,
+  categories,
+  mode,
+}: {
+  ingredients: IngredientEntry[];
+  categories: IngredientCategory[];
+  mode: Mode;
+  hovered: string | null;
+  setHovered: (next: string | null | ((prev: string | null) => string | null)) => void;
+}) {
+  if (mode === "library") {
+    return <CategoryDonut ingredients={ingredients} categories={categories} />;
+  }
+  if (mode === "categories") {
+    return <CategoryBarChart ingredients={ingredients} categories={categories} />;
+  }
+  return <TopIngredientsBarChart ingredients={ingredients} />;
+}
+
+function CategoryDonut({
+  ingredients,
+  categories,
+}: {
+  ingredients: IngredientEntry[];
+  categories: IngredientCategory[];
+}) {
+  const data = categories
+    .map((cat) => ({
+      cat,
+      count: ingredients.filter((i) => i.category === cat).length,
+    }))
+    .filter((d) => d.count > 0);
+  const total = data.reduce((s, d) => s + d.count, 0);
+
+  const cx = 0;
+  const cy = 0;
+  const rOuter = 90;
+  const rInner = 56;
+
+  let runningAngle = 0;
+  const slices = data.map((d) => {
+    const sweep = (d.count / total) * 360;
+    const start = runningAngle;
+    const end = runningAngle + sweep - 0.5; // tiny gap between slices
+    runningAngle += sweep;
+    const midAngle = (start + end) / 2;
+    const [labelX, labelY] = polarToCartesian(cx, cy, (rOuter + rInner) / 2, midAngle);
+    return {
+      cat: d.cat,
+      count: d.count,
+      pct: Math.round((d.count / total) * 100),
+      start,
+      end,
+      midAngle,
+      labelX,
+      labelY,
+      path: donutSlicePath(cx, cy, rOuter, rInner, start, end),
+      color: CATEGORY_COLOR[d.cat],
+    };
+  });
+
+  return (
+    <div className="rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-4 md:hidden">
+      <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+        Library composition
+      </p>
+      <div className="mt-3 flex flex-col items-center gap-4">
+        <svg viewBox="-110 -110 220 220" className="h-auto w-full max-w-[280px]" aria-hidden>
+          {slices.map((s) => (
+            <path key={s.cat} d={s.path} fill={s.color} stroke="var(--bg)" strokeWidth={1.5} />
+          ))}
+          {/* slice labels (count) — only render if slice is wide enough */}
+          {slices.map((s) =>
+            s.end - s.start > 18 ? (
+              <text
+                key={`l-${s.cat}`}
+                x={s.labelX}
+                y={s.labelY}
+                textAnchor="middle"
+                dominantBaseline="central"
+                fontSize="9"
+                fill="var(--forest)"
+                style={{ fontWeight: 600 }}
+              >
+                {s.count}
+              </text>
+            ) : null,
+          )}
+          {/* center: total */}
+          <text
+            x={0}
+            y={-4}
+            textAnchor="middle"
+            fontSize="22"
+            fill="var(--forest)"
+            style={{ fontFamily: "var(--font-display), serif" }}
+          >
+            {total}
+          </text>
+          <text
+            x={0}
+            y={14}
+            textAnchor="middle"
+            fontSize="8"
+            letterSpacing="2"
+            fill="var(--muted)"
+          >
+            INGREDIENTS
+          </text>
+        </svg>
+
+        <ul className="grid w-full grid-cols-2 gap-x-3 gap-y-1.5">
+          {slices.map((s) => (
+            <li
+              key={`legend-${s.cat}`}
+              className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]"
+            >
+              <span
+                className="h-2.5 w-2.5 shrink-0 rounded-full"
+                style={{ background: s.color }}
+                aria-hidden
+              />
+              <span className="min-w-0 flex-1 truncate text-[var(--forest)]">{s.cat}</span>
+              <span className="shrink-0 font-mono tabular-nums">{s.pct}%</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function CategoryBarChart({
+  ingredients,
+  categories,
+}: {
+  ingredients: IngredientEntry[];
+  categories: IngredientCategory[];
+}) {
+  const data = categories
+    .map((cat) => ({
+      cat,
+      count: ingredients.filter((i) => i.category === cat).length,
+    }))
+    .filter((d) => d.count > 0)
+    .sort((a, b) => b.count - a.count);
+
+  const maxCount = Math.max(1, ...data.map((d) => d.count));
+  // Y-axis ticks: 0 → maxCount, evenly spaced
+  const tickCount = Math.min(maxCount, 5);
+  const tickValues = Array.from({ length: tickCount + 1 }, (_, i) =>
+    Math.round((maxCount * i) / tickCount),
+  );
+
+  const padLeft = 26;
+  const padBottom = 70; // leave room for rotated labels
+  const padTop = 12;
+  const barW = 36;
+  const gap = 14;
+  const chartH = 170;
+  const chartW = data.length * (barW + gap);
+  const totalW = padLeft + chartW + 8;
+  const totalH = padTop + chartH + padBottom;
+
+  return (
+    <div className="rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-4 md:hidden">
+      <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+        Ingredients per category
+      </p>
+      <svg
+        viewBox={`0 0 ${totalW} ${totalH}`}
+        className="mt-3 h-auto w-full"
+        role="img"
+        aria-label="Ingredient count by category"
+      >
+        {/* Y-axis grid lines + labels */}
+        {tickValues.map((v) => {
+          const y = padTop + chartH - (v / maxCount) * chartH;
+          return (
+            <g key={v}>
+              <line
+                x1={padLeft}
+                x2={padLeft + chartW}
+                y1={y}
+                y2={y}
+                stroke="var(--line)"
+                strokeDasharray={v === 0 ? "0" : "2 3"}
+              />
+              <text
+                x={padLeft - 5}
+                y={y + 3}
+                textAnchor="end"
+                fontSize="8"
+                fill="var(--muted)"
+                fontFamily="var(--font-mono, monospace)"
+              >
+                {v}
+              </text>
+            </g>
+          );
+        })}
+        {/* Y-axis line */}
+        <line
+          x1={padLeft}
+          x2={padLeft}
+          y1={padTop}
+          y2={padTop + chartH}
+          stroke="var(--line-strong)"
+        />
+        {/* Bars */}
+        {data.map((d, i) => {
+          const x = padLeft + i * (barW + gap) + gap / 2;
+          const h = (d.count / maxCount) * chartH;
+          const y = padTop + chartH - h;
+          const labelX = x + barW / 2;
+          const labelY = padTop + chartH + 8;
+          return (
+            <g key={d.cat}>
+              <rect
+                x={x}
+                y={y}
+                width={barW}
+                height={h}
+                rx={4}
+                fill={CATEGORY_COLOR[d.cat]}
+                opacity={0.85}
+              />
+              <text
+                x={x + barW / 2}
+                y={y - 4}
+                textAnchor="middle"
+                fontSize="9"
+                fill="var(--forest)"
+                fontWeight={600}
+              >
+                {d.count}
+              </text>
+              {/* X-axis label, rotated -45° around its anchor */}
+              <text
+                x={labelX}
+                y={labelY}
+                textAnchor="end"
+                fontSize="9"
+                fill="var(--muted)"
+                transform={`rotate(-40 ${labelX} ${labelY})`}
+              >
+                {d.cat}
+              </text>
+            </g>
+          );
+        })}
+        {/* Y-axis title */}
+        <text
+          x={6}
+          y={padTop + chartH / 2}
+          textAnchor="middle"
+          fontSize="8"
+          fill="var(--muted)"
+          letterSpacing="2"
+          transform={`rotate(-90 6 ${padTop + chartH / 2})`}
+        >
+          COUNT
+        </text>
+      </svg>
+    </div>
+  );
+}
+
+function TopIngredientsBarChart({ ingredients }: { ingredients: IngredientEntry[] }) {
+  const TOP_N = 12;
+  const data = [...ingredients]
+    .sort((a, b) => ingredientScore(b) - ingredientScore(a))
+    .slice(0, TOP_N);
+
+  const maxScore = Math.max(1, ...data.map(ingredientScore));
+  const tickCount = Math.min(maxScore, 4);
+  const tickValues = Array.from({ length: tickCount + 1 }, (_, i) =>
+    Math.round((maxScore * i) / tickCount),
+  );
+
+  const padLeft = 26;
+  const padBottom = 92; // longer ingredient names need more rotation room
+  const padTop = 12;
+  const barW = 18;
+  const gap = 8;
+  const chartH = 200;
+  const chartW = data.length * (barW + gap);
+  const totalW = padLeft + chartW + 8;
+  const totalH = padTop + chartH + padBottom;
+
+  return (
+    <div className="rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-4 md:hidden">
+      <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+        Top {TOP_N} ingredients · synergy + goal score
+      </p>
+      <svg
+        viewBox={`0 0 ${totalW} ${totalH}`}
+        className="mt-3 h-auto w-full"
+        role="img"
+        aria-label="Top ingredients by combined synergy and goal score"
+      >
+        {/* Y-axis grid + labels */}
+        {tickValues.map((v) => {
+          const y = padTop + chartH - (v / maxScore) * chartH;
+          return (
+            <g key={v}>
+              <line
+                x1={padLeft}
+                x2={padLeft + chartW}
+                y1={y}
+                y2={y}
+                stroke="var(--line)"
+                strokeDasharray={v === 0 ? "0" : "2 3"}
+              />
+              <text
+                x={padLeft - 5}
+                y={y + 3}
+                textAnchor="end"
+                fontSize="8"
+                fill="var(--muted)"
+              >
+                {v}
+              </text>
+            </g>
+          );
+        })}
+        {/* Y-axis line */}
+        <line
+          x1={padLeft}
+          x2={padLeft}
+          y1={padTop}
+          y2={padTop + chartH}
+          stroke="var(--line-strong)"
+        />
+        {/* Bars */}
+        {data.map((ing, i) => {
+          const score = ingredientScore(ing);
+          const x = padLeft + i * (barW + gap) + gap / 2;
+          const h = (score / maxScore) * chartH;
+          const y = padTop + chartH - h;
+          const labelX = x + barW / 2;
+          const labelY = padTop + chartH + 8;
+          return (
+            <g key={ing.key}>
+              <rect
+                x={x}
+                y={y}
+                width={barW}
+                height={h}
+                rx={3}
+                fill={CATEGORY_COLOR[ing.category]}
+                opacity={0.85}
+              />
+              <text
+                x={x + barW / 2}
+                y={y - 3}
+                textAnchor="middle"
+                fontSize="8"
+                fill="var(--forest)"
+                fontWeight={600}
+              >
+                {score}
+              </text>
+              <text
+                x={labelX}
+                y={labelY}
+                textAnchor="end"
+                fontSize="8"
+                fill="var(--muted)"
+                transform={`rotate(-55 ${labelX} ${labelY})`}
+              >
+                {compactName(ing.name)}
+              </text>
+            </g>
+          );
+        })}
+        {/* Y-axis title */}
+        <text
+          x={6}
+          y={padTop + chartH / 2}
+          textAnchor="middle"
+          fontSize="8"
+          fill="var(--muted)"
+          letterSpacing="2"
+          transform={`rotate(-90 6 ${padTop + chartH / 2})`}
+        >
+          SCORE
+        </text>
+      </svg>
+    </div>
+  );
+}
+

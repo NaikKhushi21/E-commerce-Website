@@ -115,7 +115,7 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
       <section id="article-story" className="space-y-8">
         {fallbackSections.map((section, index) => (
           <article key={`${section.heading}-${index}`} id={`story-${index + 1}`} className="space-y-3">
-            <h2 className="text-3xl text-[var(--forest)] md:text-5xl">{section.heading}</h2>
+            <h2 className="text-2xl text-[var(--forest)] sm:text-3xl md:text-4xl lg:text-5xl">{section.heading}</h2>
             <p className="max-w-3xl text-base leading-relaxed text-[var(--muted)] md:text-lg">{section.body}</p>
           </article>
         ))}
@@ -145,7 +145,7 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
           return (
             <article key={id} id={id} className="space-y-4">
               {block.eyebrow ? <p className="micro-copy text-[var(--muted)]">{block.eyebrow}</p> : null}
-              <h2 className="max-w-4xl text-3xl text-[var(--forest)] md:text-5xl">{block.heading}</h2>
+              <h2 className="max-w-4xl text-2xl text-[var(--forest)] sm:text-3xl md:text-4xl lg:text-5xl">{block.heading}</h2>
               <div className="space-y-3">
                 <PortableText value={block.body} components={richTextComponents} />
               </div>

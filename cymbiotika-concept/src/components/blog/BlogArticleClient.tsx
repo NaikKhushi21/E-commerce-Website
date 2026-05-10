@@ -46,7 +46,7 @@ export function BlogArticleClient({ post, related, ingredientAtlas }: BlogArticl
           statGrid: "Stats",
           productCallout: "Product callout",
           comparison: "Comparison",
-          timeline: "Protocol timeline",
+          timeline: "Routine timeline",
           faq: "FAQ",
           callout: "Callout",
           inlineImage: "Image",
@@ -96,10 +96,10 @@ export function BlogArticleClient({ post, related, ingredientAtlas }: BlogArticl
         </div>
       </section>
 
-      <section className="grid gap-10 lg:grid-cols-[0.3fr_0.7fr] lg:items-start">
+      <section className="space-y-10 lg:grid lg:grid-cols-[0.3fr_0.7fr] lg:gap-10 lg:space-y-0 lg:items-start">
         <ArticleToc items={tocItems} />
 
-        <div className="space-y-10">
+        <div className="min-w-0 space-y-10">
           <div className="rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)]/60 px-5 py-4 md:px-6">
             <ReadingLens lens={lens} onChange={setLens} />
           </div>

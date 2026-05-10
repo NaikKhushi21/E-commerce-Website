@@ -34,7 +34,7 @@ const BEATS = [
 ] as const;
 
 const HEADLINE = "Science you can feel.";
-const SUBHEAD = "A six-beat ritual from pouch to cell. The whole protocol, in one frame.";
+const SUBHEAD = "A six-beat ritual from pouch to cell. The whole routine, in one frame.";
 
 export function PouchRitualHero() {
   const router = useRouter();
@@ -188,7 +188,7 @@ export function PouchRitualHero() {
               onClick={() => router.push("/quiz")}
               className="rounded-full bg-white px-7 py-3.5 text-xs uppercase tracking-[0.22em] text-[var(--on-primary)] transition hover:scale-[1.02]"
             >
-              Start your protocol
+              Start your routine
             </MagneticButton>
             <MagneticButton
               onClick={() => router.push("/products")}
@@ -225,14 +225,14 @@ function PouchRitualScene({ beat, reduceMotion }: { beat: number; reduceMotion: 
       <svg viewBox="0 0 600 800" className="absolute inset-0 h-full w-full" aria-hidden="true">
         <defs>
           <linearGradient id="pouch-fill" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#1a1620" />
-            <stop offset="50%" stopColor="#0a0a0c" />
-            <stop offset="100%" stopColor="#16131a" />
+            <stop offset="0%" stopColor="#e26b2e" />
+            <stop offset="50%" stopColor="#e26b2e" />
+            <stop offset="100%" stopColor="#e26b2e" />
           </linearGradient>
           <linearGradient id="pouch-edge" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0%" stopColor="#2a2128" />
-            <stop offset="50%" stopColor="#3d3138" />
-            <stop offset="100%" stopColor="#2a2128" />
+            <stop offset="0%" stopColor="#000000" />
+            <stop offset="50%" stopColor="#000000" />
+            <stop offset="100%" stopColor="#000000" />
           </linearGradient>
           <radialGradient id="droplet-fill" cx="50%" cy="38%" r="60%">
             <stop offset="0%" stopColor="#fff1d1" />
@@ -290,26 +290,26 @@ function BeatPouch({ beat, reduceMotion }: { beat: number; reduceMotion: boolean
           d="M 215 235 Q 215 218 232 218 L 268 218 L 280 200 L 320 200 L 332 218 L 368 218 Q 385 218 385 235 L 385 568 Q 385 588 365 588 L 235 588 Q 215 588 215 568 Z"
           fill="url(#pouch-fill)"
           stroke="url(#pouch-edge)"
-          strokeWidth="1.4"
+          strokeWidth="2.5"
         />
         {/* Inner liquid sheen */}
         <path
           d="M 232 250 Q 232 240 244 240 L 356 240 Q 368 240 368 250 L 368 560 Q 368 572 356 572 L 244 572 Q 232 572 232 560 Z"
-          fill="rgba(215,195,167,0.04)"
+          fill="rgba(255,255,255,0.06)"
         />
         {/* Tear notch */}
-        <path d="M 280 200 L 290 192 L 300 200 L 310 192 L 320 200" fill="none" stroke="#d7c3a7" strokeWidth="1.2" strokeLinejoin="round" />
+        <path d="M 280 200 L 290 192 L 300 200 L 310 192 L 320 200" fill="none" stroke="#000000" strokeWidth="1.6" strokeLinejoin="round" />
 
         {/* Cymbiotika label */}
         <g transform="translate(300 360)">
-          <circle r="22" fill="none" stroke="rgba(215,195,167,0.6)" strokeWidth="0.8" />
-          <text textAnchor="middle" y="6" fill="#d7c3a7" fontSize="20" fontFamily="serif" letterSpacing="2">C</text>
+          <circle r="22" fill="none" stroke="#ffffff" strokeWidth="1.4" />
+          <text textAnchor="middle" y="7" fill="#ffffff" fontSize="22" fontFamily="serif" fontWeight={700} letterSpacing="2">C</text>
         </g>
-        <text x="300" y="430" textAnchor="middle" fill="rgba(215,195,167,0.55)" fontSize="9" letterSpacing="4">CYMBIOTIKA</text>
-        <text x="300" y="450" textAnchor="middle" fill="rgba(215,195,167,0.32)" fontSize="7" letterSpacing="2.4">LIPOSOMAL · 30ml</text>
+        <text x="300" y="432" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight={700} letterSpacing="4">CYMBIOTIKA</text>
+        <text x="300" y="454" textAnchor="middle" fill="#ffffff" fontSize="8" fontWeight={600} letterSpacing="2.6">LIPOSOMAL · 30ml</text>
 
         {/* Subtle highlight stripe */}
-        <rect x="232" y="240" width="14" height="320" fill="rgba(255,255,255,0.04)" rx="6" />
+        <rect x="232" y="240" width="14" height="320" fill="rgba(255,255,255,0.10)" rx="6" />
       </motion.g>
     </motion.g>
   );
@@ -346,7 +346,7 @@ function BeatTear({ beat }: { beat: number }) {
         transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformOrigin: "270px 218px" }}
       >
-        <path d="M 215 235 Q 215 218 232 218 L 268 218 L 280 200 L 300 200 L 300 218 L 215 218 Z" fill="#1a1620" stroke="#3d3138" strokeWidth="1" />
+        <path d="M 215 235 Q 215 218 232 218 L 268 218 L 280 200 L 300 200 L 300 218 L 215 218 Z" fill="#e26b2e" stroke="#000000" strokeWidth="1.6" />
       </motion.g>
       {/* Top piece tilts right */}
       <motion.g
@@ -355,7 +355,7 @@ function BeatTear({ beat }: { beat: number }) {
         transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformOrigin: "330px 218px" }}
       >
-        <path d="M 300 200 L 320 200 L 332 218 L 368 218 Q 385 218 385 235 L 385 218 L 300 218 Z" fill="#1a1620" stroke="#3d3138" strokeWidth="1" />
+        <path d="M 300 200 L 320 200 L 332 218 L 368 218 Q 385 218 385 235 L 385 218 L 300 218 Z" fill="#e26b2e" stroke="#000000" strokeWidth="1.6" />
       </motion.g>
       {/* Sparks at the tear */}
       {[

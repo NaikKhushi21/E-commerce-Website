@@ -178,11 +178,11 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
       />
       <div className="pointer-events-none absolute inset-0 mix-blend-soft-light opacity-[0.18] bg-[radial-gradient(rgba(255,255,255,0.6)_0.5px,transparent_0.5px)] [background-size:3px_3px]" />
 
-      <div className="relative grid min-h-[88svh] gap-8 px-6 py-12 md:grid-cols-[0.46fr_0.54fr] md:items-center md:gap-4 md:px-12 md:py-14">
+      <div className="relative min-h-[88svh] space-y-8 px-6 py-12 md:grid md:grid-cols-[0.46fr_0.54fr] md:items-center md:gap-4 md:space-y-0 md:px-12 md:py-14">
         {/* LEFT — copy + controls */}
         <div className="relative z-20 max-w-xl">
           <p className="text-[10px] uppercase tracking-[0.36em] text-white/55">
-            Cymbiotika · Protocol Quiz
+            Cymbiotika · Routine Quiz
           </p>
 
           <AnimatePresence mode="wait">
@@ -199,13 +199,13 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                     Tap where you want to feel different.
                   </h1>
                   <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
-                    Your body is the input. Light up any zones — one or all eight — and your protocol assembles.
+                    Your body is the input. Light up any zones — one or all eight — and your routine assembles.
                   </p>
                 </>
               ) : (
                 <>
                   <h1 className="display-title mt-6 text-[clamp(2.6rem,5.6vw,5.5rem)] leading-[0.96] text-white">
-                    Your protocol.
+                    Your routine.
                   </h1>
                   <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
                     {recommended.length} formulas matched to{" "}
@@ -243,9 +243,21 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                 ))}
               </AnimatePresence>
               {selectedZones.length === 0 && phase === "input" && (
-                <li className="text-[11px] uppercase tracking-[0.22em] text-white/35">
-                  Nothing lit yet — tap the body.
-                </li>
+                <motion.li
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-center gap-2 rounded-full border border-[#d7c3a7]/40 bg-[#d7c3a7]/[0.06] px-3.5 py-1.5 text-[11px] uppercase tracking-[0.22em] text-[#d7c3a7]"
+                >
+                  <motion.span
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                    aria-hidden
+                  >
+                    →
+                  </motion.span>
+                  Tap any glowing dot on the body
+                </motion.li>
               )}
             </ul>
           </div>
@@ -260,7 +272,7 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                   disabled={selected.size === 0}
                   className="rounded-full bg-white px-7 py-3.5 text-xs uppercase tracking-[0.22em] text-[var(--on-primary)] transition disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/30 hover:scale-[1.02]"
                 >
-                  Reveal protocol
+                  Reveal routine
                 </button>
                 <span className="text-[10px] uppercase tracking-[0.28em] text-white/40">
                   {selected.size} / {ZONES.length} lit
@@ -274,14 +286,14 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                   disabled={recommended.length === 0}
                   className="rounded-full bg-white px-7 py-3.5 text-xs uppercase tracking-[0.22em] text-[var(--on-primary)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/30"
                 >
-                  Add full protocol
+                  Add full routine
                 </button>
                 <button
                   type="button"
                   onClick={refine}
                   className="rounded-full border border-white/25 bg-white/[0.04] px-7 py-3.5 text-xs uppercase tracking-[0.22em] text-white transition hover:border-white/55 hover:bg-white/10"
                 >
-                  Refine zones
+                Clear
                 </button>
                 <Link
                   href="/products"
@@ -334,7 +346,8 @@ function BodyStage({
   reduceMotion: boolean;
 }) {
   return (
-    <div className="relative mx-auto aspect-[3/4] w-full max-w-[640px]">
+    <div className="mx-auto w-full max-w-[640px]">
+      <div className="relative aspect-[3/4] w-full">
       <svg viewBox="0 0 600 800" className="absolute inset-0 h-full w-full" aria-hidden="true">
         <defs>
           <radialGradient id="ld-body-glow" cx="50%" cy="40%" r="60%">
@@ -408,7 +421,8 @@ function BodyStage({
         />
       ))}
 
-      {/* Orbiting product cards (revealed only) */}
+      {/* Orbiting product cards (desktop only — see ProductOrbit for the
+          `hidden md:block` constraint that keeps these out of mobile flow). */}
       <AnimatePresence>
         {phase === "revealed" &&
           recommended.map((product, i) => (
@@ -421,6 +435,50 @@ function BodyStage({
             />
           ))}
       </AnimatePresence>
+      </div>
+
+      {/* Mobile match list — orbital layout collapses on narrow viewports,
+          so render the matches as a normal vertical stack below the body. */}
+      {phase === "revealed" ? (
+        <div className="mt-6 flex flex-col gap-3 md:hidden">
+          {recommended.map((product, i) => (
+            <motion.article
+              key={`mobile-${product.id}`}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.2 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="flex w-full min-w-0 items-center gap-3 rounded-[1.2rem] border border-white/12 bg-white/[0.06] p-3"
+            >
+              <Link
+                href={`/products/${product.handle}`}
+                className="relative h-16 w-16 shrink-0 overflow-hidden rounded-[0.8rem] bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.18),transparent_60%)]"
+              >
+                <SafeImage
+                  src={product.featuredImage}
+                  alt={product.title}
+                  fill
+                  className="object-contain p-1.5"
+                />
+              </Link>
+              <div className="min-w-0 flex-1">
+                <p className="text-[9px] uppercase tracking-[0.28em] text-[#d7c3a7]">Match</p>
+                <Link href={`/products/${product.handle}`} className="block">
+                  <p className="mt-1 truncate font-display text-sm leading-tight text-white">
+                    {product.title}
+                  </p>
+                </Link>
+              </div>
+              <button
+                type="button"
+                onClick={() => onAddProduct(product)}
+                className="shrink-0 rounded-full bg-white/95 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-[var(--on-primary)] transition hover:bg-white"
+              >
+                Add
+              </button>
+            </motion.article>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -561,14 +619,31 @@ function ZoneMarker({
       aria-pressed={active}
     >
       <span className="relative block h-12 w-12">
+        {/* Idle attention pulse — only shown in the input phase on dots that
+            haven't been selected/hovered yet. Signals "tap me" without
+            requiring the user to read instructions. */}
+        {phase === "input" && !active && !hovered && (
+          <motion.span
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+            style={{
+              width: 12,
+              height: 12,
+              border: "1px solid rgba(255,255,255,0.7)",
+              transformOrigin: "center",
+            }}
+            animate={{ scale: [1, 2.4, 1], opacity: [0.65, 0, 0.65] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+            aria-hidden
+          />
+        )}
         {/* outer pulse */}
         <span
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-500"
           style={{
-            width: active ? 22 : hovered ? 16 : 10,
-            height: active ? 22 : hovered ? 16 : 10,
-            border: `1px solid ${active ? zone.color : "rgba(255,255,255,0.35)"}`,
-            opacity: active ? 0.9 : 0.55,
+            width: active ? 22 : hovered ? 16 : 12,
+            height: active ? 22 : hovered ? 16 : 12,
+            border: `1px solid ${active ? zone.color : "rgba(255,255,255,0.5)"}`,
+            opacity: active ? 0.9 : 0.7,
             boxShadow: active ? `0 0 18px ${zone.color}` : "none",
           }}
         />
@@ -576,10 +651,12 @@ function ZoneMarker({
         <span
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-500"
           style={{
-            width: active ? 8 : 4,
-            height: active ? 8 : 4,
-            background: active ? zone.color : "rgba(255,255,255,0.7)",
-            boxShadow: active ? `0 0 12px ${zone.color}` : "none",
+            width: active ? 8 : 6,
+            height: active ? 8 : 6,
+            background: active ? zone.color : "rgba(255,255,255,0.95)",
+            boxShadow: active
+              ? `0 0 12px ${zone.color}`
+              : "0 0 8px rgba(255,255,255,0.45)",
           }}
         />
       </span>
@@ -632,7 +709,7 @@ function ProductOrbit({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.85 }}
       transition={{ duration: 0.55, delay: 0.5 + index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className="absolute z-30 w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-[1.4rem] border border-white/12 bg-white/[0.06] p-3 md:w-[208px]"
+      className="absolute z-30 hidden w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-[1.4rem] border border-white/12 bg-white/[0.06] p-3 md:block md:w-[208px]"
       style={{
         left: `${left}%`,
         top: `${top}%`,

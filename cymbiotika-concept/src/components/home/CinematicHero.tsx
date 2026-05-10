@@ -74,7 +74,7 @@ export function CinematicHero({ products }: { products: Product[] }) {
             viewport={{ once: true, margin: "-15%" }}
             transition={reduceMotion ? undefined : { duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
-            Scroll-Controlled Protocol Film
+            Scroll-Controlled Routine Film
           </motion.p>
           <motion.h1
             className="display-title mt-6 max-w-3xl text-[clamp(3.2rem,8vw,8rem)]"
@@ -101,7 +101,7 @@ export function CinematicHero({ products }: { products: Product[] }) {
               onClick={() => router.push("/quiz")}
               className="rounded-full bg-[var(--primary)] px-6 py-3 text-sm uppercase tracking-[0.14em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.02]"
             >
-              Start your protocol
+              Start your routine
             </MagneticButton>
             <MagneticButton
               onClick={() => router.push("/products")}

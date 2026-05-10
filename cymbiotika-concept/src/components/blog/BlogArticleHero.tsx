@@ -14,7 +14,9 @@ export function BlogArticleHero({ post }: BlogArticleHeroProps) {
         <span>{formatCardDate(post.publishedAt)}</span>
       </div>
 
-      <h1 className="display-title max-w-5xl text-5xl text-[var(--forest)] md:text-7xl">{post.title}</h1>
+      <h1 className="display-title max-w-5xl text-3xl text-[var(--forest)] sm:text-4xl md:text-6xl lg:text-7xl">
+        {post.title}
+      </h1>
       <p className="body-copy max-w-3xl text-base md:text-xl">{post.excerpt}</p>
 
       <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.12em] text-[var(--muted)]">

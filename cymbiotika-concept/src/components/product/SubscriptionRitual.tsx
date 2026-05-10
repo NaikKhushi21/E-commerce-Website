@@ -18,7 +18,7 @@ const CADENCES: Array<{
   discountPct: number;
   hint: string;
 }> = [
-  { key: "weekly", label: "Weekly", intervalDays: 7, discountPct: 0, hint: "Higher-frequency dosing protocols." },
+  { key: "weekly", label: "Weekly", intervalDays: 7, discountPct: 0, hint: "Higher-frequency dosing routines." },
   { key: "biweekly", label: "Bi-weekly", intervalDays: 14, discountPct: 10, hint: "The sweet spot for most stacks." },
   { key: "monthly", label: "Monthly", intervalDays: 30, discountPct: 15, hint: "One pouch, monthly delivery." },
 ];
@@ -78,7 +78,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
       <SectionHeader
         eyebrow="06 — Subscription Ritual"
         title="Routine, scheduled to your rhythm."
-        subhead="Pick a cadence — pouches arrive on the days that suit your protocol. Skip, swap, or pause from the cart."
+        subhead="Pick a cadence — pouches arrive on the days that suit your routine. Skip, swap, or pause from the cart."
         right={
           <div>
             <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--muted)]">

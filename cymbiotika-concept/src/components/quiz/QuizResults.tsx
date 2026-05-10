@@ -17,7 +17,7 @@ export function QuizResults({ products }: { products: Product[] }) {
   return (
     <section className="space-y-10">
       <div className="max-w-3xl space-y-4">
-        <p className="micro-copy text-[var(--muted)]">Protocol Ready</p>
+        <p className="micro-copy text-[var(--muted)]">Routine Ready</p>
         <h2 className="display-title text-5xl text-[var(--forest)] md:text-7xl">Your personalized stack direction.</h2>
         <p className="body-copy text-base md:text-lg">These formulas align with your selected goals and routine preferences.</p>
       </div>

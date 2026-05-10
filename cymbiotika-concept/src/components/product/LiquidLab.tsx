@@ -132,7 +132,7 @@ function CopyOverlay({ progress, productTitle }: { progress: MotionValue<number>
   const stage = STAGES[stageIdx];
 
   return (
-    <div className="pointer-events-none absolute inset-y-0 left-0 z-30 flex w-full flex-col justify-center px-6 md:left-12 md:max-w-md md:px-0">
+    <div className="pointer-events-none absolute inset-y-0 left-0 z-30 flex w-full flex-col justify-start px-6 pt-16 md:left-12 md:max-w-md md:justify-center md:px-0 md:pt-0">
       <p className="text-[10px] uppercase tracking-[0.32em] text-white/45">{productTitle}</p>
       <AnimatePresence mode="wait">
         <motion.div
@@ -182,14 +182,14 @@ function Stage1Pouch({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity, scale, y }}
-      className="absolute inset-0 z-10 flex items-center justify-center translate-x-[6vw] md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
     >
       <svg viewBox="0 0 600 800" className="h-[80vh] max-h-[700px] w-auto" aria-hidden="true">
         <defs>
           <linearGradient id="ll-pouch-fill" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#1a1620" />
-            <stop offset="50%" stopColor="#0a0a0c" />
-            <stop offset="100%" stopColor="#16131a" />
+            <stop offset="0%" stopColor="#e26b2e" />
+            <stop offset="50%" stopColor="#e26b2e" />
+            <stop offset="100%" stopColor="#e26b2e" />
           </linearGradient>
         </defs>
         {/* Shadow */}
@@ -198,8 +198,13 @@ function Stage1Pouch({ progress }: { progress: MotionValue<number> }) {
         <path
           d="M 215 235 Q 215 218 232 218 L 268 218 L 280 200 L 320 200 L 332 218 L 368 218 Q 385 218 385 235 L 385 568 Q 385 588 365 588 L 235 588 Q 215 588 215 568 Z"
           fill="url(#ll-pouch-fill)"
-          stroke="#3d3138"
-          strokeWidth="1.4"
+          stroke="#000000"
+          strokeWidth="2.5"
+        />
+        {/* Inner liquid sheen — lighter inset panel inside the pouch frame */}
+        <path
+          d="M 232 250 Q 232 240 244 240 L 356 240 Q 368 240 368 250 L 368 560 Q 368 572 356 572 L 244 572 Q 232 572 232 560 Z"
+          fill="rgba(255,255,255,0.10)"
         />
         {/* Tear notch */}
         <path
@@ -211,16 +216,16 @@ function Stage1Pouch({ progress }: { progress: MotionValue<number> }) {
         />
         {/* Logo C */}
         <g transform="translate(300 360)">
-          <circle r="22" fill="none" stroke="rgba(215,195,167,0.65)" strokeWidth="0.8" />
-          <text textAnchor="middle" y="6" fill="#d7c3a7" fontSize="20" fontFamily="serif" letterSpacing="2">C</text>
+          <circle r="22" fill="none" stroke="#ffffff" strokeWidth="1.4" />
+          <text textAnchor="middle" y="7" fill="#ffffff" fontSize="22" fontFamily="serif" fontWeight={700} letterSpacing="2">C</text>
         </g>
-        <text x="300" y="430" textAnchor="middle" fill="rgba(215,195,167,0.55)" fontSize="9" letterSpacing="4">
+        <text x="300" y="432" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight={700} letterSpacing="4">
           CYMBIOTIKA
         </text>
-        <text x="300" y="450" textAnchor="middle" fill="rgba(215,195,167,0.32)" fontSize="7" letterSpacing="2.4">
+        <text x="300" y="454" textAnchor="middle" fill="#ffffff" fontSize="8" fontWeight={600} letterSpacing="2.6">
           LIPOSOMAL · 30ml
         </text>
-        <rect x="232" y="240" width="14" height="320" fill="rgba(255,255,255,0.04)" rx="6" />
+        <rect x="232" y="240" width="14" height="320" fill="rgba(255,255,255,0.10)" rx="6" />
       </svg>
     </motion.div>
   );
@@ -241,7 +246,7 @@ function Stage2Tear({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center translate-x-[6vw] md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
     >
       <motion.svg
         viewBox="0 0 600 800"
@@ -251,9 +256,9 @@ function Stage2Tear({ progress }: { progress: MotionValue<number> }) {
       >
         <defs>
           <linearGradient id="ll-tear-pouch-fill" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#1a1620" />
-            <stop offset="50%" stopColor="#0a0a0c" />
-            <stop offset="100%" stopColor="#16131a" />
+            <stop offset="0%" stopColor="#e26b2e" />
+            <stop offset="50%" stopColor="#e26b2e" />
+            <stop offset="100%" stopColor="#e26b2e" />
           </linearGradient>
           <radialGradient id="ll-light-burst" cx="50%" cy="40%" r="60%">
             <stop offset="0%" stopColor="rgba(255,241,209,1)" />
@@ -267,22 +272,27 @@ function Stage2Tear({ progress }: { progress: MotionValue<number> }) {
           <path
             d="M 215 235 Q 215 218 232 218 L 268 218 L 280 200 L 320 200 L 332 218 L 368 218 Q 385 218 385 235 L 385 568 Q 385 588 365 588 L 235 588 Q 215 588 215 568 Z"
             fill="url(#ll-tear-pouch-fill)"
-            stroke="#3d3138"
-            strokeWidth="1.4"
+            stroke="#000000"
+            strokeWidth="2.5"
+          />
+          {/* Inner liquid sheen — lighter inset panel inside the pouch frame */}
+          <path
+            d="M 232 250 Q 232 240 244 240 L 356 240 Q 368 240 368 250 L 368 560 Q 368 572 356 572 L 244 572 Q 232 572 232 560 Z"
+            fill="rgba(255,255,255,0.10)"
           />
           {/* C logo */}
           <g transform="translate(300 360)">
-            <circle r="22" fill="none" stroke="rgba(215,195,167,0.65)" strokeWidth="0.8" />
-            <text textAnchor="middle" y="6" fill="#d7c3a7" fontSize="20" fontFamily="serif" letterSpacing="2">C</text>
+            <circle r="22" fill="none" stroke="#ffffff" strokeWidth="1.4" />
+            <text textAnchor="middle" y="7" fill="#ffffff" fontSize="22" fontFamily="serif" fontWeight={700} letterSpacing="2">C</text>
           </g>
-          <text x="300" y="430" textAnchor="middle" fill="rgba(215,195,167,0.55)" fontSize="9" letterSpacing="4">
+          <text x="300" y="432" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight={700} letterSpacing="4">
             CYMBIOTIKA
           </text>
-          <text x="300" y="450" textAnchor="middle" fill="rgba(215,195,167,0.32)" fontSize="7" letterSpacing="2.4">
+          <text x="300" y="454" textAnchor="middle" fill="#ffffff" fontSize="8" fontWeight={600} letterSpacing="2.6">
             LIPOSOMAL · 30ml
           </text>
           {/* Inner highlight stripe */}
-          <rect x="232" y="240" width="14" height="320" fill="rgba(255,255,255,0.04)" rx="6" />
+          <rect x="232" y="240" width="14" height="320" fill="rgba(255,255,255,0.10)" rx="6" />
         </motion.g>
 
         {/* Light burst */}
@@ -361,7 +371,7 @@ function Stage3Molecule({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center translate-x-[6vw] md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
     >
       {/* Warm liquid background */}
       <div
@@ -463,7 +473,7 @@ function Stage4Liposome({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center translate-x-[6vw] md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
     >
       <svg viewBox="-200 -200 400 400" className="h-[70vh] w-auto" aria-hidden="true">
         <defs>
@@ -591,7 +601,7 @@ function Stage5Bloodstream({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center translate-x-[6vw] md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
     >
       <svg viewBox="-400 -200 800 400" className="h-[36vh] max-h-[320px] w-auto max-w-[min(44vw,640px)]" aria-hidden="true">
         <defs>
@@ -781,7 +791,7 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center translate-x-[6vw] md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
     >
       <svg viewBox="-300 -260 600 520" className="h-[54vh] max-h-[480px] w-auto max-w-[min(40vw,480px)]" aria-hidden="true">
         <defs>
@@ -833,7 +843,7 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
       {/* Stats overlay — counter-translates the parent's right shift so it stays
           anchored to the viewport's actual right edge, not past it. */}
       <motion.div
-        className="pointer-events-auto absolute bottom-12 right-6 z-30 max-w-xs -translate-x-[6vw] rounded-[1.6rem] border border-white/12 bg-white/[0.04] p-6 md:bottom-16 md:right-12 md:-translate-x-[10vw]"
+        className="pointer-events-auto absolute bottom-12 right-6 z-30 max-w-xs rounded-[1.6rem] border border-white/12 bg-white/[0.04] p-6 md:bottom-16 md:right-12 md:-translate-x-[10vw]"
         style={{ opacity: statsOpacity }}
       >
         <p className="text-[10px] uppercase tracking-[0.32em] text-[#d7c3a7]">Bioavailability</p>

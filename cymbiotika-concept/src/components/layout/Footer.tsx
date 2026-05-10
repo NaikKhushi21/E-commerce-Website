@@ -14,7 +14,7 @@ export function Footer() {
           <p className="micro-copy text-[var(--muted)]">Explore</p>
           <ul className="mt-3 space-y-2 text-sm text-[var(--forest)]">
             <li><Link href="/products" className="transition-opacity hover:opacity-70">Products</Link></li>
-            <li><Link href="/quiz" className="transition-opacity hover:opacity-70">Protocol Quiz</Link></li>
+            <li><Link href="/quiz" className="transition-opacity hover:opacity-70">Routine Quiz</Link></li>
             <li><Link href="/science" className="transition-opacity hover:opacity-70">Science</Link></li>
             <li><Link href="/blog" className="transition-opacity hover:opacity-70">Journal</Link></li>
           </ul>

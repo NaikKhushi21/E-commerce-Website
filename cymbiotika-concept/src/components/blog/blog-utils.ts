@@ -15,7 +15,7 @@ export function displayCategory(rawCategory: BlogPost["category"]): string {
 }
 
 export function intentTag(post: BlogPost): string {
-  if (post.category === "Protocols") return "Protocol";
+  if (post.category === "Protocols") return "Routine";
   if (post.category === "Research") return "Deep science";
   return "Beginner";
 }
@@ -42,7 +42,7 @@ export function categorySearchTokens(category: BlogPost["category"]): string[] {
     case "Research":
       return ["Research", "Science", "Data"];
     case "Protocols":
-      return ["Guides", "Protocol", "Routine"];
+      return ["Guides", "Routine", "Daily"];
     case "Ingredients":
       return ["Ingredients", "Compounds", "Breakdowns"];
     case "Lifestyle":

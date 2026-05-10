@@ -138,12 +138,20 @@ export function ProductCard({ product, index = 0, rotateModelOnHover = false }: 
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-        <div className="translate-y-8 rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-4 opacity-0 shadow-[0_10px_28px_rgba(28,39,48,0.10)] transition duration-700 [transition-timing-function:var(--easing-premium)] group-hover:translate-y-0 group-hover:opacity-100">
+      {/* Whole-card tap target → product detail. Sits above the gradient/dust
+          but below the info panel so the buttons inside the panel still work. */}
+      <Link
+        href={`/products/${product.handle}`}
+        className="absolute inset-0 z-[1]"
+        aria-label={`Open ${product.title}`}
+      />
+
+      <div className="absolute inset-x-0 bottom-0 z-[2] p-4 md:p-6">
+        <div className="rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-4 shadow-[0_10px_28px_rgba(28,39,48,0.10)] transition duration-700 [transition-timing-function:var(--easing-premium)]">
           <div className="flex items-start justify-between gap-4">
-            <div>
+            <div className="min-w-0">
               <p className="micro-copy text-[var(--muted)]">Museum Object {String(index + 1).padStart(2, "0")}</p>
-              <h3 className="mt-2 line-clamp-2 text-2xl leading-none text-[var(--text)] md:text-3xl">{product.title}</h3>
+              <h3 className="mt-2 line-clamp-2 text-xl leading-tight text-[var(--text)] md:text-3xl md:leading-none">{product.title}</h3>
             </div>
             <p className="whitespace-nowrap text-sm text-[var(--muted)]">{formatMoney(product.price, product.currency)}</p>
           </div>

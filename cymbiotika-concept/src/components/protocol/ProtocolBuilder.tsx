@@ -58,10 +58,10 @@ export function ProtocolBuilder({ products }: { products: Product[] }) {
   return (
     <div className="space-y-8 pb-12">
       <section className="rounded-[2rem] bg-[var(--primary)] px-6 py-8 text-[var(--on-primary)] md:px-8 md:py-10">
-        <p className="text-xs uppercase tracking-[0.2em] text-white/75">Protocol Builder</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-white/75">Routine Builder</p>
         <h1 className="mt-2 font-sans text-6xl font-medium leading-tight md:text-7xl">Build your daily stack.</h1>
         <p className="mt-3 max-w-3xl text-xl text-white/90 md:text-2xl">
-          Select your goals and generate a practical morning and evening protocol.
+          Select your goals and generate a practical morning and evening routine.
         </p>
       </section>
 
@@ -88,7 +88,7 @@ export function ProtocolBuilder({ products }: { products: Product[] }) {
       <section className="grid gap-3 rounded-3xl border border-[var(--line)] bg-white p-5 md:grid-cols-3 md:p-6">
         <div>
           <p className="text-sm uppercase tracking-[0.18em] text-[var(--muted)]">Step 2</p>
-          <p className="mt-1 text-base text-[var(--muted)]">Recommended monthly protocol</p>
+          <p className="mt-1 text-base text-[var(--muted)]">Recommended monthly routine</p>
         </div>
         <div>
           <p className="text-sm text-[var(--muted)]">Estimated monthly total</p>

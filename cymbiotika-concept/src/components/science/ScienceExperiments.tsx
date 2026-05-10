@@ -36,7 +36,7 @@ export function ScienceExperiments({
 
       <ExperimentCard
         index={2}
-        eyebrow="Protocol Gravity"
+        eyebrow="Routine Gravity"
         title="Products orbit the goal they serve."
         caption="Compatibility as spatial pull. Switch the goal — the field rearranges around it."
       >

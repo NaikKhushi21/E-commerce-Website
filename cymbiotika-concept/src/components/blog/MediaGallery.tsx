@@ -16,7 +16,7 @@ export function MediaGallery({ gallery }: MediaGalleryProps) {
 
   return (
     <section id="media-gallery" className="space-y-4">
-      <h2 className="text-3xl text-[var(--forest)] md:text-5xl">Media gallery</h2>
+      <h2 className="text-2xl text-[var(--forest)] sm:text-3xl md:text-4xl lg:text-5xl">Media gallery</h2>
 
       <div className="grid gap-3 md:grid-cols-[0.64fr_0.36fr]">
         {featured ? (

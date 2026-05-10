@@ -14,7 +14,7 @@ export default async function SciencePage() {
         title="Research you move through."
         right={
           <p className="max-w-md text-sm leading-relaxed text-[var(--muted)] md:text-base">
-            A living field of ingredient signals, review density, protocol gravity, and absorption behavior.
+            A living field of ingredient signals, review density, routine gravity, and absorption behavior.
           </p>
         }
       />

@@ -104,7 +104,7 @@ export function VialChat() {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             onClick={() => setOpen(true)}
             className="fixed bottom-6 right-6 z-[60] cursor-pointer"
-            aria-label="Open Cymbiotika protocol concierge"
+            aria-label="Open Cymbiotika routine concierge"
           >
             <VialIcon size={64} breathing />
             <span className="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 whitespace-nowrap rounded-full bg-[var(--surface-elevated)] px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] text-[var(--forest)] opacity-0 shadow-[0_8px_22px_rgba(12,31,28,0.14)] transition-opacity duration-500 group-hover:opacity-100">
@@ -139,7 +139,7 @@ export function VialChat() {
             <header className="relative flex items-center justify-between border-b border-[rgba(12,31,28,0.08)] px-5 py-4">
               <div>
                 <p className="text-[9px] uppercase tracking-[0.32em] text-[var(--muted)]">Cymbiotika</p>
-                <p className="font-display text-base text-[var(--forest)]">Protocol concierge</p>
+                <p className="font-display text-base text-[var(--forest)]">Routine concierge</p>
               </div>
               <button
                 onClick={() => setOpen(false)}
@@ -168,7 +168,7 @@ export function VialChat() {
                   className="relative space-y-4"
                 >
                   <p className="text-center font-display text-base leading-snug text-[var(--forest)]">
-                    A small concierge for ingredient questions, protocol timing, and absorption science.
+                    A small concierge for ingredient questions, routine timing, and absorption science.
                   </p>
                   <div className="space-y-2">
                     {STARTERS.map((p) => (
@@ -212,7 +212,7 @@ export function VialChat() {
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about a protocol…"
+                placeholder="Ask about a routine…"
                 disabled={thinking}
                 className="flex-1 rounded-full border border-[rgba(12,31,28,0.12)] bg-white/80 px-4 py-2 text-sm text-[var(--forest)] outline-none placeholder:text-[var(--muted)] focus:border-[var(--accent)] focus:bg-white disabled:opacity-60"
               />

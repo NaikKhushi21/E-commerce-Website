@@ -42,9 +42,7 @@ function mapDoc(doc: SanityReviewDoc): Review | null {
   };
 }
 
-let cachedReviews: Review[] | null = null;
-
-async function fetchAllFromSanity(): Promise<Review[] | null> {
+async function fetchAllFromSanity(): Promise<Review[]> {
   const query = `*[_type == "productReview"] | order(displayOrder asc, publishedAt desc){
     _id,
     author,
@@ -54,10 +52,8 @@ async function fetchAllFromSanity(): Promise<Review[] | null> {
     productSlug,
     publishedAt
   }`;
-  const rows = await sanityQuery<SanityReviewDoc[]>(query);
-  if (!rows || rows.length === 0) return null;
-  const mapped = rows.map(mapDoc).filter((r): r is Review => Boolean(r));
-  return mapped.length > 0 ? mapped : null;
+  const rows = (await sanityQuery<SanityReviewDoc[]>(query)) ?? [];
+  return rows.map(mapDoc).filter((r): r is Review => Boolean(r));
 }
 
 /**
@@ -66,12 +62,7 @@ async function fetchAllFromSanity(): Promise<Review[] | null> {
  * exact handle; untagged reviews are shown for any product.
  */
 export async function getProductReviews(productHandle?: string): Promise<Review[]> {
-  if (!cachedReviews) {
-    const fromSanity = await fetchAllFromSanity();
-    cachedReviews = fromSanity ?? [];
-  }
-  if (!productHandle) return cachedReviews;
-  return cachedReviews.filter(
-    (r) => !r.productSlug || r.productSlug === productHandle,
-  );
+  const reviews = await fetchAllFromSanity();
+  if (!productHandle) return reviews;
+  return reviews.filter((r) => !r.productSlug || r.productSlug === productHandle);
 }

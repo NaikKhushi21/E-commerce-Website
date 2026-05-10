@@ -16,7 +16,7 @@ export function BestSellers({ featured }: { featured: Product[] }) {
     <section className="space-y-8">
       <SectionHeader
         eyebrow="Curated Formulas"
-        title="Daily protocols, curated for momentum."
+        title="Daily routines, curated for momentum."
         right={
           <Pill href="/products" variant="secondary" size="sm">
             Explore all formulas

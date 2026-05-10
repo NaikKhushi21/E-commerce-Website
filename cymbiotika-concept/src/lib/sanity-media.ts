@@ -33,13 +33,10 @@ type SanityEditorialMediaDoc = {
   context?: string;
 };
 
-let cachedEditorialVideos: EditorialVideo[] | null = null;
-let cachedEditorialImages: EditorialImage[] | null = null;
-
 async function fetchEditorialMedia(): Promise<{
   videos: EditorialVideo[];
   images: EditorialImage[];
-} | null> {
+}> {
   const query = `*[_type == "editorialMedia"] | order(displayOrder asc, title asc){
     _id,
     title,
@@ -49,8 +46,7 @@ async function fetchEditorialMedia(): Promise<{
     alt,
     context
   }`;
-  const rows = await sanityQuery<SanityEditorialMediaDoc[]>(query);
-  if (!rows || rows.length === 0) return null;
+  const rows = (await sanityQuery<SanityEditorialMediaDoc[]>(query)) ?? [];
 
   const videos: EditorialVideo[] = [];
   const images: EditorialImage[] = [];
@@ -65,23 +61,15 @@ async function fetchEditorialMedia(): Promise<{
       images.push({ id, title, src });
     }
   });
-
-  if (videos.length === 0 && images.length === 0) return null;
   return { videos, images };
 }
 
 export async function getEditorialVideos(): Promise<EditorialVideo[]> {
-  if (cachedEditorialVideos) return cachedEditorialVideos;
-  const fromSanity = await fetchEditorialMedia();
-  cachedEditorialVideos = fromSanity?.videos ?? [];
-  cachedEditorialImages = fromSanity?.images ?? [];
-  return cachedEditorialVideos;
+  return (await fetchEditorialMedia()).videos;
 }
 
 export async function getEditorialImages(): Promise<EditorialImage[]> {
-  if (cachedEditorialImages) return cachedEditorialImages;
-  await getEditorialVideos();
-  return cachedEditorialImages ?? [];
+  return (await fetchEditorialMedia()).images;
 }
 
 // ---------- Product video clips (home InteractiveVideoReel) ----------
@@ -103,9 +91,7 @@ type SanityProductVideoDoc = {
   productSlug?: string;
 };
 
-let cachedProductVideos: ProductVideoClip[] | null = null;
-
-async function fetchProductVideos(): Promise<ProductVideoClip[] | null> {
+export async function getProductVideoClips(): Promise<ProductVideoClip[]> {
   const query = `*[_type == "productVideo"] | order(displayOrder asc, title asc){
     _id,
     title,
@@ -114,8 +100,7 @@ async function fetchProductVideos(): Promise<ProductVideoClip[] | null> {
     category,
     productSlug
   }`;
-  const rows = await sanityQuery<SanityProductVideoDoc[]>(query);
-  if (!rows || rows.length === 0) return null;
+  const rows = (await sanityQuery<SanityProductVideoDoc[]>(query)) ?? [];
   const mapped: ProductVideoClip[] = [];
   rows.forEach((row) => {
     const src = (row.externalUrl ?? row.assetUrl ?? "").trim();
@@ -130,12 +115,5 @@ async function fetchProductVideos(): Promise<ProductVideoClip[] | null> {
       productSlug: row.productSlug?.trim() || undefined,
     });
   });
-  return mapped.length > 0 ? mapped : null;
-}
-
-export async function getProductVideoClips(): Promise<ProductVideoClip[]> {
-  if (cachedProductVideos) return cachedProductVideos;
-  const fromSanity = await fetchProductVideos();
-  cachedProductVideos = fromSanity ?? [];
-  return cachedProductVideos;
+  return mapped;
 }
