@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { VialChat } from "@/components/concierge/VialChat";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <div className="mx-auto w-full max-w-[1680px] px-5 py-12 md:px-12 md:py-16">{children}</div>
           </main>
           <Footer />
+          <VialChat />
         </AppProviders>
       </body>
     </html>

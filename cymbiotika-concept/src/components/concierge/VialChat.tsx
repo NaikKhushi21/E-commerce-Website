@@ -179,7 +179,7 @@ export function VialChat() {
           >
             <span className="relative block h-28 w-28 drop-shadow-[0_14px_32px_rgba(12,31,28,0.32)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] group-hover:scale-[1.05]">
               <Image
-                src="/images/concierge-icon.png"
+                src="/brand/cymborg-avatar.png"
                 alt="Cymborg"
                 fill
                 sizes="112px"

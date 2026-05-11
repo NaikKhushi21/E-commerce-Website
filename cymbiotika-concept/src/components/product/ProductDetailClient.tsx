@@ -3,8 +3,10 @@
 import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import type { Product } from "@/data/products";
+import type { WellnessGoal } from "@/data/goals";
 import type { IngredientEntry } from "@/lib/sanity-ingredients";
 import type { Review } from "@/lib/sanity-reviews";
+import type { GoalArtwork } from "@/lib/sanity-goal-art";
 import { SafeImage } from "@/components/ui/SafeImage";
 import { ProductBuyPanel } from "@/components/product/ProductBuyPanel";
 
@@ -37,10 +39,12 @@ export function ProductDetailClient({
   product,
   ingredients,
   reviews,
+  botanicalMap,
 }: {
   product: Product;
   ingredients: IngredientEntry[];
   reviews: Review[];
+  botanicalMap?: Partial<Record<WellnessGoal, GoalArtwork>>;
 }) {
   const images = useMemo(() => (product.images.length > 0 ? product.images : [product.featuredImage]), [product]);
   const [active, setActive] = useState(images[0]);
@@ -90,7 +94,7 @@ export function ProductDetailClient({
         <ProductBuyPanel product={product} ingredients={ingredients} />
       </div>
 
-      <ProductFormulaBlock product={product} />
+      <ProductFormulaBlock product={product} botanicalMap={botanicalMap} />
 
       <IngredientAtomizer product={product} ingredients={ingredients} />
 

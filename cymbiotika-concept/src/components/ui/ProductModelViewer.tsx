@@ -12,9 +12,8 @@ type Props = {
    * Initial camera position the model is shown from on mount and snapped back
    * to whenever auto-rotation turns off (e.g., when the mouse leaves a card).
    * Format: "theta phi radius". When omitted, ProductModelViewer first
-   * consults LOCAL_MODEL_ORBITS for a per-file override (the four scans in
-   * /public/models/ were each exported with a different forward axis), then
-   * falls back to DEFAULT_FRONT_ORBIT.
+   * consults MODEL_ORBITS for a per-file override (each scan was exported
+   * with a different forward axis), then falls back to DEFAULT_FRONT_ORBIT.
    */
   defaultOrbit?: string;
   onLoaded?: () => void;
@@ -23,12 +22,12 @@ type Props = {
 const DEFAULT_FRONT_ORBIT = "-90deg 90deg auto";
 
 /**
- * Per-file front-facing orbit for the local GLB pool. Each scan was authored
- * with a different forward axis, so a single global default rotates some
- * models to the back or the side seam. Keys match the basename of paths
- * returned by `pickLocalModel` in shopify-products.ts.
+ * Per-file front-facing orbit. Each scan was authored with a different
+ * forward axis, so a single global default rotates some models to the back
+ * or the side seam. Keys match the basename of the Shopify MODEL_3D URL,
+ * which preserves the upload filename.
  */
-const LOCAL_MODEL_ORBITS: Record<string, string> = {
+const MODEL_ORBITS: Record<string, string> = {
   "colestrum.glb": "-270deg 90deg auto",
   "glutathione_left.glb": "90deg 90deg auto",
   "vitamin-c.glb": "0deg 90deg auto",
@@ -37,8 +36,8 @@ const LOCAL_MODEL_ORBITS: Record<string, string> = {
 
 function resolveOrbit(src: string, explicit: string | undefined): string {
   if (explicit && explicit !== DEFAULT_FRONT_ORBIT) return explicit;
-  const basename = src.split("/").pop() ?? "";
-  return LOCAL_MODEL_ORBITS[basename] ?? explicit ?? DEFAULT_FRONT_ORBIT;
+  const basename = src.split("/").pop()?.split("?")[0] ?? "";
+  return MODEL_ORBITS[basename] ?? explicit ?? DEFAULT_FRONT_ORBIT;
 }
 
 let modelViewerReady = false;

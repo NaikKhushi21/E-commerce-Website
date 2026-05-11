@@ -3,6 +3,7 @@ import { ProductDetailClient } from "@/components/product/ProductDetailClient";
 import { getShopifyProductByHandle, getShopifyProducts } from "@/lib/shopify-products";
 import { getIngredientsForProduct } from "@/lib/sanity-ingredients";
 import { getProductReviews } from "@/lib/sanity-reviews";
+import { getGoalArtworkMap } from "@/lib/sanity-goal-art";
 
 export async function generateStaticParams() {
   const products = await getShopifyProducts();
@@ -17,9 +18,10 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
     notFound();
   }
 
-  const [ingredients, reviews] = await Promise.all([
+  const [ingredients, reviews, botanicalMap] = await Promise.all([
     getIngredientsForProduct(product),
     getProductReviews(product.handle),
+    getGoalArtworkMap(),
   ]);
 
   return (
@@ -27,6 +29,7 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
       product={product}
       ingredients={ingredients}
       reviews={reviews}
+      botanicalMap={botanicalMap}
     />
   );
 }

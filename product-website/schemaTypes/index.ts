@@ -9,6 +9,7 @@ import productReview from './productReview'
 import editorialMedia from './editorialMedia'
 import productVideo from './productVideo'
 import productEnrichment from './productEnrichment'
+import goalArtwork from './goalArtwork'
 
 export const schemaTypes = [
   researchFeature,
@@ -19,6 +20,7 @@ export const schemaTypes = [
   productEnrichment,
   editorialMedia,
   productVideo,
+  goalArtwork,
   author,
   category,
   blockContent,

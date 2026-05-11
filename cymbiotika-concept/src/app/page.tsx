@@ -5,7 +5,6 @@ import { InteractiveVideoReel } from "@/components/home/InteractiveVideoReel";
 import { ReviewsModule } from "@/components/home/ReviewsModule";
 import { BlogTeaserStrip } from "@/components/home/BlogTeaserStrip";
 import { ScenePanel } from "@/components/home/ScenePanel";
-import { VialChat } from "@/components/concierge/VialChat";
 import { getShopifyFeaturedProducts } from "@/lib/shopify-products";
 import { getProductVideoClips } from "@/lib/sanity-media";
 import { getProductReviews } from "@/lib/sanity-reviews";
@@ -44,8 +43,6 @@ export default async function Home() {
       <ScenePanel>
         <BlogTeaserStrip posts={blogPosts} />
       </ScenePanel>
-
-      <VialChat />
     </div>
   );
 }

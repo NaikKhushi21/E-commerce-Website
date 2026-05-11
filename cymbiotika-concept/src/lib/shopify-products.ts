@@ -509,40 +509,6 @@ function extractNumericId(gid: string): string {
   return match?.[1] ?? gid;
 }
 
-/**
- * Local .glb files live in /public/models/. The first 4 are real
- * product-specific scans; the rest of the catalog gets one of these
- * deterministically (hash of handle → index), so each product always
- * resolves to the same model across renders.
- */
-const LOCAL_MODEL_POOL = [
-  "/models/vitamin-c.glb",
-  "/models/colestrum.glb",
-  "/models/glutathione_left.glb",
-  "/models/seamoss_left.glb",
-];
-
-const HANDLE_TO_MODEL: Record<string, string> = {
-  "vitamin-c": "/models/vitamin-c.glb",
-  "liposomal-vitamin-c": "/models/vitamin-c.glb",
-  "vitamin-c-2": "/models/vitamin-c.glb",
-  "liquid-colostrum": "/models/colestrum.glb",
-  glutathione: "/models/glutathione_left.glb",
-  "glutathione-2": "/models/glutathione_left.glb",
-};
-
-function hashHandle(handle: string): number {
-  let h = 0;
-  for (let i = 0; i < handle.length; i += 1) {
-    h = (h * 31 + handle.charCodeAt(i)) | 0;
-  }
-  return Math.abs(h);
-}
-
-function pickLocalModel(handle: string): string {
-  return HANDLE_TO_MODEL[handle] ?? LOCAL_MODEL_POOL[hashHandle(handle) % LOCAL_MODEL_POOL.length];
-}
-
 function pickModelUrl(mediaNodes: ShopifyMediaNode[]): string | undefined {
   for (const node of mediaNodes) {
     if (node.mediaContentType !== "MODEL_3D") continue;
@@ -592,10 +558,9 @@ function mapToProduct(node: ShopifyProductNode): Product {
   const goals = inferGoalsFromContent(node.title, productType, tags, description);
   const tagBenefits = tags.slice(0, 3).map((tag) => tag.replace(/-/g, " "));
   const benefits = parsed.benefits.length > 0 ? parsed.benefits : tagBenefits;
-  // Prefer Shopify's MODEL_3D media (uploaded via scripts/sync-shopify-models).
-  // Fall back to the local /public/models/ copy while Shopify is still
-  // processing the GLB asynchronously, and as a permanent safety net.
-  const modelPath = pickModelUrl(mediaNodes) ?? pickLocalModel(node.handle);
+  // Shopify MODEL_3D media (uploaded via scripts/sync-shopify-models) is the
+  // single source for 3D bottles; undefined when a product has none attached.
+  const modelPath = pickModelUrl(mediaNodes);
   const firstVariant = variants[0];
 
   // Rating + reviewCount come from Shopify metafields (namespace: "reviews").

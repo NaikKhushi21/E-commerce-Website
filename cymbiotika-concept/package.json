@@ -7,11 +7,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "import:products": "tsx scripts/import-public-products.ts",
-    "enrich:shopify": "tsx scripts/enrich-shopify-descriptions.ts",
-    "sync:models": "tsx scripts/sync-shopify-models.ts",
-    "fetch:cymbiotika-metrics": "node scripts/fetch-cymbiotika-metrics.mjs",
-    "sync:blog:sanity": "tsx scripts/sync-blog-to-sanity.ts"
+    "enrich:shopify": "tsx scripts/enrich-shopify-descriptions.ts"
   },
   "dependencies": {
     "@google/model-viewer": "^4.2.0",
