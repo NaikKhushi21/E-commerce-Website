@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,14 +24,41 @@ const STARTERS = [
   "Why liposomal?",
 ];
 
+const ATTENTION_DISMISSED_KEY = "cymborg-attention-dismissed";
+
 export function VialChat() {
   const [open, setOpen] = useState(false);
+  const [attentionOpen, setAttentionOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { addItem, openCart } = useCart();
+
+  // Surface the attention pop-up shortly after the page settles, but only
+  // once per browser — once dismissed, it stays out of the way.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let dismissed = false;
+    try {
+      dismissed = window.localStorage.getItem(ATTENTION_DISMISSED_KEY) === "1";
+    } catch {
+      // Storage blocked — fall through and show.
+    }
+    if (dismissed) return;
+    const id = window.setTimeout(() => setAttentionOpen(true), 1800);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  function dismissAttention() {
+    setAttentionOpen(false);
+    try {
+      window.localStorage.setItem(ATTENTION_DISMISSED_KEY, "1");
+    } catch {
+      // ignore — dismissing in-memory is enough for this session
+    }
+  }
 
   useEffect(() => {
     if (!scrollRef.current) return;
@@ -92,8 +120,51 @@ export function VialChat() {
     }
   };
 
+  function openChat() {
+    dismissAttention();
+    setOpen(true);
+  }
+
   return (
     <>
+      <AnimatePresence>
+        {!open && attentionOpen && (
+          <motion.div
+            key="cymborg-attention"
+            initial={{ opacity: 0, y: 16, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.96 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            role="dialog"
+            aria-label="Cymborg introduction"
+            className="fixed bottom-[88px] right-6 z-[60] w-44 rounded-xl border border-[var(--forest)] bg-[var(--surface-elevated)] py-2.5 pl-3 pr-5 shadow-[0_14px_30px_rgba(12,31,28,0.20)]"
+          >
+            <button
+              type="button"
+              onClick={dismissAttention}
+              aria-label="Dismiss"
+              className="absolute right-1 top-1 rounded-full p-0.5 text-[var(--muted)] transition-colors hover:bg-[rgba(12,31,28,0.06)] hover:text-[var(--forest)]"
+            >
+              <svg width="9" height="9" viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1.5 1.5 L10.5 10.5 M10.5 1.5 L1.5 10.5"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+            <p className="font-display text-[13px] leading-snug text-[var(--forest)]">Hi, I&apos;m Cymborg.</p>
+            <p className="mt-0.5 text-[11px] leading-snug text-[var(--muted)]">Routine question?</p>
+            {/* Tail pointing toward the launcher below. */}
+            <span
+              aria-hidden
+              className="absolute -bottom-1.5 right-12 h-2.5 w-2.5 rotate-45 border-b border-r border-[var(--forest)] bg-[var(--surface-elevated)]"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {!open && (
           <motion.button
@@ -102,13 +173,22 @@ export function VialChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.85 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            onClick={() => setOpen(true)}
-            className="fixed bottom-6 right-6 z-[60] cursor-pointer"
+            onClick={openChat}
+            className="group fixed bottom-6 right-6 z-[60] cursor-pointer"
             aria-label="Open Cymbiotika routine concierge"
           >
-            <VialIcon size={64} breathing />
+            <span className="relative block h-28 w-28 drop-shadow-[0_14px_32px_rgba(12,31,28,0.32)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] group-hover:scale-[1.05]">
+              <Image
+                src="/images/concierge-icon.png"
+                alt="Cymborg"
+                fill
+                sizes="112px"
+                className="object-contain"
+                priority
+              />
+            </span>
             <span className="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 whitespace-nowrap rounded-full bg-[var(--surface-elevated)] px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] text-[var(--forest)] opacity-0 shadow-[0_8px_22px_rgba(12,31,28,0.14)] transition-opacity duration-500 group-hover:opacity-100">
-              Ask the vial
+              Ask Cymborg
             </span>
           </motion.button>
         )}
@@ -139,7 +219,7 @@ export function VialChat() {
             <header className="relative flex items-center justify-between border-b border-[rgba(12,31,28,0.08)] px-5 py-4">
               <div>
                 <p className="text-[9px] uppercase tracking-[0.32em] text-[var(--muted)]">Cymbiotika</p>
-                <p className="font-display text-base text-[var(--forest)]">Routine concierge</p>
+                <p className="font-display text-base text-[var(--forest)]">Cymborg</p>
               </div>
               <button
                 onClick={() => setOpen(false)}
@@ -393,67 +473,3 @@ function FloatingDust() {
   );
 }
 
-function VialIcon({ size = 64, breathing = false }: { size?: number; breathing?: boolean }) {
-  return (
-    <div className="relative" style={{ width: size, height: size + 8 }}>
-      <motion.span
-        className="absolute inset-0 -inset-x-2 -bottom-2 rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(229,183,115,0.55) 0%, rgba(229,183,115,0.0) 65%)",
-          filter: "blur(14px)",
-        }}
-        animate={breathing ? { opacity: [0.45, 0.85, 0.45], scale: [1, 1.08, 1] } : undefined}
-        transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-        aria-hidden
-      />
-
-      <motion.svg
-        viewBox="0 0 48 64"
-        width={size}
-        height={size + 8}
-        className="relative drop-shadow-[0_10px_22px_rgba(12,31,28,0.22)]"
-        animate={breathing ? { y: [0, -2, 0] } : undefined}
-        transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <defs>
-          <linearGradient id="vialLiquid" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#fffaf0" stopOpacity="0.95" />
-            <stop offset="50%" stopColor="#f5d7a8" />
-            <stop offset="100%" stopColor="#e5b773" />
-          </linearGradient>
-          <linearGradient id="vialGlass" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.55)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0.18)" />
-          </linearGradient>
-          <clipPath id="vialClip">
-            <path d="M16 14 H32 V20 C36 24 38 28 38 32 L38 52 C38 58 34 62 28 62 H20 C14 62 10 58 10 52 L10 32 C10 28 12 24 16 20 Z" />
-          </clipPath>
-        </defs>
-
-        <rect x="18" y="2" width="12" height="6" rx="2" fill="#0c1f1c" />
-        <rect x="16" y="8" width="16" height="6" fill="rgba(12,31,28,0.55)" />
-
-        <path
-          d="M16 14 H32 V20 C36 24 38 28 38 32 L38 52 C38 58 34 62 28 62 H20 C14 62 10 58 10 52 L10 32 C10 28 12 24 16 20 Z"
-          fill="url(#vialGlass)"
-          stroke="rgba(12,31,28,0.55)"
-          strokeWidth="1.4"
-        />
-
-        <motion.rect
-          x="6"
-          y="36"
-          width="40"
-          height="28"
-          fill="url(#vialLiquid)"
-          clipPath="url(#vialClip)"
-          animate={breathing ? { y: [36, 33, 36] } : undefined}
-          transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}
-        />
-
-        <ellipse cx="20" cy="46" rx="1.6" ry="9" fill="rgba(255,255,255,0.45)" />
-      </motion.svg>
-    </div>
-  );
-}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import {
   CATEGORY_COLOR,
@@ -223,47 +223,89 @@ function IngredientNetwork({
         })}
       </svg>
 
-      {/* Nodes */}
+      {/* Nodes — labels for the hovered node + its synergy neighbours only. */}
       {ingredients.map((ing, i) => {
         const color = CATEGORY_COLOR[ing.category];
         const pos = placed[i];
         const isHovered = hovered === ing.key;
+
+        // Determine if this node is a synergy neighbour of the hovered one.
+        let isConnected = false;
+        if (hovered && !isHovered) {
+          for (const e of edges) {
+            const aKey = ingredients[e.a].key;
+            const bKey = ingredients[e.b].key;
+            if ((aKey === hovered && bKey === ing.key) || (bKey === hovered && aKey === ing.key)) {
+              isConnected = true;
+              break;
+            }
+          }
+        }
+
+        const isDimmed = hovered !== null && !isHovered && !isConnected;
+        const labelVisible = isHovered || isConnected;
+
+        // Place each label radially outward from the center so labels splay
+        // away from the synergy lines and don't all stack in one direction.
+        const dx = pos.x - 50;
+        const dy = pos.y - 50;
+        const dist = Math.max(0.0001, Math.hypot(dx, dy));
+        const labelOffset = 18; // % units of the field
+        const labelX = pos.x + (dx / dist) * labelOffset;
+        const labelY = pos.y + (dy / dist) * labelOffset;
+
         return (
-          <motion.button
-            key={ing.key}
-            type="button"
-            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer focus:outline-none"
-            style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-            onMouseEnter={() => setHovered(ing.key)}
-            onMouseLeave={() => setHovered(null)}
-            onFocus={() => setHovered(ing.key)}
-            onBlur={() => setHovered(null)}
-            animate={{ scale: isHovered ? 1.3 : 1 }}
-            transition={{ type: "spring", stiffness: 300, damping: 22 }}
-            aria-label={ing.name}
-          >
-            <span
-              className="block h-3 w-3 rounded-full"
+          <div key={ing.key}>
+            {/* Label — only rendered while this node is hovered or connected
+                to the hovered node, so the synergy graph reads as the network
+                relationship instead of a dense word cloud. */}
+            <motion.span
+              className="pointer-events-none absolute z-[2] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border bg-[var(--surface)]/85 px-2 py-0.5 text-[9px] uppercase tracking-[0.22em] backdrop-blur-sm"
               style={{
-                background: color,
-                boxShadow: isHovered ? `0 0 14px ${color}` : `0 0 6px ${color}66`,
+                left: `${labelX}%`,
+                top: `${labelY}%`,
+                color,
+                borderColor: `${color}55`,
               }}
-            />
-            <AnimatePresence>
-              {isHovered ? (
-                <motion.span
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 4 }}
-                  transition={{ duration: 0.2 }}
-                  className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full border border-[var(--line)] bg-[var(--surface-elevated)] px-2.5 py-1 text-[9px] uppercase tracking-[0.22em]"
-                  style={{ color }}
-                >
-                  {ing.name}
-                </motion.span>
-              ) : null}
-            </AnimatePresence>
-          </motion.button>
+              initial={false}
+              animate={{
+                opacity: labelVisible ? 1 : 0,
+                scale: isHovered ? 1.08 : labelVisible ? 1 : 0.92,
+                y: labelVisible ? 0 : 4,
+              }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {ing.name}
+            </motion.span>
+
+            {/* Node */}
+            <motion.button
+              type="button"
+              className="absolute z-[3] -translate-x-1/2 -translate-y-1/2 cursor-pointer focus:outline-none"
+              style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+              onMouseEnter={() => setHovered(ing.key)}
+              onMouseLeave={() => setHovered(null)}
+              onFocus={() => setHovered(ing.key)}
+              onBlur={() => setHovered(null)}
+              animate={{
+                scale: isHovered ? 1.35 : isConnected ? 1.15 : 1,
+                opacity: isDimmed ? 0.4 : 1,
+              }}
+              transition={{ type: "spring", stiffness: 300, damping: 22 }}
+              aria-label={ing.name}
+            >
+              <span
+                className="block h-3 w-3 rounded-full"
+                style={{
+                  background: color,
+                  boxShadow:
+                    isHovered || isConnected
+                      ? `0 0 14px ${color}`
+                      : `0 0 6px ${color}66`,
+                }}
+              />
+            </motion.button>
+          </div>
         );
       })}
 

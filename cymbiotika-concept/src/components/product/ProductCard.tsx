@@ -65,7 +65,7 @@ export function ProductCard({ product, index = 0, rotateModelOnHover = false }: 
 
   return (
     <article
-      className="group relative min-h-[520px] overflow-hidden rounded-[2.25rem] border border-[var(--line)] bg-[var(--surface)] text-[var(--text)] shadow-[0_8px_28px_rgba(28,39,48,0.06)] transition duration-700 [transition-timing-function:var(--easing-premium)] hover:-translate-y-2 hover:bg-[var(--surface-elevated)] hover:border-[var(--line-strong)] hover:shadow-[0_16px_40px_rgba(28,39,48,0.10)]"
+      className="group relative min-h-[520px] overflow-hidden rounded-[2.25rem] border border-[var(--forest)] bg-[var(--surface)] text-[var(--text)] shadow-[0_8px_28px_rgba(28,39,48,0.06)] transition duration-700 [transition-timing-function:var(--easing-premium)] hover:-translate-y-2 hover:bg-[var(--surface-elevated)] hover:border-[var(--forest)] hover:shadow-[0_16px_40px_rgba(12,31,28,0.18)]"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
@@ -147,29 +147,35 @@ export function ProductCard({ product, index = 0, rotateModelOnHover = false }: 
       />
 
       <div className="absolute inset-x-0 bottom-0 z-[2] p-4 md:p-6">
-        <div className="rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-4 shadow-[0_10px_28px_rgba(28,39,48,0.10)] transition duration-700 [transition-timing-function:var(--easing-premium)]">
+        <div className="rounded-[1.5rem] border border-[var(--forest)] bg-[var(--surface-elevated)] p-4 shadow-[0_10px_28px_rgba(12,31,28,0.14)] transition duration-700 [transition-timing-function:var(--easing-premium)]">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
               <p className="micro-copy text-[var(--muted)]">Museum Object {String(index + 1).padStart(2, "0")}</p>
               <h3 className="mt-2 line-clamp-2 text-xl leading-tight text-[var(--text)] md:text-3xl md:leading-none">{product.title}</h3>
             </div>
-            <p className="whitespace-nowrap text-sm text-[var(--muted)]">{formatMoney(product.price, product.currency)}</p>
+            <p className="whitespace-nowrap text-sm text-[var(--muted)] opacity-0 transition-opacity duration-500 [transition-timing-function:var(--easing-premium)] group-hover:opacity-100">{formatMoney(product.price, product.currency)}</p>
           </div>
-          <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">{benefit}</p>
-          <div className="mt-4 flex flex-wrap gap-2.5">
-            <button
-              onClick={() => addItem(product)}
-              className="rounded-full bg-[var(--primary)] px-4 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--on-primary)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.02]"
-            >
-              Add
-            </button>
-            <ProductAskButton product={product} />
-            <Link
-              href={`/products/${product.handle}`}
-              className="rounded-full border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--text)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:bg-[var(--surface-elevated)]"
-            >
-              Study
-            </Link>
+          {/* Benefit + CTAs reveal on card hover. max-h pairs with opacity so
+              the panel grows smoothly instead of popping the layout. */}
+          <div className="grid max-h-0 grid-rows-[0fr] opacity-0 transition-all duration-500 [transition-timing-function:var(--easing-premium)] group-hover:max-h-48 group-hover:grid-rows-[1fr] group-hover:opacity-100">
+            <div className="overflow-hidden">
+              <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">{benefit}</p>
+              <div className="mt-4 flex flex-wrap gap-2.5">
+                <button
+                  onClick={() => addItem(product)}
+                  className="rounded-full bg-[var(--primary)] px-4 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--on-primary)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.02]"
+                >
+                  Add
+                </button>
+                <ProductAskButton product={product} />
+                <Link
+                  href={`/products/${product.handle}`}
+                  className="rounded-full border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--text)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:bg-[var(--surface-elevated)]"
+                >
+                  Study
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

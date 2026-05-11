@@ -2,6 +2,7 @@ import { cache } from "react";
 import { type Product, type ProductVariant } from "@/data/products";
 import { type WellnessGoal } from "@/data/goals";
 import { assertPublicCymbiotikaUrl } from "@/lib/safe-fetch";
+import { getProductEnrichmentMap, type ProductEnrichment } from "@/lib/sanity-products";
 
 type ShopifyPageInfo = {
   hasNextPage: boolean;
@@ -185,6 +186,169 @@ function stripHtml(html: string | null | undefined): string {
   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
 
+function decodeEntities(value: string): string {
+  return value
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/&rsquo;/gi, "’")
+    .replace(/&lsquo;/gi, "‘")
+    .replace(/&ldquo;/gi, "“")
+    .replace(/&rdquo;/gi, "”");
+}
+
+function htmlToText(fragment: string): string {
+  return decodeEntities(fragment.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+}
+
+type SectionMap = Record<string, string>;
+
+/**
+ * Splits Shopify descriptionHtml into sections keyed by lowercased <h4> label.
+ * Cymbiotika product copy uses a stable layout — Benefits, Description, How to
+ * Enjoy, Ingredients, Third Party Testing — so we segment on h4 boundaries and
+ * parse each block independently.
+ */
+function splitSections(html: string): SectionMap {
+  const out: SectionMap = {};
+  if (!html) return out;
+  const re = /<h4[^>]*>([\s\S]*?)<\/h4>([\s\S]*?)(?=<h4[^>]*>|$)/gi;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(html)) !== null) {
+    const heading = htmlToText(match[1]).toLowerCase();
+    const body = match[2] ?? "";
+    if (heading) out[heading] = body;
+  }
+  return out;
+}
+
+function parseListItems(html: string): string[] {
+  const items: string[] = [];
+  const re = /<li[^>]*>([\s\S]*?)<\/li>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(html)) !== null) {
+    const text = htmlToText(match[1]).replace(/\*+\s*$/, "").trim();
+    if (text) items.push(text);
+  }
+  return items;
+}
+
+function parseParagraphs(html: string): string[] {
+  const paragraphs: string[] = [];
+  const re = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(html)) !== null) {
+    const text = htmlToText(match[1]);
+    if (text) paragraphs.push(text);
+  }
+  return paragraphs;
+}
+
+function findSection(sections: SectionMap, ...needles: string[]): string | undefined {
+  for (const key of Object.keys(sections)) {
+    for (const needle of needles) {
+      if (key.includes(needle)) return sections[key];
+    }
+  }
+  return undefined;
+}
+
+function splitIngredientList(line: string): string[] {
+  return line
+    .split(/,(?![^()]*\))/g)
+    .map((entry) => entry.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+}
+
+function parseIngredients(block: string | undefined): { active: string[]; other: string[] } {
+  if (!block) return { active: [], other: [] };
+  const paragraphs = parseParagraphs(block);
+  let active: string[] = [];
+  let other: string[] = [];
+  for (const paragraph of paragraphs) {
+    const lower = paragraph.toLowerCase();
+    if (lower.startsWith("active ingredient")) {
+      const after = paragraph.replace(/^[^:]*:\s*/i, "");
+      active = splitIngredientList(after);
+    } else if (lower.startsWith("other ingredient") || lower.startsWith("inactive ingredient")) {
+      const after = paragraph.replace(/^[^:]*:\s*/i, "");
+      other = splitIngredientList(after);
+    } else if (active.length === 0) {
+      // Some products list everything inline without an "Active Ingredients:" prefix.
+      active = splitIngredientList(paragraph);
+    }
+  }
+  return { active, other };
+}
+
+function parseProTip(block: string | undefined): string | undefined {
+  if (!block) return undefined;
+  const re = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(block)) !== null) {
+    const text = htmlToText(match[1]);
+    if (/pro\s*-?\s*tip/i.test(text)) {
+      return text.replace(/^pro\s*-?\s*tip\s*:\s*/i, "");
+    }
+  }
+  return undefined;
+}
+
+function parseCoaUrl(block: string | undefined): string | undefined {
+  if (!block) return undefined;
+  const match = block.match(/href="([^"]+\.(?:pdf|jpg|jpeg|png)[^"]*)"/i);
+  return match?.[1];
+}
+
+type ParsedDescription = {
+  benefits: string[];
+  descriptionRich: string[];
+  howToUse: string[];
+  ingredientsActive: string[];
+  ingredientsOther: string[];
+  proTip?: string;
+  coaUrl?: string;
+};
+
+function parseDescriptionHtml(html: string | null | undefined): ParsedDescription {
+  const empty: ParsedDescription = {
+    benefits: [],
+    descriptionRich: [],
+    howToUse: [],
+    ingredientsActive: [],
+    ingredientsOther: [],
+  };
+  if (!html) return empty;
+
+  const sections = splitSections(html);
+
+  const benefitsBlock = findSection(sections, "benefit");
+  const descriptionBlock = findSection(sections, "description", "about");
+  const howToBlock = findSection(sections, "how to enjoy", "how to use", "directions", "suggested use");
+  const ingredientsBlock = findSection(sections, "ingredient");
+  const testingBlock = findSection(sections, "third party");
+
+  const benefits = benefitsBlock ? parseListItems(benefitsBlock) : [];
+  const descriptionParas = descriptionBlock ? parseParagraphs(descriptionBlock) : [];
+  const howToParas = howToBlock ? parseParagraphs(howToBlock).filter((line) => !/^disclaimer/i.test(line)) : [];
+  const { active, other } = parseIngredients(ingredientsBlock);
+  const proTip = parseProTip(benefitsBlock) ?? parseProTip(descriptionBlock);
+  const coaUrl = parseCoaUrl(testingBlock);
+
+  return {
+    benefits,
+    descriptionRich: descriptionParas,
+    howToUse: howToParas,
+    ingredientsActive: active,
+    ingredientsOther: other,
+    proTip,
+    coaUrl,
+  };
+}
+
 async function getAdminToken(): Promise<string> {
   const staticToken = process.env.SHOPIFY_ACCESS_TOKEN?.trim();
   if (staticToken) return staticToken;
@@ -227,9 +391,14 @@ async function fetchProductsPage(token: string, after: string | null): Promise<S
   const url = `https://${SHOP_DOMAIN}/admin/api/${SHOPIFY_API_VERSION}/graphql.json`;
   assertPublicCymbiotikaUrl(url);
 
+  // Scope to active products only. The dev store carries an ARCHIVED legacy
+  // catalog alongside the current ACTIVE one — the archived rows have no
+  // media uploaded and would otherwise leak through as imageless duplicates
+  // (different titles than the active versions, so the dedupe-by-title step
+  // can't merge them).
   const query = `
     query ProductsPage($first: Int!, $after: String) {
-      products(first: $first, after: $after) {
+      products(first: $first, after: $after, query: "status:active") {
         pageInfo {
           hasNextPage
           endCursor
@@ -340,6 +509,40 @@ function extractNumericId(gid: string): string {
   return match?.[1] ?? gid;
 }
 
+/**
+ * Local .glb files live in /public/models/. The first 4 are real
+ * product-specific scans; the rest of the catalog gets one of these
+ * deterministically (hash of handle → index), so each product always
+ * resolves to the same model across renders.
+ */
+const LOCAL_MODEL_POOL = [
+  "/models/vitamin-c.glb",
+  "/models/colestrum.glb",
+  "/models/glutathione_left.glb",
+  "/models/seamoss_left.glb",
+];
+
+const HANDLE_TO_MODEL: Record<string, string> = {
+  "vitamin-c": "/models/vitamin-c.glb",
+  "liposomal-vitamin-c": "/models/vitamin-c.glb",
+  "vitamin-c-2": "/models/vitamin-c.glb",
+  "liquid-colostrum": "/models/colestrum.glb",
+  glutathione: "/models/glutathione_left.glb",
+  "glutathione-2": "/models/glutathione_left.glb",
+};
+
+function hashHandle(handle: string): number {
+  let h = 0;
+  for (let i = 0; i < handle.length; i += 1) {
+    h = (h * 31 + handle.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+}
+
+function pickLocalModel(handle: string): string {
+  return HANDLE_TO_MODEL[handle] ?? LOCAL_MODEL_POOL[hashHandle(handle) % LOCAL_MODEL_POOL.length];
+}
+
 function pickModelUrl(mediaNodes: ShopifyMediaNode[]): string | undefined {
   for (const node of mediaNodes) {
     if (node.mediaContentType !== "MODEL_3D") continue;
@@ -380,10 +583,19 @@ function mapToProduct(node: ShopifyProductNode): Product {
   const images = Array.from(new Set([featuredFromShopify, ...mediaImages].filter((entry): entry is string => Boolean(entry))));
   const featuredImage = featuredFromShopify ?? images[0] ?? "";
   const descriptionHtml = node.descriptionHtml ?? "<p>Daily wellness support.</p>";
-  const description = stripHtml(descriptionHtml) || "Daily wellness support.";
+  const parsed = parseDescriptionHtml(node.descriptionHtml);
+  // Prefer the first paragraph of the curated "Description" section as the
+  // short blurb. Fall back to plain stripped HTML when the section layout is
+  // missing (gift cards, merch, etc.).
+  const description =
+    parsed.descriptionRich[0] || stripHtml(descriptionHtml) || "Daily wellness support.";
   const goals = inferGoalsFromContent(node.title, productType, tags, description);
-  const benefits = tags.slice(0, 3).map((tag) => tag.replace(/-/g, " "));
-  const modelPath = pickModelUrl(mediaNodes);
+  const tagBenefits = tags.slice(0, 3).map((tag) => tag.replace(/-/g, " "));
+  const benefits = parsed.benefits.length > 0 ? parsed.benefits : tagBenefits;
+  // Prefer Shopify's MODEL_3D media (uploaded via scripts/sync-shopify-models).
+  // Fall back to the local /public/models/ copy while Shopify is still
+  // processing the GLB asynchronously, and as a permanent safety net.
+  const modelPath = pickModelUrl(mediaNodes) ?? pickLocalModel(node.handle);
   const firstVariant = variants[0];
 
   // Rating + reviewCount come from Shopify metafields (namespace: "reviews").
@@ -410,6 +622,12 @@ function mapToProduct(node: ShopifyProductNode): Product {
     available: variants.length > 0,
     variants,
     benefits: benefits.length > 0 ? benefits : ["daily wellness support"],
+    descriptionRich: parsed.descriptionRich.length > 0 ? parsed.descriptionRich : undefined,
+    howToUse: parsed.howToUse.length > 0 ? parsed.howToUse : undefined,
+    ingredientsActive: parsed.ingredientsActive.length > 0 ? parsed.ingredientsActive : undefined,
+    ingredientsOther: parsed.ingredientsOther.length > 0 ? parsed.ingredientsOther : undefined,
+    proTip: parsed.proTip,
+    coaUrl: parsed.coaUrl,
     goals,
     modelPath,
     rating,
@@ -430,9 +648,33 @@ function mediaScore(product: Product): number {
   return imageScore + featuredScore + modelScore;
 }
 
+/**
+ * Apply Sanity-authored editorial copy on top of Shopify-derived fields.
+ * Sanity wins per-field when present; everything else passes through.
+ */
+function applyEnrichment(product: Product, enrichment: ProductEnrichment | undefined): Product {
+  if (!enrichment) return product;
+  const description = enrichment.shortDescription ?? enrichment.descriptionRich?.[0] ?? product.description;
+  return {
+    ...product,
+    title: enrichment.displayTitle ?? product.title,
+    description,
+    benefits: enrichment.benefits && enrichment.benefits.length > 0 ? enrichment.benefits : product.benefits,
+    descriptionRich: enrichment.descriptionRich ?? product.descriptionRich,
+    howToUse: enrichment.howToUse ?? product.howToUse,
+    ingredientsActive: enrichment.ingredientsActive ?? product.ingredientsActive,
+    ingredientsOther: enrichment.ingredientsOther ?? product.ingredientsOther,
+    proTip: enrichment.proTip ?? product.proTip,
+    coaUrl: enrichment.coaUrl ?? product.coaUrl,
+  };
+}
+
 export const getShopifyProducts = cache(async (): Promise<Product[]> => {
   try {
-    const rows = await fetchAllShopifyProducts();
+    const [rows, enrichmentMap] = await Promise.all([
+      fetchAllShopifyProducts(),
+      getProductEnrichmentMap(),
+    ]);
     const mapped = rows.map((row) => mapToProduct(row));
 
     // Shopify store currently has duplicate catalog rows (some with no media).
@@ -448,6 +690,11 @@ export const getShopifyProducts = cache(async (): Promise<Product[]> => {
 
     return [...bestByTitle.values()]
       .filter((entry) => entry.images.length > 0 || Boolean(entry.modelPath))
+      .map((entry) => applyEnrichment(entry, enrichmentMap[entry.handle]))
+      // Hide products that don't have authored content yet — neither a parsed
+      // Shopify "Description" section nor a Sanity productEnrichment override.
+      // Reappears automatically once either source is populated.
+      .filter((entry) => (entry.descriptionRich?.length ?? 0) > 0)
       .sort((a, b) => a.title.localeCompare(b.title));
   } catch {
     return [];

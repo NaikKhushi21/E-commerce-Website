@@ -37,6 +37,18 @@ export type Product = {
   available: boolean;
   variants: ProductVariant[];
   benefits: string[];
+  /** Long-form overview paragraphs parsed from the Shopify "Description" section. */
+  descriptionRich?: string[];
+  /** Plain-text usage instructions parsed from the Shopify "How to Enjoy" / "How to Use" section. */
+  howToUse?: string[];
+  /** Active ingredients parsed from the Shopify "Ingredients" section, comma-split. */
+  ingredientsActive?: string[];
+  /** Other / inactive ingredients parsed from the Shopify "Ingredients" section, comma-split. */
+  ingredientsOther?: string[];
+  /** Optional pro-tip / pairing line above the description. */
+  proTip?: string;
+  /** Optional Certificate of Analysis URL surfaced in "Third Party Testing". */
+  coaUrl?: string;
   goals: WellnessGoal[];
   modelPath?: string;
   rating?: number | null;

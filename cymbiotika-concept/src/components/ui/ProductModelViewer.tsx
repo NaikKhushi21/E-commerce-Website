@@ -8,8 +8,38 @@ type Props = {
   poster?: string;
   className?: string;
   autoRotate?: boolean;
+  /**
+   * Initial camera position the model is shown from on mount and snapped back
+   * to whenever auto-rotation turns off (e.g., when the mouse leaves a card).
+   * Format: "theta phi radius". When omitted, ProductModelViewer first
+   * consults LOCAL_MODEL_ORBITS for a per-file override (the four scans in
+   * /public/models/ were each exported with a different forward axis), then
+   * falls back to DEFAULT_FRONT_ORBIT.
+   */
+  defaultOrbit?: string;
   onLoaded?: () => void;
 };
+
+const DEFAULT_FRONT_ORBIT = "-90deg 90deg auto";
+
+/**
+ * Per-file front-facing orbit for the local GLB pool. Each scan was authored
+ * with a different forward axis, so a single global default rotates some
+ * models to the back or the side seam. Keys match the basename of paths
+ * returned by `pickLocalModel` in shopify-products.ts.
+ */
+const LOCAL_MODEL_ORBITS: Record<string, string> = {
+  "colestrum.glb": "-270deg 90deg auto",
+  "glutathione_left.glb": "90deg 90deg auto",
+  "vitamin-c.glb": "0deg 90deg auto",
+  "seamoss_left.glb": "90deg 90deg auto",
+};
+
+function resolveOrbit(src: string, explicit: string | undefined): string {
+  if (explicit && explicit !== DEFAULT_FRONT_ORBIT) return explicit;
+  const basename = src.split("/").pop() ?? "";
+  return LOCAL_MODEL_ORBITS[basename] ?? explicit ?? DEFAULT_FRONT_ORBIT;
+}
 
 let modelViewerReady = false;
 let modelViewerLoader: Promise<void> | null = null;
@@ -41,10 +71,12 @@ export function ProductModelViewer({
   poster,
   className,
   autoRotate = true,
+  defaultOrbit,
   onLoaded,
 }: Props) {
   const [ready, setReady] = useState(modelViewerReady);
   const ref = useRef<HTMLElement | null>(null);
+  const orbit = resolveOrbit(src, defaultOrbit);
 
   useEffect(() => {
     let mounted = true;
@@ -73,6 +105,22 @@ export function ProductModelViewer({
     return () => el.removeEventListener("load", handler);
   }, [onLoaded, ready, src]);
 
+  // Snap the camera back to the front-facing orbit whenever auto-rotation
+  // stops (i.e., the user's cursor left the card). model-viewer animates the
+  // transition via its own interpolation, so this looks like a smooth reset.
+  useEffect(() => {
+    if (!ready) return;
+    const el = ref.current as (HTMLElement & {
+      cameraOrbit?: string;
+      resetTurntableRotation?: () => void;
+    }) | null;
+    if (!el) return;
+    if (!autoRotate) {
+      el.resetTurntableRotation?.();
+      if (orbit) el.cameraOrbit = orbit;
+    }
+  }, [autoRotate, ready, orbit]);
+
   if (!ready) return null;
 
   return (
@@ -83,7 +131,8 @@ export function ProductModelViewer({
       poster={poster}
       auto-rotate={autoRotate}
       auto-rotate-delay="0"
-      camera-orbit="auto auto auto"
+      camera-orbit={orbit}
+      interpolation-decay="180"
       bounds="tight"
       disable-zoom
       disable-pan

@@ -68,7 +68,14 @@ function useLocalProgress(progress: MotionValue<number>, range: [number, number]
   return useTransform(progress, [range[0], range[1]], [0, 1]);
 }
 
-export function LiquidLab({ product }: { product: Product }) {
+/**
+ * Long-scroll liposomal absorption story. Originally used on the product
+ * detail page but the content is generic — it explains the delivery system,
+ * not a specific formula — so it now anchors the Science page. The optional
+ * `product` prop preserves the original per-product framing if a caller
+ * passes one in.
+ */
+export function LiquidLab({ product }: { product?: Product }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
@@ -106,7 +113,7 @@ export function LiquidLab({ product }: { product: Product }) {
         <Stage6Cell progress={scrollYProgress} product={product} />
 
         {/* Copy overlay (left side, beat-paced) */}
-        <CopyOverlay progress={scrollYProgress} productTitle={product.title} />
+        <CopyOverlay progress={scrollYProgress} productTitle={product?.title ?? "Liposomal Delivery"} />
 
         {/* Progress indicator (right side) */}
         <ProgressIndicator progress={scrollYProgress} />
@@ -769,7 +776,7 @@ function Liposome({
 
 // ---------- Stage 6 — Cell uptake + stats ----------
 
-function Stage6Cell({ progress, product }: { progress: MotionValue<number>; product: Product }) {
+function Stage6Cell({ progress, product }: { progress: MotionValue<number>; product?: Product }) {
   // Final stage stays visible after its range ends so the cell + stats card
   // don't vanish when the user scrolls to the absolute end of the section.
   const opacity = useTransform(progress, (v) => (v >= STAGE_RANGES[5][0] ? 1 : 0));
@@ -851,17 +858,27 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
         <p className="mt-2 text-xs leading-relaxed text-white/55">
           Estimated absorption uplift vs. uncoated equivalent — measured by serum concentration over time.
         </p>
-        <button
-          type="button"
-          onClick={() => {
-            addItem(product);
-            openCart();
-          }}
-          className="mt-5 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-white transition hover:gap-3"
-        >
-          Add to routine
-          <span aria-hidden>→</span>
-        </button>
+        {product ? (
+          <button
+            type="button"
+            onClick={() => {
+              addItem(product);
+              openCart();
+            }}
+            className="mt-5 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-white transition hover:gap-3"
+          >
+            Add to routine
+            <span aria-hidden>→</span>
+          </button>
+        ) : (
+          <a
+            href="/products"
+            className="mt-5 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-white transition hover:gap-3"
+          >
+            Explore formulas
+            <span aria-hidden>→</span>
+          </a>
+        )}
       </motion.div>
     </motion.div>
   );
@@ -869,10 +886,10 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
 
 // ---------- Reduced-motion fallback ----------
 
-function LiquidLabReducedMotion({ product }: { product: Product }) {
+function LiquidLabReducedMotion({ product }: { product?: Product }) {
   return (
     <section className="theme-aurora relative overflow-hidden rounded-[2.4rem] border border-[var(--line)] bg-[var(--bg)] p-10 text-[var(--text)] md:p-14">
-      <p className="text-[10px] uppercase tracking-[0.32em] text-white/45">{product.title}</p>
+      <p className="text-[10px] uppercase tracking-[0.32em] text-white/45">{product?.title ?? "Liposomal Delivery"}</p>
       <h2 className="display-title mt-4 text-4xl text-white md:text-6xl">Inside the formula.</h2>
       <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
         Pouch → seal → molecule → liposome → bloodstream → cell. The full delivery journey, summarised.

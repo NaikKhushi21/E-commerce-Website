@@ -182,7 +182,7 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
         {/* LEFT — copy + controls */}
         <div className="relative z-20 max-w-xl">
           <p className="text-[10px] uppercase tracking-[0.36em] text-white/55">
-            Cymbiotika · Routine Quiz
+            Cymbiotika · Start Routine
           </p>
 
           <AnimatePresence mode="wait">

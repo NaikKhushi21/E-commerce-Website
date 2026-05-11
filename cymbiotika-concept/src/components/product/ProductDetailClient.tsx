@@ -5,19 +5,12 @@ import dynamic from "next/dynamic";
 import type { Product } from "@/data/products";
 import type { IngredientEntry } from "@/lib/sanity-ingredients";
 import type { Review } from "@/lib/sanity-reviews";
-import { formatMoney } from "@/lib/money";
 import { SafeImage } from "@/components/ui/SafeImage";
-import { ProductAskButton } from "@/components/product/ProductAskButton";
-import { useCart } from "@/components/cart/CartProvider";
+import { ProductBuyPanel } from "@/components/product/ProductBuyPanel";
 
 const ProductModelViewer = dynamic(
   () => import("@/components/ui/ProductModelViewer").then((m) => m.ProductModelViewer),
   { ssr: false, loading: () => <div className="h-full w-full bg-[var(--surface-elevated)]" /> },
-);
-
-const LiquidLab = dynamic(
-  () => import("@/components/product/LiquidLab").then((m) => m.LiquidLab),
-  { ssr: false, loading: () => <div className="h-[420px] w-full rounded-[2.4rem] bg-[var(--surface-elevated)]" /> },
 );
 
 const IngredientAtomizer = dynamic(
@@ -35,6 +28,11 @@ const SubscriptionRitual = dynamic(
   { loading: () => <div className="h-[300px] w-full rounded-[2.4rem] bg-[var(--surface-elevated)]" /> },
 );
 
+const ProductFormulaBlock = dynamic(
+  () => import("@/components/product/ProductFormulaBlock").then((m) => m.ProductFormulaBlock),
+  { loading: () => <div className="h-[420px] w-full rounded-[2.4rem] bg-[var(--surface-elevated)]" /> },
+);
+
 export function ProductDetailClient({
   product,
   ingredients,
@@ -46,7 +44,6 @@ export function ProductDetailClient({
 }) {
   const images = useMemo(() => (product.images.length > 0 ? product.images : [product.featuredImage]), [product]);
   const [active, setActive] = useState(images[0]);
-  const { addItem, openCart } = useCart();
 
   return (
     <div className="space-y-20 pb-14 md:space-y-24">
@@ -80,8 +77,8 @@ export function ProductDetailClient({
           {product.modelPath ? (
             <div className="mt-4 overflow-hidden rounded-[1.3rem] bg-[var(--surface-elevated)]">
               <div className="flex items-center justify-between px-4 py-3 text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
-                <span>Interactive bottle</span>
-                <span>drag to rotate</span>
+                {/* <span>Interactive bottle</span>
+                <span>drag to rotate</span> */}
               </div>
               <div className="h-[300px]">
                 <ProductModelViewer src={product.modelPath} alt={`${product.title} 3D model`} poster={active} autoRotate={false} />
@@ -90,61 +87,10 @@ export function ProductDetailClient({
           ) : null}
         </section>
 
-        <aside className="space-y-9 lg:pt-7">
-          <div>
-            <p className="micro-copy text-[var(--muted)]">Formula</p>
-            <h1 className="display-title mt-3 text-5xl text-[var(--forest)] md:text-6xl">{product.title}</h1>
-            <p className="body-copy mt-5 max-w-lg text-base md:text-lg">Daily cellular support designed for better nutrient uptake and consistent routine adherence.</p>
-          </div>
-
-          <div className="space-y-4">
-            <p className="text-4xl text-[var(--forest)] md:text-5xl">{formatMoney(product.price, product.currency)}</p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <button
-                onClick={() => {
-                  addItem(product);
-                  openCart();
-                }}
-                className="w-full rounded-full bg-[var(--forest)] py-3 text-xs uppercase tracking-[0.14em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.01] sm:w-auto sm:px-9"
-              >
-                Add to routine
-              </button>
-              <ProductAskButton
-                product={product}
-                label="Ask about this"
-                className="w-full border border-[var(--line-strong)] bg-[var(--surface)] py-3 text-center text-[var(--forest)] sm:w-auto sm:px-6"
-              />
-            </div>
-            <p className="text-sm text-[var(--muted)]">Free US shipping over $75. 30-day support guarantee.</p>
-          </div>
-
-          <div className="space-y-4 pt-1">
-            <article>
-              <p className="micro-copy text-[var(--muted)]">Benefits</p>
-              <ul className="mt-3 space-y-2 text-base leading-relaxed text-[var(--forest)] md:text-lg">
-                {product.benefits.slice(0, 4).map((benefit) => (
-                  <li key={benefit}>{benefit}</li>
-                ))}
-              </ul>
-            </article>
-
-            {product.datasetSource ? (
-              <article className="space-y-1 text-sm text-[var(--muted)]">
-                <p>Dataset source: {product.datasetSource}</p>
-                {product.license ? <p>License: {product.license}</p> : null}
-              </article>
-            ) : null}
-
-            {product.sourceUrl ? (
-              <a href={product.sourceUrl} target="_blank" rel="noreferrer" className="inline-block text-sm text-[var(--forest)] underline underline-offset-4">
-                View source asset
-              </a>
-            ) : null}
-          </div>
-        </aside>
+        <ProductBuyPanel product={product} ingredients={ingredients} />
       </div>
 
-      <LiquidLab product={product} />
+      <ProductFormulaBlock product={product} />
 
       <IngredientAtomizer product={product} ingredients={ingredients} />
 

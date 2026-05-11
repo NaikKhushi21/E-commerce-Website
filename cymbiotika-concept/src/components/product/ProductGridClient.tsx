@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Product } from "@/data/products";
 import type { WellnessGoal } from "@/data/goals";
@@ -51,8 +52,16 @@ type Props = {
 };
 
 export function ProductGridClient({ products }: Props) {
+  const searchParams = useSearchParams();
   const [filter, setFilter] = useState<FilterKey>("all");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => searchParams?.get("q") ?? "");
+
+  // Sync the local search box when a new ?q= arrives (e.g. the user submits
+  // the nav search again while already on /products).
+  useEffect(() => {
+    const next = searchParams?.get("q") ?? "";
+    setSearch((prev) => (prev === next ? prev : next));
+  }, [searchParams]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -90,8 +99,8 @@ export function ProductGridClient({ products }: Props) {
       {/* Sticky filter rail */}
       <div className="sticky top-[68px] z-30 -mx-5 md:-mx-12">
         <div className="px-5 md:px-12">
-          <div className="flex items-center gap-2 overflow-hidden rounded-full border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_82%,white)]/88 p-1.5">
-            <div data-lenis-prevent className="no-scrollbar flex flex-1 items-center gap-1 overflow-x-auto">
+          <div className="flex items-center gap-3 overflow-hidden rounded-full border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_82%,white)]/88 p-2.5">
+            <div data-lenis-prevent className="no-scrollbar flex flex-1 items-center gap-1.5 overflow-x-auto">
               <FilterChip label="All" active={filter === "all"} onClick={() => setFilter("all")} />
               {ALL_GOALS.map((g) => (
                 <FilterChip
@@ -103,13 +112,13 @@ export function ProductGridClient({ products }: Props) {
                 />
               ))}
             </div>
-            <div className="hidden h-6 w-px shrink-0 bg-[var(--line)] md:block" />
+            <div className="hidden h-8 w-px shrink-0 bg-[var(--line)] md:block" />
             <input
               type="search"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search ingredients, benefits…"
-              className="hidden w-72 shrink-0 bg-transparent px-3 py-1.5 text-xs text-[var(--text)] outline-none placeholder:text-[var(--muted)] md:block"
+              className="hidden w-96 shrink-0 bg-transparent px-5 py-2.5 text-sm text-[var(--text)] outline-none placeholder:text-[var(--muted)] md:block"
               aria-label="Search formulas"
             />
           </div>
@@ -130,7 +139,7 @@ export function ProductGridClient({ products }: Props) {
 
       {/* Live counter */}
       <div className="flex items-center justify-between">
-        <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+        <p className="text-xs uppercase tracking-[0.28em] text-[var(--muted)]">
           {filtered.length} of {products.length} formula{products.length === 1 ? "" : "s"}
           {filter !== "all" ? ` · ${GOAL_LABEL[filter]}` : ""}
           {search.trim() ? ` · "${search.trim()}"` : ""}
@@ -139,7 +148,7 @@ export function ProductGridClient({ products }: Props) {
           <button
             type="button"
             onClick={reset}
-            className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)] transition hover:text-[var(--forest)]"
+            className="text-xs uppercase tracking-[0.28em] text-[var(--muted)] transition hover:text-[var(--forest)]"
           >
             Reset
           </button>
@@ -195,7 +204,7 @@ function FilterChip({
       type="button"
       onClick={onClick}
       className={cn(
-        "shrink-0 rounded-full px-4 py-1.5 text-[10px] uppercase tracking-[0.24em] transition",
+        "shrink-0 rounded-full px-6 py-2.5 text-xs uppercase tracking-[0.24em] transition",
         active
           ? "bg-[var(--primary)] text-[var(--on-primary)]"
           : "text-[var(--muted)] hover:text-[var(--forest)]",

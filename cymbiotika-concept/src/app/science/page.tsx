@@ -1,4 +1,5 @@
 import { IngredientCloud } from "@/components/science/IngredientCloud";
+import { LiquidLab } from "@/components/product/LiquidLab";
 import { ScienceExperiments } from "@/components/science/ScienceExperiments";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { getIngredientAtlas } from "@/lib/sanity-ingredients";
@@ -22,6 +23,8 @@ export default async function SciencePage() {
       <IngredientCloud atlas={atlas} />
 
       <ScienceExperiments atlas={atlas} />
+
+      <LiquidLab />
     </div>
   );
 }

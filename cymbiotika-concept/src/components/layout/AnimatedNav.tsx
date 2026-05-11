@@ -7,7 +7,6 @@ import { cn } from "@/lib/cn";
 
 const navItems = [
   { label: "Shop", href: "/" },
-  { label: "Quiz", href: "/quiz" },
   { label: "Science", href: "/science" },
 ];
 

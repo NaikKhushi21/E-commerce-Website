@@ -8,6 +8,7 @@ import ingredient from './ingredient'
 import productReview from './productReview'
 import editorialMedia from './editorialMedia'
 import productVideo from './productVideo'
+import productEnrichment from './productEnrichment'
 
 export const schemaTypes = [
   researchFeature,
@@ -15,6 +16,7 @@ export const schemaTypes = [
   protocolPlaybook,
   ingredient,
   productReview,
+  productEnrichment,
   editorialMedia,
   productVideo,
   author,
