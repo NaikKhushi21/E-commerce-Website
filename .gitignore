@@ -13,6 +13,8 @@ Thumbs.db
 # AI agent instruction files (kept local only)
 AGENTS.md
 CLAUDE.md
+implementation.md
+data-architecture.md
 
 # Dependencies (each subproject also has its own gitignore for safety)
 node_modules/

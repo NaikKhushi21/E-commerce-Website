@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { GOAL_LABELS, WELLNESS_GOALS, type WellnessGoal } from "@/data/goals";
 import { getProductsByGoalFromCatalog } from "@/lib/recommendations";
@@ -29,7 +30,9 @@ export default async function CollectionPage({ params }: { params: Promise<{ goa
         </p>
       </section>
 
-      <ProductGridClient products={matched} />
+      <Suspense fallback={<div className="h-[400px] w-full rounded-[2rem] bg-[var(--surface-elevated)]" />}>
+        <ProductGridClient products={matched} />
+      </Suspense>
     </div>
   );
 }

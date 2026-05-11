@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { ProductGridClient } from "@/components/product/ProductGridClient";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { getShopifyProducts } from "@/lib/shopify-products";
@@ -18,7 +19,9 @@ export default async function ProductsPage() {
         }
       />
 
-      <ProductGridClient products={products} />
+      <Suspense fallback={<div className="h-[400px] w-full rounded-[2rem] bg-[var(--surface-elevated)]" />}>
+        <ProductGridClient products={products} />
+      </Suspense>
     </div>
   );
 }
