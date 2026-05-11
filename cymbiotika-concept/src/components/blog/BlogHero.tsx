@@ -10,8 +10,8 @@ export function BlogHero({ query, onQueryChange }: BlogHeroProps) {
     <section className="grid gap-6 md:grid-cols-[0.7fr_0.3fr] md:items-end">
       <div>
         <p className="micro-copy text-[var(--muted)]">Journal</p>
-        <h1 className="display-title mt-3 max-w-5xl text-5xl text-[var(--forest)] md:text-7xl">Editorial wellness intelligence for modern routines.</h1>
-        <p className="body-copy mt-4 max-w-2xl text-base md:text-lg">
+        <h1 className="text-display mt-3 max-w-5xl text-[var(--forest)]">Editorial wellness intelligence for modern routines.</h1>
+        <p className="text-body mt-4 max-w-2xl text-body md:text-lg">
           Research-backed explainers, ingredient deep dives, and protocol guides designed for practical daily implementation.
         </p>
       </div>

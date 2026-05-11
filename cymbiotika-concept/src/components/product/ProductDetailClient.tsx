@@ -53,7 +53,7 @@ export function ProductDetailClient({
     <div className="space-y-20 pb-14 md:space-y-24">
       <div className="grid gap-9 lg:grid-cols-[0.58fr_0.42fr]">
         <section className="lg:self-start">
-          <div className="relative h-[66svh] min-h-[520px] overflow-hidden rounded-[2.2rem] border border-[var(--line)] bg-[radial-gradient(circle_at_20%_20%,rgba(215,195,167,0.10)_0%,rgba(140,224,214,0.05)_45%,rgba(255,255,255,0.02)_100%)] shadow-[0_26px_90px_rgba(0,0,0,0.45)] md:h-[760px]">
+          <div className="relative h-[66svh] min-h-[520px] overflow-hidden rounded-[2.2rem] border border-[var(--line)] bg-[radial-gradient(circle_at_20%_20%,rgba(215,195,167,0.10)_0%,rgba(140,224,214,0.05)_45%,rgba(255,255,255,0.02)_100%)] md:h-[760px]">
             <div
               className="absolute inset-0"
               style={{
@@ -80,7 +80,7 @@ export function ProductDetailClient({
 
           {product.modelPath ? (
             <div className="mt-4 overflow-hidden rounded-[1.3rem] bg-[var(--surface-elevated)]">
-              <div className="flex items-center justify-between px-4 py-3 text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+              <div className="flex items-center justify-between px-4 py-3 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                 {/* <span>Interactive bottle</span>
                 <span>drag to rotate</span> */}
               </div>

@@ -14,7 +14,7 @@ export function ClinicalStats() {
         {stats.map((stat, i) => (
           <article key={stat.label} className={`rounded-2xl border p-4 ${i % 2 === 0 ? "bg-white border-[#4e8b5b]" : "bg-white border-[#ea8c2f]"}`}>
             <p className="font-display text-3xl text-[#1f3126]">{stat.value}</p>
-            <p className="mt-1 text-sm text-[#36533d]">{stat.label}</p>
+            <p className="mt-1 text-body text-[#36533d]">{stat.label}</p>
           </article>
         ))}
       </section>

@@ -15,7 +15,7 @@ export function FreeShippingProgress({ subtotal }: { subtotal: number }) {
       <div className="h-2 overflow-hidden rounded-full bg-[#ececec]">
         <div className="h-full rounded-full bg-[--brand-gold]" style={{ width: `${progress}%` }} />
       </div>
-      <p className="mt-2 text-xs text-[#35533f]">
+      <p className="mt-2 text-small text-[#35533f]">
         {remaining > 0 ? `${formatMoney(remaining)} away from free shipping.` : "Free shipping unlocked."}
       </p>
     </div>

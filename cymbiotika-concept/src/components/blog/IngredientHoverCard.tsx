@@ -68,7 +68,7 @@ export function IngredientHoverCard({
                 style={{ background: color, boxShadow: `0 0 8px ${color}` }}
               />
               <span
-                className="font-mono text-[10px] uppercase tracking-[0.18em]"
+                className="font-mono text-eyebrow tracking-[0.1em]"
                 style={{ color }}
               >
                 {entry.category}
@@ -84,7 +84,7 @@ export function IngredientHoverCard({
             </span>
 
             {entry.dose ? (
-              <span className="mt-2 block text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+              <span className="mt-2 block text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                 Dose · <span className="text-[var(--forest)]">{entry.dose}</span>
               </span>
             ) : null}
@@ -94,7 +94,7 @@ export function IngredientHoverCard({
                 {entry.synergies.slice(0, 4).map((s) => (
                   <span
                     key={s}
-                    className="rounded-full border border-[var(--line)] px-2 py-0.5 text-[9px] uppercase tracking-[0.18em] text-[var(--muted)]"
+                    className="rounded-full border border-[var(--line)] px-2 py-0.5 text-eyebrow tracking-[0.1em] text-[var(--muted)]"
                   >
                     {s.replace(/-/g, " ")}
                   </span>
@@ -104,7 +104,7 @@ export function IngredientHoverCard({
 
             <Link
               href={`/science#${slug}`}
-              className="mt-3 block text-[10px] uppercase tracking-[0.22em] text-[var(--forest)] underline underline-offset-4"
+              className="mt-3 block text-eyebrow tracking-[0.1em] text-[var(--forest)] underline underline-offset-4"
             >
               Open atlas →
             </Link>

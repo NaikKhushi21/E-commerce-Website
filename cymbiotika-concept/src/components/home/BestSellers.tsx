@@ -7,7 +7,7 @@ export function BestSellers({ featured }: { featured: Product[] }) {
   if (featured.length === 0) {
     return (
       <section className="rounded-[2rem] bg-[var(--surface-elevated)] p-8">
-        <h2 className="display-title text-4xl text-[var(--forest)] md:text-5xl">Featured products will appear after Shopify sync.</h2>
+        <h2 className="text-h1 text-[var(--forest)]">Featured products will appear after Shopify sync.</h2>
       </section>
     );
   }
@@ -18,7 +18,12 @@ export function BestSellers({ featured }: { featured: Product[] }) {
         eyebrow="Curated Formulas"
         title="Daily routines, curated for momentum."
         right={
-          <Pill href="/products" variant="secondary" size="sm">
+          <Pill
+            href="/products"
+            variant="secondary"
+            size="sm"
+            className="border-0 bg-[var(--surface-elevated)] text-[var(--forest)] hover:bg-[var(--forest)] hover:text-[var(--on-primary)]"
+          >
             Explore all formulas
           </Pill>
         }

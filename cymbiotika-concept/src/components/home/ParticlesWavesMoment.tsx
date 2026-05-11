@@ -140,9 +140,9 @@ export function ParticlesWavesMoment() {
       <div className="relative z-10 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
         <div>
           <p className="micro-copy text-white/62">Ambient Wave Field</p>
-          <h3 className="display-title mt-3 max-w-3xl text-4xl md:text-6xl">One signature atmosphere, always alive.</h3>
+          <h3 className="text-display mt-3 max-w-3xl">One signature atmosphere, always alive.</h3>
         </div>
-        <p className="max-w-sm text-sm text-white/70 md:text-base">
+        <p className="max-w-sm text-body text-white/70 md:text-body">
           A restrained particle field inspired by Three.js waves for depth and calm motion without a media gallery.
         </p>
       </div>

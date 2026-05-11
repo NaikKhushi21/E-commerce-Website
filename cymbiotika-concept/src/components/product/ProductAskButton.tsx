@@ -115,12 +115,12 @@ export function ProductAskButton({ product, className, label = "Ask" }: ProductA
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="micro-copy text-[var(--muted)]">Product Assistant</p>
-                  <h2 className="mt-2 font-display text-3xl leading-none text-[var(--primary)] md:text-4xl">Ask about {product.title}</h2>
+                  <h2 className="mt-2 text-h2 leading-none text-[var(--primary)]">Ask about {product.title}</h2>
                 </div>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="rounded-full border border-[var(--line)] bg-white/58 px-3 py-1.5 text-xs uppercase tracking-[0.14em] text-[var(--primary)]"
+                  className="rounded-full border border-[var(--line)] bg-white/58 px-3 py-1.5 text-eyebrow tracking-[0.1em] text-[var(--primary)]"
                 >
                   Close
                 </button>
@@ -149,8 +149,8 @@ export function ProductAskButton({ product, className, label = "Ask" }: ProductA
                 </div>
               ))}
 
-              {loading ? <p className="text-sm text-[var(--muted)]">Thinking...</p> : null}
-              {error ? <p className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
+              {loading ? <p className="text-body text-[var(--muted)]">Thinking...</p> : null}
+              {error ? <p className="rounded-xl bg-red-50 px-3 py-2 text-body text-red-700">{error}</p> : null}
             </div>
 
             <div className="border-t border-[var(--line)] px-5 py-4 md:px-6">
@@ -177,7 +177,7 @@ export function ProductAskButton({ product, className, label = "Ask" }: ProductA
                 <button
                   type="submit"
                   disabled={loading || input.trim().length === 0}
-                  className="rounded-full bg-[var(--primary)] px-5 py-3 text-xs uppercase tracking-[0.14em] text-[var(--on-primary)] disabled:opacity-45"
+                  className="rounded-full bg-[var(--primary)] px-5 py-3 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] disabled:opacity-45"
                 >
                   Send
                 </button>
@@ -195,7 +195,7 @@ export function ProductAskButton({ product, className, label = "Ask" }: ProductA
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          "rounded-full border border-[var(--line-strong)] bg-white/40 px-4 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--primary)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:bg-white/80",
+          "rounded-full border border-[var(--line-strong)] bg-white/40 px-4 py-2.5 text-eyebrow tracking-[0.1em] text-[var(--primary)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:bg-white/80",
           className,
         )}
       >

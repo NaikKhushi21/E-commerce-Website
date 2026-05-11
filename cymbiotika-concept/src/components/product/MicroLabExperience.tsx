@@ -18,13 +18,13 @@ export function MicroLabExperience({ product }: { product: Product }) {
       <div className="grid min-h-[72svh] gap-10 lg:grid-cols-[0.38fr_0.62fr] lg:items-center">
         <div className="relative z-10">
           <p className="micro-copy text-[var(--muted)]">Micro Lab</p>
-          <h2 className="display-title mt-4 max-w-xl text-5xl text-[var(--primary)] md:text-7xl">Absorption, rendered as atmosphere.</h2>
-          <p className="body-copy mt-5 max-w-md text-base md:text-lg">
+          <h2 className="text-display mt-4 max-w-xl text-[var(--primary)]">Absorption, rendered as atmosphere.</h2>
+          <p className="text-body mt-5 max-w-md text-body md:text-lg">
             {product.title} is shown as a cellular path: threads connect, nutrients drift, and the membrane opens without turning science into a dashboard.
           </p>
           <div className="mt-8 flex flex-wrap gap-2">
             {ingredients.map((ingredient) => (
-              <span key={ingredient} className="rounded-full border border-white/55 bg-white/48 px-3 py-1.5 text-xs uppercase tracking-[0.13em] text-[var(--muted)]">
+              <span key={ingredient} className="rounded-full border border-white/55 bg-white/48 px-3 py-1.5 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                 {ingredient}
               </span>
             ))}

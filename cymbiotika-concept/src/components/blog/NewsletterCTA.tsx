@@ -7,10 +7,10 @@ export function NewsletterCTA() {
       <p className="micro-copy text-white/70">Continue your routine intelligence</p>
       <h2 className="mt-3 max-w-3xl text-4xl md:text-6xl">Get weekly editorial insights or build your personalized stack now.</h2>
       <div className="mt-7 flex flex-wrap gap-3">
-        <Link href="/quiz" className="rounded-full bg-white px-5 py-3 text-xs uppercase tracking-[0.14em] text-[var(--forest)]">
-          Start Routine
+        <Link href="/quiz" className="rounded-full bg-white px-5 py-3 text-eyebrow tracking-[0.1em] text-[var(--forest)]">
+          Take the Quiz
         </Link>
-        <Link href="/science" className="rounded-full border border-white/45 px-5 py-3 text-xs uppercase tracking-[0.14em] text-white">
+        <Link href="/science" className="rounded-full border border-white/45 px-5 py-3 text-eyebrow tracking-[0.1em] text-white">
           Explore science
         </Link>
       </div>

@@ -198,7 +198,7 @@ export function IngredientAtomizer({
               onMouseEnter={() => setHoveredKey(ing.key)}
               onMouseLeave={() => setHoveredKey(null)}
               className={cn(
-                "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[10px] uppercase tracking-[0.22em] transition",
+                "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-eyebrow tracking-[0.1em] transition",
                 isActive
                   ? "border-[var(--line-strong)] bg-[var(--surface-elevated)] text-[var(--text)]"
                   : "border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--text)]",
@@ -319,7 +319,7 @@ function Atom({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 6 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full border border-[var(--line)] bg-[var(--surface-elevated)] px-3 py-1 text-[10px] uppercase tracking-[0.22em]"
+            className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full border border-[var(--line)] bg-[var(--surface-elevated)] px-3 py-1 text-eyebrow tracking-[0.1em]"
             style={{ color: selected ? color : "rgba(245,244,240,0.85)" }}
           >
             {ing.name}
@@ -366,7 +366,7 @@ function DetailPanel({
               style={{ background: color, boxShadow: `0 0 10px ${color}` }}
             />
             <p
-              className="text-[10px] uppercase tracking-[0.32em]"
+              className="text-eyebrow tracking-[0.1em]"
               style={{ color }}
             >
               {ingredient.category}
@@ -379,7 +379,7 @@ function DetailPanel({
           </h3>
 
           {/* Function */}
-          <p className="mt-5 text-sm leading-relaxed text-[var(--muted)] md:text-[15px]">
+          <p className="mt-5 text-body leading-relaxed text-[var(--muted)] md:text-[15px]">
             {ingredient.function}
           </p>
 
@@ -401,7 +401,7 @@ function DetailPanel({
 
           {/* Why this formula */}
           <div className="mt-7 rounded-2xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] p-4">
-            <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+            <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
               Why it&apos;s in this formula
             </p>
             <p className="mt-2 text-[13px] leading-relaxed text-[var(--text)]">
@@ -412,7 +412,7 @@ function DetailPanel({
           {/* Synergies */}
           {ingredient.synergies && ingredient.synergies.length > 0 ? (
             <div className="mt-5">
-              <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+              <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                 Pairs with
               </p>
               <p className="mt-2 text-[12px] leading-relaxed text-[var(--text)]/80">
@@ -431,10 +431,10 @@ function DetailPanel({
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] px-4 py-3">
-      <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+      <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
         {label}
       </p>
-      <p className="mt-1.5 text-base capitalize text-[var(--text)]">{value}</p>
+      <p className="mt-1.5 text-body capitalize text-[var(--text)]">{value}</p>
     </div>
   );
 }

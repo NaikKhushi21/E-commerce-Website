@@ -141,7 +141,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
         subhead="Pick a cadence — pouches arrive on the days that suit your routine. Skip, swap, or pause from the cart."
         right={
           <div>
-            <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--muted)]">
+            <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
               Next delivery
             </p>
             <AnimatePresence mode="wait">
@@ -174,7 +174,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
                   type="button"
                   onClick={() => setCadenceKey(c.key)}
                   className={cn(
-                    "rounded-full border px-4 py-1.5 text-[10px] uppercase tracking-[0.22em] transition",
+                    "rounded-full border px-4 py-1.5 text-eyebrow tracking-[0.1em] transition",
                     active
                       ? "border-transparent bg-[var(--primary)] text-[var(--on-primary)]"
                       : "border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--text)]",
@@ -187,7 +187,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
                 >
                   {c.label}
                   {c.discountPct > 0 ? (
-                    <span className="ml-2 text-[var(--muted)]/85">
+                    <span className="ml-2 text-[var(--muted)]">
                       –{c.discountPct}%
                     </span>
                   ) : null}
@@ -197,7 +197,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
           </div>
 
           {/* Day-of-week labels */}
-          <div className="mt-6 grid grid-cols-7 gap-2 text-center text-[9px] uppercase tracking-[0.28em] text-[var(--muted)]/65">
+          <div className="mt-6 grid grid-cols-7 gap-2 text-center text-eyebrow tracking-[0.1em] text-[var(--muted)]">
             {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
               <span key={i}>{d}</span>
             ))}
@@ -224,7 +224,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
             })}
           </div>
 
-          <p className="mt-4 text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+          <p className="mt-4 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
             Tap any day to anchor your first delivery · tap a pouch to skip it
           </p>
         </div>
@@ -232,7 +232,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
         {/* RIGHT — savings + CTA */}
         <div className="flex flex-col gap-4">
           <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-elevated)] p-5">
-            <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+            <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
               Cadence
             </p>
             <p className="mt-2 font-display text-2xl text-[var(--text)]">
@@ -247,10 +247,10 @@ export function SubscriptionRitual({ product }: { product: Product }) {
           <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-elevated)] p-5">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+                <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                   Pouches per delivery
                 </p>
-                <p className="mt-1 text-[11px] text-[var(--muted)]/80">
+                <p className="mt-1 text-small text-[var(--muted)]">
                   Stack one box, or stock up.
                 </p>
               </div>
@@ -287,7 +287,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
 
           <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-elevated)] p-5">
             <div className="flex items-baseline justify-between gap-2">
-              <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+              <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                 One-time
               </p>
               <p className="text-[15px] tabular-nums text-[var(--muted)] line-through">
@@ -295,7 +295,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
               </p>
             </div>
             <div className="mt-2 flex items-baseline justify-between gap-2">
-              <p className="text-[10px] uppercase tracking-[0.28em] text-[#d7c3a7]">
+              <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">
                 Subscription
               </p>
               <AnimatePresence mode="wait">
@@ -312,13 +312,13 @@ export function SubscriptionRitual({ product }: { product: Product }) {
               </AnimatePresence>
             </div>
             {monthlySavings > 0 ? (
-              <p className="mt-3 text-[11px] leading-relaxed text-[#8ce0d6]">
+              <p className="mt-3 text-small leading-relaxed text-[#8ce0d6]">
                 Saves ~{formatMoney(monthlySavings, product.currency)} per month
                 {skippedCount > 0 ? ` · ${skippedCount} skipped` : ""}
                 {" "}vs one-time orders.
               </p>
             ) : (
-              <p className="mt-3 text-[11px] leading-relaxed text-[var(--muted)]">
+              <p className="mt-3 text-small leading-relaxed text-[var(--muted)]">
                 Standard cadence — no discount, full flexibility.
               </p>
             )}
@@ -333,7 +333,7 @@ export function SubscriptionRitual({ product }: { product: Product }) {
           >
             Start subscription
           </Pill>
-          <p className="text-center text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+          <p className="text-center text-eyebrow tracking-[0.1em] text-[var(--muted)]">
             Cancel anytime · skip any delivery
           </p>
         </div>
@@ -386,7 +386,7 @@ function CalendarCell({
       )}
     >
       {/* Day label */}
-      <span className="pointer-events-none absolute left-1.5 top-1.5 text-[8px] uppercase tracking-[0.2em] text-[var(--muted)]/70">
+      <span className="pointer-events-none absolute left-1.5 top-1.5 text-[8px] uppercase tracking-[0.1em] text-[var(--muted)]">
         {isToday ? "TODAY" : index < TODAY_INDEX ? `${TODAY_INDEX - index}d` : `+${index - TODAY_INDEX}`}
       </span>
 
@@ -442,7 +442,7 @@ function CalendarCell({
       {/* Hover tooltip — real arrival date */}
       {dateLabel ? (
         <span
-          className="pointer-events-none absolute left-1/2 top-full z-30 mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-md border border-[var(--line-strong)] bg-[var(--surface-elevated)] px-2 py-1 text-[9px] uppercase tracking-[0.18em] text-[var(--text)] opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.35)] transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+          className="pointer-events-none absolute left-1/2 top-full z-30 mt-1.5 -translate-x-1/2 whitespace-nowrap rounded-md border border-[var(--line-strong)] bg-[var(--surface-elevated)] px-2 py-1 text-eyebrow tracking-[0.1em] text-[var(--text)] opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.35)] transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
         >
           {dateLabel}
         </span>

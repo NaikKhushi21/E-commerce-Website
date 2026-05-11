@@ -11,8 +11,8 @@ export function SupplementProblem() {
   return (
     <FadeIn>
       <section className="rounded-[2rem] border border-[--brand-mint]/25 bg-white p-6 md:p-8">
-        <p className="text-xs uppercase tracking-[0.18em] text-[--brand-gold]">Why this feels better</p>
-        <h2 className="mt-3 max-w-3xl font-display text-4xl leading-tight text-[#1f3126] md:text-5xl">Less noise. Better product focus.</h2>
+        <p className="text-eyebrow tracking-[0.1em] text-[--brand-gold]">Why this feels better</p>
+        <h2 className="mt-3 max-w-3xl text-h1 leading-tight text-[#1f3126]">Less noise. Better product focus.</h2>
         <div className="mt-6 grid gap-3 md:grid-cols-3">
           {issues.map((issue) => (
             <article key={issue.title} className={`rounded-2xl border p-4 ${issue.color}`}>

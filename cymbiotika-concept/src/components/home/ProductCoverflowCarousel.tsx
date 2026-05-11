@@ -125,6 +125,7 @@ export function ProductCoverflowCarousel({ clips, initialIndex }: ProductCoverfl
           scroll-snap-stop: always;
           overflow: hidden;
           border-radius: 1.8rem;
+          border: 1px solid var(--forest);
           background: var(--surface-elevated);
           opacity: 0.18;
           transform: scale(0.9);

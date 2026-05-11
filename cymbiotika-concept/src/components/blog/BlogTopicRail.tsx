@@ -18,7 +18,7 @@ export function BlogTopicRail({ category, onChange }: BlogTopicRailProps) {
             <button
               key={entry}
               onClick={() => onChange(entry)}
-              className="relative rounded-full px-3 py-2 text-[10px] uppercase tracking-[0.14em] sm:text-xs md:px-4"
+              className="relative rounded-full px-3 py-2 text-eyebrow tracking-[0.1em] sm:text-xs md:px-4"
             >
               {active ? (
                 <motion.span

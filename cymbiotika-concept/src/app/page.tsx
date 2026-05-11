@@ -1,6 +1,5 @@
 import { PouchRitualHero } from "@/components/home/PouchRitualHero";
 import { BestSellers } from "@/components/home/BestSellers";
-import { AbsorptionExplainer } from "@/components/home/AbsorptionExplainer";
 import { InteractiveVideoReel } from "@/components/home/InteractiveVideoReel";
 import { ReviewsModule } from "@/components/home/ReviewsModule";
 import { BlogTeaserStrip } from "@/components/home/BlogTeaserStrip";
@@ -26,10 +25,6 @@ export default async function Home() {
 
       <ScenePanel>
         <BestSellers featured={featuredProducts} />
-      </ScenePanel>
-
-      <ScenePanel>
-        <AbsorptionExplainer />
       </ScenePanel>
 
       <ScenePanel>

@@ -155,7 +155,7 @@ export function VialChat() {
               </svg>
             </button>
             <p className="font-display text-[13px] leading-snug text-[var(--forest)]">Hi, I&apos;m Cymborg.</p>
-            <p className="mt-0.5 text-[11px] leading-snug text-[var(--muted)]">Routine question?</p>
+            <p className="mt-0.5 text-small leading-snug text-[var(--muted)]">Routine question?</p>
             {/* Tail pointing toward the launcher below. */}
             <span
               aria-hidden
@@ -187,7 +187,7 @@ export function VialChat() {
                 priority
               />
             </span>
-            <span className="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 whitespace-nowrap rounded-full bg-[var(--surface-elevated)] px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] text-[var(--forest)] opacity-0 shadow-[0_8px_22px_rgba(12,31,28,0.14)] transition-opacity duration-500 group-hover:opacity-100">
+            <span className="absolute -left-2 top-1/2 -translate-x-full -translate-y-1/2 whitespace-nowrap rounded-full bg-[var(--surface-elevated)] px-3 py-1.5 text-eyebrow tracking-[0.1em] text-[var(--forest)] opacity-0 shadow-[0_8px_22px_rgba(12,31,28,0.14)] transition-opacity duration-500 group-hover:opacity-100">
               Ask Cymborg
             </span>
           </motion.button>
@@ -218,8 +218,8 @@ export function VialChat() {
 
             <header className="relative flex items-center justify-between border-b border-[rgba(12,31,28,0.08)] px-5 py-4">
               <div>
-                <p className="text-[9px] uppercase tracking-[0.32em] text-[var(--muted)]">Cymbiotika</p>
-                <p className="font-display text-base text-[var(--forest)]">Cymborg</p>
+                <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">Cymbiotika</p>
+                <p className="font-display text-body text-[var(--forest)]">Cymborg</p>
               </div>
               <button
                 onClick={() => setOpen(false)}
@@ -247,7 +247,7 @@ export function VialChat() {
                   transition={{ duration: 0.6, delay: 0.1 }}
                   className="relative space-y-4"
                 >
-                  <p className="text-center font-display text-base leading-snug text-[var(--forest)]">
+                  <p className="text-center font-display text-body leading-snug text-[var(--forest)]">
                     A small concierge for ingredient questions, routine timing, and absorption science.
                   </p>
                   <div className="space-y-2">
@@ -255,7 +255,7 @@ export function VialChat() {
                       <button
                         key={p}
                         onClick={() => send(p)}
-                        className="w-full rounded-full border border-[rgba(229,183,115,0.45)] bg-[rgba(255,255,255,0.6)] px-4 py-2 text-xs uppercase tracking-[0.18em] text-[var(--forest)] transition hover:border-[var(--accent)] hover:bg-white"
+                        className="w-full rounded-full border border-[rgba(229,183,115,0.45)] bg-[rgba(255,255,255,0.6)] px-4 py-2 text-eyebrow tracking-[0.1em] text-[var(--forest)] transition hover:border-[var(--accent)] hover:bg-white"
                       >
                         {p}
                       </button>
@@ -395,7 +395,7 @@ function ProductChip({ rec, onAdd }: { rec: Recommendation; onAdd: (rec: Recomme
       </Link>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate font-display text-sm leading-tight text-[var(--forest)]">{product.title}</p>
+        <p className="truncate font-display text-body leading-tight text-[var(--forest)]">{product.title}</p>
         <p className="line-clamp-2 text-[10.5px] leading-snug text-[var(--muted)]">{reason}</p>
       </div>
 
@@ -406,7 +406,7 @@ function ProductChip({ rec, onAdd }: { rec: Recommendation; onAdd: (rec: Recomme
         <button
           type="button"
           onClick={() => onAdd(rec)}
-          className="rounded-full bg-[var(--forest)] px-3 py-1 text-[9px] uppercase tracking-[0.2em] text-white transition hover:scale-[1.04]"
+          className="rounded-full bg-[var(--forest)] px-3 py-1 text-eyebrow tracking-[0.1em] text-white transition hover:scale-[1.04]"
         >
           Add
         </button>

@@ -30,11 +30,11 @@ export function ProtocolProductCard({
           {selected ? "Remove" : "Select"}
         </button>
       </div>
-      <h3 className="text-2xl font-medium">{product.title}</h3>
+      <h3 className="text-h3">{product.title}</h3>
       <div className="relative mt-3 h-48 w-full">
         <SafeImage src={product.featuredImage} alt={product.title} fill className="object-contain" />
       </div>
-      <p className="mt-2 text-sm text-white/85">{product.description}</p>
+      <p className="mt-2 text-body text-white/85">{product.description}</p>
       <div className="mt-4 flex items-center justify-between">
         <p className="text-2xl font-semibold">{formatMoney(product.price, product.currency)}</p>
         <Link href={`/products/${product.handle}`} className="rounded-full bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-[var(--on-primary)]">

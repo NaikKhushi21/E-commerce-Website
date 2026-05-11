@@ -26,7 +26,7 @@ export function MediaGallery({ gallery }: MediaGalleryProps) {
             ) : (
               <SafeImage src={featured.src} alt={featured.alt} fill className="object-cover" />
             )}
-            <span className="absolute bottom-3 left-3 rounded-full bg-black/45 px-3 py-1 text-xs uppercase tracking-[0.12em] text-white">View media</span>
+            <span className="absolute bottom-3 left-3 rounded-full bg-black/45 px-3 py-1 text-eyebrow tracking-[0.12em] text-white">View media</span>
           </button>
         ) : null}
 
@@ -38,7 +38,7 @@ export function MediaGallery({ gallery }: MediaGalleryProps) {
               ) : (
                 <SafeImage src={media.src} alt={media.alt} fill className="object-cover" />
               )}
-              <span className="absolute bottom-2 left-2 rounded-full bg-black/45 px-2.5 py-1 text-[10px] uppercase tracking-[0.1em] text-white">
+              <span className="absolute bottom-2 left-2 rounded-full bg-black/45 px-2.5 py-1 text-eyebrow tracking-[0.1em] text-white">
                 {idx === 0 ? "Watch protocol demo" : "Ingredient close-up"}
               </span>
             </button>

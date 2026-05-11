@@ -260,7 +260,7 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
       <header className="flex flex-wrap items-end justify-between gap-8">
         <div>
           <p className="micro-copy text-[var(--muted)]">Formulation Intelligence</p>
-          <h2 className="display-title mt-4 max-w-3xl text-5xl text-[var(--forest)] md:text-6xl">
+          <h2 className="text-display mt-4 max-w-3xl text-[var(--forest)]">
             One signal at a time.
           </h2>
           <AnimatePresence mode="wait">
@@ -291,7 +291,7 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
               {summaryValue}
             </motion.p>
           </AnimatePresence>
-          <p className="mt-3 text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+          <p className="mt-3 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
             Updated {fetchedDate}
           </p>
         </div>
@@ -308,7 +308,7 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
                   type="button"
                   onClick={() => setMode(m.id)}
                   className={cn(
-                    "relative rounded-full px-5 py-2 text-[11px] uppercase tracking-[0.26em] transition",
+                    "relative rounded-full px-5 py-2 text-eyebrow tracking-[0.1em] transition",
                     isActive ? "text-[var(--on-primary)]" : "text-[var(--muted)] hover:text-[var(--forest)]",
                   )}
                 >
@@ -325,7 +325,7 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
             })}
           </div>
         </LayoutGroup>
-        <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+        <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
           {ingredients.length} ingredients · radius = synergy weight
         </p>
       </div>
@@ -351,11 +351,11 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
                       style={{ background: tint }}
                       aria-hidden
                     />
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">{b.category}</p>
+                    <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">{b.category}</p>
                   </div>
                   <p className="mt-2 font-display text-2xl text-[var(--forest)] md:text-3xl">{b.name}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{b.function}</p>
-                  <div className="mt-4 grid grid-cols-2 gap-3 border-t border-[var(--line)] pt-4 text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+                  <p className="mt-3 text-body leading-relaxed text-[var(--muted)]">{b.function}</p>
+                  <div className="mt-4 grid grid-cols-2 gap-3 border-t border-[var(--line)] pt-4 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                     <div>
                       <p>Synergy</p>
                       <p className="mt-1 font-display text-2xl text-[var(--forest)] normal-case tracking-normal">
@@ -380,13 +380,13 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               >
-                <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">Hover an ingredient</p>
+                <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">Hover an ingredient</p>
                 <p className="mt-2 font-display text-xl leading-tight text-[var(--forest)]">
                   Read its function, synergy, and goal coverage.
                 </p>
                 <ul className="mt-5 space-y-2 border-t border-[var(--line)] pt-4">
                   {stats.categories.map((cat) => (
-                    <li key={cat} className="flex items-center gap-2.5 text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+                    <li key={cat} className="flex items-center gap-2.5 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                       <span
                         className="inline-block h-2.5 w-2.5 rounded-full"
                         style={{ background: CATEGORY_COLOR[cat] }}
@@ -433,13 +433,13 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
                 style={{ left: PADDING - 0.5 }}
               />
               <span
-                className="absolute whitespace-nowrap text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]"
+                className="absolute whitespace-nowrap text-eyebrow tracking-[0.1em] text-[var(--muted)]"
                 style={{ left: PADDING + 8, bottom: 18 }}
               >
                 Synergy connections →
               </span>
               <span
-                className="absolute whitespace-nowrap text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]"
+                className="absolute whitespace-nowrap text-eyebrow tracking-[0.1em] text-[var(--muted)]"
                 style={{
                   left: 18,
                   top: "50%",
@@ -516,7 +516,7 @@ export function IngredientCloud({ atlas }: { atlas: Record<string, IngredientEnt
                 return (
                   <span
                     key={cat}
-                    className="absolute -translate-x-1/2 whitespace-nowrap rounded-full bg-[var(--surface-elevated)] px-2.5 py-1 text-[10px] uppercase tracking-[0.24em] text-[var(--muted)] shadow-[0_4px_14px_rgba(0,0,0,0.06)]"
+                    className="absolute -translate-x-1/2 whitespace-nowrap rounded-full bg-[var(--surface-elevated)] px-2.5 py-1 text-eyebrow tracking-[0.1em] text-[var(--muted)] shadow-[0_4px_14px_rgba(0,0,0,0.06)]"
                     style={{ left: meanX, top: maxY + 18 }}
                   >
                     {cat}
@@ -646,7 +646,7 @@ function CategoryDonut({
 
   return (
     <div className="rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-4 md:hidden">
-      <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+      <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
         Library composition
       </p>
       <div className="mt-3 flex flex-col items-center gap-4">
@@ -698,7 +698,7 @@ function CategoryDonut({
           {slices.map((s) => (
             <li
               key={`legend-${s.cat}`}
-              className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-[var(--muted)]"
+              className="flex items-center gap-2 text-eyebrow tracking-[0.1em] text-[var(--muted)]"
             >
               <span
                 className="h-2.5 w-2.5 shrink-0 rounded-full"
@@ -749,7 +749,7 @@ function CategoryBarChart({
 
   return (
     <div className="rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-4 md:hidden">
-      <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+      <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
         Ingredients per category
       </p>
       <svg
@@ -875,7 +875,7 @@ function TopIngredientsBarChart({ ingredients }: { ingredients: IngredientEntry[
 
   return (
     <div className="rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-4 md:hidden">
-      <p className="text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+      <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
         Top {TOP_N} ingredients · synergy + goal score
       </p>
       <svg

@@ -14,7 +14,12 @@ export function BlogTeaserStrip({ posts }: { posts: BlogPost[] }) {
         title="Read deeper into the science."
         subhead="Editorial features, creator routines, and daily playbooks — written for people who want to understand what they're taking and why."
         right={
-          <Pill href="/blog" variant="secondary" size="sm">
+          <Pill
+            href="/blog"
+            variant="secondary"
+            size="sm"
+            className="border-0 bg-[var(--surface-elevated)] text-[var(--forest)] hover:bg-[var(--forest)] hover:text-[var(--on-primary)]"
+          >
             Read all stories
           </Pill>
         }

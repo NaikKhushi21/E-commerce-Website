@@ -58,7 +58,7 @@ export function ProtocolBuilder({ products }: { products: Product[] }) {
   return (
     <div className="space-y-8 pb-12">
       <section className="rounded-[2rem] bg-[var(--primary)] px-6 py-8 text-[var(--on-primary)] md:px-8 md:py-10">
-        <p className="text-xs uppercase tracking-[0.2em] text-white/75">Routine Builder</p>
+        <p className="text-eyebrow tracking-[0.1em] text-white/75">Routine Builder</p>
         <h1 className="mt-2 font-sans text-6xl font-medium leading-tight md:text-7xl">Build your daily stack.</h1>
         <p className="mt-3 max-w-3xl text-xl text-white/90 md:text-2xl">
           Select your goals and generate a practical morning and evening routine.
@@ -66,8 +66,8 @@ export function ProtocolBuilder({ products }: { products: Product[] }) {
       </section>
 
       <section className="rounded-3xl border border-[var(--line)] bg-white p-5 md:p-6">
-        <p className="text-sm uppercase tracking-[0.18em] text-[var(--muted)]">Step 1</p>
-        <h2 className="mt-1 font-display text-4xl text-[var(--primary)]">Select wellness goals</h2>
+        <p className="text-sm uppercase tracking-[0.1em] text-[var(--muted)]">Step 1</p>
+        <h2 className="mt-1 text-h1 text-[var(--primary)]">Select wellness goals</h2>
         <div className="mt-4 grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
           {WELLNESS_GOALS.map((goal) => (
             <button
@@ -87,13 +87,13 @@ export function ProtocolBuilder({ products }: { products: Product[] }) {
 
       <section className="grid gap-3 rounded-3xl border border-[var(--line)] bg-white p-5 md:grid-cols-3 md:p-6">
         <div>
-          <p className="text-sm uppercase tracking-[0.18em] text-[var(--muted)]">Step 2</p>
-          <p className="mt-1 text-base text-[var(--muted)]">Recommended monthly routine</p>
+          <p className="text-sm uppercase tracking-[0.1em] text-[var(--muted)]">Step 2</p>
+          <p className="mt-1 text-body text-[var(--muted)]">Recommended monthly routine</p>
         </div>
         <div>
-          <p className="text-sm text-[var(--muted)]">Estimated monthly total</p>
+          <p className="text-body text-[var(--muted)]">Estimated monthly total</p>
           <p className="font-display text-4xl text-[var(--primary)]">{formatMoney(monthlyTotal)}</p>
-          <p className="mt-1 text-xs text-[var(--muted)]">{selectedProducts.length} product(s) selected</p>
+          <p className="mt-1 text-small text-[var(--muted)]">{selectedProducts.length} product(s) selected</p>
         </div>
         <button
           onClick={addSelectedProtocol}

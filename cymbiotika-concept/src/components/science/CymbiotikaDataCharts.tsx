@@ -145,7 +145,7 @@ export function CymbiotikaDataCharts({
       <header className="flex flex-wrap items-end justify-between gap-8">
         <div>
           <p className="micro-copy text-[var(--muted)]">Formulation Intelligence</p>
-          <h2 className="display-title mt-4 max-w-3xl text-5xl text-[var(--forest)] md:text-6xl">
+          <h2 className="text-display mt-4 max-w-3xl text-[var(--forest)]">
             One signal at a time.
           </h2>
           <AnimatePresence mode="wait">
@@ -176,7 +176,7 @@ export function CymbiotikaDataCharts({
               {summaryValue}
             </motion.p>
           </AnimatePresence>
-          <p className="mt-3 text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+          <p className="mt-3 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
             Updated {fetchedDate}
           </p>
         </div>
@@ -192,7 +192,7 @@ export function CymbiotikaDataCharts({
                 type="button"
                 onClick={() => setMetricKey(m.key)}
                 className={cn(
-                  "relative rounded-full px-5 py-2 text-[11px] uppercase tracking-[0.26em] transition",
+                  "relative rounded-full px-5 py-2 text-eyebrow tracking-[0.1em] transition",
                   isActive ? "text-[var(--on-primary)]" : "text-[var(--muted)] hover:text-[var(--forest)]",
                 )}
               >
@@ -208,7 +208,7 @@ export function CymbiotikaDataCharts({
             );
           })}
         </div>
-        <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+        <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
           {sortedEntries.length} formulas · {metric.desc ? "highest" : "lowest"} first
         </p>
       </div>
@@ -247,7 +247,7 @@ export function CymbiotikaDataCharts({
                         <p className="font-display text-xl leading-none text-[var(--forest)] md:text-2xl">
                           {product.title}
                         </p>
-                        <p className="mt-2 text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+                        <p className="mt-2 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                           {product.productType}
                         </p>
                       </div>
@@ -279,11 +279,11 @@ export function CymbiotikaDataCharts({
                     />
                   </div>
 
-                  <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]">
+                  <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                     <span>{metrics.ingredientCount} actives</span>
                     <span>{metrics.synergyCount} synergies</span>
                     <span>{metrics.goalBreadth} goals · {formatCurrency(product.price)}</span>
-                    <span className="ml-auto text-[var(--muted)]/70 transition group-hover:text-[var(--forest)]">
+                    <span className="ml-auto text-[var(--muted)] transition group-hover:text-[var(--forest)]">
                       {isExpanded ? "Close" : "Open"} →
                     </span>
                   </div>
@@ -305,7 +305,7 @@ export function CymbiotikaDataCharts({
                             <p className="mt-2 font-display text-3xl text-[var(--forest)]">
                               {metrics.ingredientCount}
                             </p>
-                            <p className="mt-1 text-xs leading-relaxed text-[var(--muted)]">
+                            <p className="mt-1 text-small leading-relaxed text-[var(--muted)]">
                               Clinically-active ingredients carried in this formula.
                             </p>
                           </div>
@@ -314,7 +314,7 @@ export function CymbiotikaDataCharts({
                             <p className="mt-2 font-display text-3xl text-[var(--forest)]">
                               {metrics.synergyCount}
                             </p>
-                            <p className="mt-1 text-xs leading-relaxed text-[var(--muted)]">
+                            <p className="mt-1 text-small leading-relaxed text-[var(--muted)]">
                               Cross-ingredient pairings amplifying absorption and effect.
                             </p>
                           </div>
@@ -323,7 +323,7 @@ export function CymbiotikaDataCharts({
                             <p className="mt-2 font-display text-3xl text-[var(--forest)]">
                               {metrics.goalBreadth}
                             </p>
-                            <p className="mt-1 text-xs leading-relaxed text-[var(--muted)]">
+                            <p className="mt-1 text-small leading-relaxed text-[var(--muted)]">
                               Distinct wellness goals this formula targets · {formatCurrency(product.price)} entry.
                             </p>
                           </div>
@@ -332,7 +332,7 @@ export function CymbiotikaDataCharts({
                           href={product.sourceUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-[var(--forest)] transition hover:gap-3"
+                          className="mt-6 inline-flex items-center gap-2 text-eyebrow tracking-[0.1em] text-[var(--forest)] transition hover:gap-3"
                         >
                           Enter formula
                           <span aria-hidden>→</span>

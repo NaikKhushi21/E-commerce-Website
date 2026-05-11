@@ -28,9 +28,18 @@ export function FeaturedEditorialGrid({ featured, secondary }: FeaturedEditorial
           )}
           <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0.55)_30%,rgba(0,0,0,0.2)_60%,rgba(0,0,0,0)_82%)]" />
 
-          <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-8">
+          {/* Whole-card tap target → article. Sits above the image/gradient but
+              below the bottom content panel so the inner "Explore article" button
+              still works. */}
+          <Link
+            href={`/blog/${featured.slug}`}
+            className="absolute inset-0 z-[1]"
+            aria-label={featured.title}
+          />
+
+          <div className="absolute inset-x-0 bottom-0 z-[2] p-6 text-white md:p-8">
             <div
-              className="mb-3 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.13em] text-white/85"
+              className="mb-3 flex flex-wrap items-center gap-2 text-eyebrow tracking-[0.1em] text-white/85"
               style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
             >
               <span className="rounded-full border border-white/45 px-2.5 py-1">Editor&apos;s pick</span>
@@ -39,7 +48,7 @@ export function FeaturedEditorialGrid({ featured, secondary }: FeaturedEditorial
               <span>{featured.readTime}</span>
             </div>
             <h2
-              className="display-title max-w-3xl text-4xl leading-[1.02] md:text-6xl"
+              className="text-display max-w-3xl leading-[1.02]"
               style={{
                 textShadow:
                   "0 1px 2px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.5), 0 0 32px rgba(0,0,0,0.28)",
@@ -54,10 +63,10 @@ export function FeaturedEditorialGrid({ featured, secondary }: FeaturedEditorial
               {featured.excerpt}
             </p>
             <div className="mt-5 flex items-center justify-between">
-              <p className="text-xs uppercase tracking-[0.12em] text-white/70">{formatCardDate(featured.publishedAt)}</p>
+              <p className="text-eyebrow tracking-[0.12em] text-white/70">{formatCardDate(featured.publishedAt)}</p>
               <Link
                 href={`/blog/${featured.slug}`}
-                className="rounded-full bg-white px-4 py-2 text-xs uppercase tracking-[0.14em] text-[var(--forest)] transition hover:bg-[var(--accent)]"
+                className="rounded-full bg-white px-4 py-2 text-eyebrow tracking-[0.1em] text-[var(--forest)] transition hover:bg-[var(--accent)]"
               >
                 Explore article
               </Link>

@@ -23,10 +23,10 @@ export function ReadingLens({
   return (
     <div className="flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-3">
-        <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--muted)]">
+        <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
           Reading lens
         </p>
-        <p className="text-[11px] text-[var(--muted)]/85">
+        <p className="text-small text-[var(--muted)]">
           {activeOption.sub}
         </p>
       </div>
@@ -46,7 +46,7 @@ export function ReadingLens({
               aria-checked={active}
               onClick={() => onChange(opt.key)}
               className={cn(
-                "relative z-10 rounded-full px-4 py-1.5 text-[10px] uppercase tracking-[0.22em] transition-colors",
+                "relative z-10 rounded-full px-4 py-1.5 text-eyebrow tracking-[0.1em] transition-colors",
                 active
                   ? "text-[var(--on-primary)]"
                   : "text-[var(--muted)] hover:text-[var(--forest)]",

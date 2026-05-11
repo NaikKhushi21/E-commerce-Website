@@ -115,7 +115,7 @@ export function PouchRitualHero() {
         {/* LEFT — copy */}
         <div className="relative z-10 max-w-xl">
           <motion.p
-            className="text-[10px] uppercase tracking-[0.36em] text-white/55"
+            className="text-eyebrow tracking-[0.1em] text-white/78"
             initial={reduceMotion ? undefined : { opacity: 0, y: 10 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             transition={reduceMotion ? undefined : { duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -133,7 +133,7 @@ export function PouchRitualHero() {
           </motion.h1>
 
           <motion.p
-            className="body-copy mt-6 max-w-md text-base leading-relaxed text-white/65 md:text-lg"
+            className="text-body mt-6 max-w-md text-base leading-relaxed text-white/65 md:text-lg"
             initial={reduceMotion ? undefined : { opacity: 0, y: 12 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             transition={reduceMotion ? undefined : { duration: 0.9, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
@@ -151,8 +151,8 @@ export function PouchRitualHero() {
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               >
-                <p className="text-[10px] uppercase tracking-[0.32em] text-[#d7c3a7]">{currentBeat.label}</p>
-                <p className="mt-3 text-sm leading-relaxed text-white/82 md:text-[15px]">{currentBeat.copy}</p>
+                <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">{currentBeat.label}</p>
+                <p className="mt-3 text-body leading-relaxed text-white/82 md:text-[15px]">{currentBeat.copy}</p>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -178,7 +178,7 @@ export function PouchRitualHero() {
                 </button>
               );
             })}
-            <span className="ml-3 text-[10px] uppercase tracking-[0.28em] text-white/35">
+            <span className="ml-3 text-eyebrow tracking-[0.1em] text-white/78">
               {String(beat + 1).padStart(2, "0")} / {String(BEATS.length).padStart(2, "0")}
             </span>
           </div>
@@ -186,13 +186,13 @@ export function PouchRitualHero() {
           <div className="mt-10 flex flex-wrap gap-3">
             <MagneticButton
               onClick={() => router.push("/quiz")}
-              className="rounded-full bg-white px-7 py-3.5 text-xs uppercase tracking-[0.22em] text-[var(--on-primary)] transition hover:scale-[1.02]"
+              className="rounded-full bg-white px-7 py-3.5 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition hover:scale-[1.02]"
             >
-              Start your routine
+              Take the Quiz
             </MagneticButton>
             <MagneticButton
               onClick={() => router.push("/products")}
-              className="rounded-full border border-white/25 bg-white/[0.04] px-7 py-3.5 text-xs uppercase tracking-[0.22em] text-white transition hover:border-white/55 hover:bg-white/10"
+              className="rounded-full border border-white/25 bg-white/[0.04] px-7 py-3.5 text-eyebrow tracking-[0.1em] text-white transition hover:border-white/55 hover:bg-white/10"
             >
               Explore formulas
             </MagneticButton>

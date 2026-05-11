@@ -14,7 +14,7 @@ export default async function SciencePage() {
         eyebrow="Science"
         title="Research you move through."
         right={
-          <p className="max-w-md text-sm leading-relaxed text-[var(--muted)] md:text-base">
+          <p className="max-w-md text-body leading-relaxed text-[var(--muted)] md:text-body">
             A living field of ingredient signals, review density, routine gravity, and absorption behavior.
           </p>
         }
@@ -22,7 +22,7 @@ export default async function SciencePage() {
 
       <IngredientCloud atlas={atlas} />
 
-      <ScienceExperiments atlas={atlas} />
+      <ScienceExperiments />
 
       <LiquidLab />
     </div>

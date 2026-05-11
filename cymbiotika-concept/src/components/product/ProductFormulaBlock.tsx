@@ -90,7 +90,7 @@ export function ProductFormulaBlock({
                   "linear-gradient(90deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.0) 70%, var(--surface) 100%)",
               }}
             />
-            <figcaption className="absolute bottom-3 left-4 flex items-center gap-2 rounded-full bg-black/35 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-white/85 backdrop-blur-md">
+            <figcaption className="absolute bottom-3 left-4 flex items-center gap-2 rounded-full bg-black/35 px-3 py-1 text-eyebrow tracking-[0.1em] text-white/85 backdrop-blur-md">
               <span className="h-1 w-1 rounded-full bg-[var(--accent-soft)]" />
               {botanical.subject}
             </figcaption>
@@ -100,7 +100,7 @@ export function ProductFormulaBlock({
         <div className="relative px-7 py-9 md:px-10 md:py-12">
           <div className="flex items-center gap-3">
             <span aria-hidden="true" className="h-px w-8 bg-[var(--accent)]" />
-            <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--muted)]">About this formula</p>
+            <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">About this formula</p>
           </div>
 
           <div className="mt-5 space-y-5 text-base leading-relaxed text-[var(--forest)] md:text-lg">
@@ -134,7 +134,7 @@ export function ProductFormulaBlock({
             <button
               type="button"
               onClick={() => setExpanded((v) => !v)}
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-[var(--line-strong)] bg-[var(--surface-elevated)] px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[var(--forest)] transition hover:bg-[var(--accent-soft)]/40"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-[var(--line-strong)] bg-[var(--surface-elevated)] px-4 py-2 text-eyebrow tracking-[0.1em] text-[var(--forest)] transition hover:bg-[var(--accent-soft)]/40"
               aria-expanded={expanded}
             >
               {expanded ? "Show less" : "Read more"}
@@ -145,7 +145,7 @@ export function ProductFormulaBlock({
           ) : null}
 
           {botanical?.credit ? (
-            <p className="mt-6 text-[10px] uppercase tracking-[0.22em] text-[var(--muted)]/70">
+            <p className="mt-6 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
               Botanical photo · {botanical.credit}
             </p>
           ) : null}

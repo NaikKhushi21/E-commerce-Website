@@ -97,7 +97,7 @@ export function Header() {
             Cymbiotika
           </Link>
 
-          <nav className="hidden items-center gap-7 text-sm font-semibold uppercase tracking-[0.14em] text-[var(--muted)] md:flex">
+          <nav className="hidden items-center gap-7 text-sm font-semibold uppercase tracking-[0.1em] text-[var(--muted)] md:flex">
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);
               return (
@@ -157,9 +157,9 @@ export function Header() {
           </form>
           <Link
             href="/quiz"
-            className="hidden rounded-full bg-[var(--primary)] px-4 py-2 text-sm uppercase tracking-[0.13em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.015] sm:inline-flex"
+            className="hidden rounded-full bg-[var(--primary)] px-4 py-2 text-sm uppercase tracking-[0.1em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.015] sm:inline-flex"
           >
-            Start Routine
+            Take the Quiz
           </Link>
           <button
             onClick={openCart}
@@ -226,7 +226,7 @@ export function Header() {
                       onClick={() => setMobileOpen(false)}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex items-center justify-between rounded-2xl px-4 py-4 text-base font-semibold uppercase tracking-[0.14em] transition-colors duration-300",
+                        "flex items-center justify-between rounded-2xl px-4 py-4 text-base font-semibold uppercase tracking-[0.1em] transition-colors duration-300",
                         active
                           ? "bg-[var(--surface-elevated)] text-[var(--forest)]"
                           : "text-[var(--muted)] hover:bg-[var(--surface-elevated)] hover:text-[var(--forest)]",
@@ -247,9 +247,9 @@ export function Header() {
             <Link
               href="/quiz"
               onClick={() => setMobileOpen(false)}
-              className="flex w-full items-center justify-center rounded-full bg-[var(--primary)] px-5 py-3 text-sm uppercase tracking-[0.13em] text-[var(--on-primary)]"
+              className="flex w-full items-center justify-center rounded-full bg-[var(--primary)] px-5 py-3 text-sm uppercase tracking-[0.1em] text-[var(--on-primary)]"
             >
-              Start Routine
+              Take the Quiz
             </Link>
           </div>
         </aside>

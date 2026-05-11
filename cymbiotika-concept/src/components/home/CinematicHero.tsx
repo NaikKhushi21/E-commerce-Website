@@ -26,7 +26,7 @@ export function CinematicHero({ products }: { products: Product[] }) {
     return (
       <section className="rounded-[2rem] bg-[var(--surface-elevated)] px-6 py-14 md:px-10">
         <p className="micro-copy text-[var(--muted)]">Cymbiotika</p>
-        <h1 className="display-title mt-5 max-w-3xl text-5xl text-[var(--text)] md:text-7xl">Better energy starts with absorption.</h1>
+        <h1 className="text-display mt-5 max-w-3xl text-[var(--text)]">Better energy starts with absorption.</h1>
       </section>
     );
   }
@@ -85,7 +85,7 @@ export function CinematicHero({ products }: { products: Product[] }) {
             without volatility.
           </motion.h1>
           <motion.p
-            className="body-copy mt-6 max-w-lg text-base text-[color:color-mix(in_srgb,var(--text)_78%,transparent)] md:text-lg"
+            className="text-body mt-6 max-w-lg text-base text-[color:color-mix(in_srgb,var(--text)_78%,transparent)] md:text-lg"
             style={reduceMotion ? undefined : { opacity: copyOpacity }}
           >
             Designed as a cinematic rhythm: product, light, grain, and copy move at different depths as you scroll.
@@ -99,13 +99,13 @@ export function CinematicHero({ products }: { products: Product[] }) {
           >
             <MagneticButton
               onClick={() => router.push("/quiz")}
-              className="rounded-full bg-[var(--primary)] px-6 py-3 text-sm uppercase tracking-[0.14em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.02]"
+              className="rounded-full bg-[var(--primary)] px-6 py-3 text-sm uppercase tracking-[0.1em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.02]"
             >
-              Start your routine
+              Take the Quiz
             </MagneticButton>
             <MagneticButton
               onClick={() => router.push("/products")}
-              className="rounded-full border border-[var(--line-strong)] bg-white/52 px-6 py-3 text-sm uppercase tracking-[0.14em] text-[var(--primary)] transition-colors duration-500 hover:border-[var(--primary)] hover:bg-white/82"
+              className="rounded-full border border-[var(--line-strong)] bg-white/52 px-6 py-3 text-sm uppercase tracking-[0.1em] text-[var(--primary)] transition-colors duration-500 hover:border-[var(--primary)] hover:bg-white/82"
             >
               Explore formulas
             </MagneticButton>

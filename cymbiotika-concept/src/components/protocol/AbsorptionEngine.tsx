@@ -137,7 +137,7 @@ export function AbsorptionEngine({ products }: { products: Product[] }) {
         <div>
           <p className="micro-copy text-[var(--muted)]">Absorption Engine</p>
           <h3 className="mt-2 text-3xl text-[var(--forest)] md:text-4xl">Design your routine timing flow.</h3>
-          <p className="mt-2 max-w-2xl text-sm text-[var(--muted)] md:text-base">
+          <p className="mt-2 max-w-2xl text-body text-[var(--muted)] md:text-body">
             Drag formulas between windows to shape rhythm, compatibility, and daily consistency.
           </p>
         </div>
@@ -148,7 +148,7 @@ export function AbsorptionEngine({ products }: { products: Product[] }) {
             background: "color-mix(in srgb, var(--surface) 84%, transparent)",
           }}
         >
-          <p className="text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">Rhythm score</p>
+          <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">Rhythm score</p>
           <p className="mt-1 text-3xl text-[var(--forest)]">{metrics.score}</p>
           <div className="mt-2 h-1.5 w-[120px] rounded-full bg-[var(--line)]/60">
             <div
@@ -176,8 +176,8 @@ export function AbsorptionEngine({ products }: { products: Product[] }) {
             }}
           >
             <div className="mb-2 flex items-center justify-between">
-              <p className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">{SLOT_LABELS[slot]}</p>
-              <p className="text-xs text-[var(--muted)]">{productsBySlot[slot].length} formula(s)</p>
+              <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">{SLOT_LABELS[slot]}</p>
+              <p className="text-small text-[var(--muted)]">{productsBySlot[slot].length} formula(s)</p>
             </div>
 
             <div className="space-y-2 min-h-[140px]">
@@ -196,14 +196,14 @@ export function AbsorptionEngine({ products }: { products: Product[] }) {
                     boxShadow: "0 10px 24px color-mix(in srgb, var(--forest) 9%, transparent)",
                   }}
                 >
-                  <p className="text-sm text-[var(--forest)]">{product.title}</p>
-                  <p className="mt-1 text-[11px] uppercase tracking-[0.11em] text-[var(--muted)]">
+                  <p className="text-body text-[var(--forest)]">{product.title}</p>
+                  <p className="mt-1 text-eyebrow tracking-[0.11em] text-[var(--muted)]">
                     {product.goals.slice(0, 2).map((goal) => shortGoalLabel(goal)).join(" • ") || "General support"}
                   </p>
                 </article>
               ))}
               {productsBySlot[slot].length === 0 ? (
-                <p className="rounded-xl border border-dashed border-[var(--line)] px-3 py-6 text-center text-xs uppercase tracking-[0.12em] text-[var(--muted)]">
+                <p className="rounded-xl border border-dashed border-[var(--line)] px-3 py-6 text-center text-eyebrow tracking-[0.12em] text-[var(--muted)]">
                   Drop formula here
                 </p>
               ) : null}
@@ -217,7 +217,7 @@ export function AbsorptionEngine({ products }: { products: Product[] }) {
           <p className="micro-copy text-[var(--muted)]">Timing Guidance</p>
           <div className="space-y-2">
             {guidance.map((line) => (
-              <p key={line} className="text-sm leading-relaxed text-[var(--forest)] md:text-base">
+              <p key={line} className="text-body leading-relaxed text-[var(--forest)] md:text-body">
                 {line}
               </p>
             ))}
@@ -226,7 +226,7 @@ export function AbsorptionEngine({ products }: { products: Product[] }) {
 
         <button
           onClick={autoBalance}
-          className="rounded-full border border-[var(--line-strong)] bg-[var(--surface-elevated)]/90 px-5 py-2.5 text-xs uppercase tracking-[0.13em] text-[var(--forest)] transition duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:bg-[var(--forest)] hover:text-[var(--on-primary)]"
+          className="rounded-full border border-[var(--line-strong)] bg-[var(--surface-elevated)]/90 px-5 py-2.5 text-eyebrow tracking-[0.1em] text-[var(--forest)] transition duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:bg-[var(--forest)] hover:text-[var(--on-primary)]"
         >
           Auto-balance slots
         </button>
