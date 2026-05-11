@@ -10,6 +10,10 @@ Thumbs.db
 # Claude Code per-machine state
 .claude/
 
+# AI agent instruction files (kept local only)
+AGENTS.md
+CLAUDE.md
+
 # Dependencies (each subproject also has its own gitignore for safety)
 node_modules/
 .pnp
