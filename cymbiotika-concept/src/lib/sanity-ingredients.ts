@@ -144,14 +144,19 @@ async function fetchAtlasFromSanity(): Promise<Record<string, IngredientEntry> |
 let cachedAtlas: Record<string, IngredientEntry> | null = null;
 
 /**
- * Returns the full ingredient atlas keyed by ingredient key. Sanity-first
- * with seed fallback. Cached per-process.
+ * Returns the full ingredient atlas keyed by ingredient key. Cached
+ * per-process *only* when the fetch returned real data — an empty result
+ * is never cached, otherwise a single transient Sanity blip would poison
+ * the serverless container for the rest of its lifetime.
  */
 export async function getIngredientAtlas(): Promise<Record<string, IngredientEntry>> {
-  if (cachedAtlas) return cachedAtlas;
+  if (cachedAtlas && Object.keys(cachedAtlas).length > 0) return cachedAtlas;
   const fromSanity = await fetchAtlasFromSanity();
-  cachedAtlas = fromSanity ?? {};
-  return cachedAtlas;
+  if (fromSanity && Object.keys(fromSanity).length > 0) {
+    cachedAtlas = fromSanity;
+    return cachedAtlas;
+  }
+  return {};
 }
 
 /**
