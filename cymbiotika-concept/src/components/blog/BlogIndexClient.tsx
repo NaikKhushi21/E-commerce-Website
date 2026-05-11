@@ -79,7 +79,7 @@ export function BlogIndexClient({ posts }: BlogIndexClientProps) {
             <Link
               key={item.topic}
               href={item.slug ? `/blog/${item.slug}` : "/blog"}
-              className="rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-xs uppercase tracking-[0.14em] text-[var(--forest)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface-elevated)]"
+              className="rounded-full border border-[var(--line)] bg-[var(--surface)] px-4 py-2 text-eyebrow tracking-[0.1em] text-[var(--forest)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:bg-[var(--surface-elevated)]"
             >
               {item.topic}
             </Link>
@@ -90,7 +90,7 @@ export function BlogIndexClient({ posts }: BlogIndexClientProps) {
       {filtered.length === 0 ? (
         <section className="space-y-5 rounded-[1.8rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-6 md:p-8">
           <h2 className="text-3xl text-[var(--forest)] md:text-4xl">No articles found for “{query.trim() || "your current filters"}”.</h2>
-          <p className="text-sm text-[var(--muted)] md:text-base">
+          <p className="text-body text-[var(--muted)] md:text-body">
             Try {emptySuggestions.length > 0 ? emptySuggestions.join(", ") : "Energy, Ingredients, or Research"}.
           </p>
           <div className="flex flex-wrap gap-3">
@@ -99,13 +99,13 @@ export function BlogIndexClient({ posts }: BlogIndexClientProps) {
                 setQuery("");
                 setCategory("All");
               }}
-              className="rounded-full bg-[var(--forest)] px-5 py-2 text-xs uppercase tracking-[0.14em] text-[var(--on-primary)]"
+              className="rounded-full bg-[var(--forest)] px-5 py-2 text-eyebrow tracking-[0.1em] text-[var(--on-primary)]"
             >
               Reset filters
             </button>
             <button
               onClick={() => setQuery("")}
-              className="rounded-full border border-[var(--line)] px-5 py-2 text-xs uppercase tracking-[0.14em] text-[var(--forest)]"
+              className="rounded-full border border-[var(--line)] px-5 py-2 text-eyebrow tracking-[0.1em] text-[var(--forest)]"
             >
               Clear search
             </button>

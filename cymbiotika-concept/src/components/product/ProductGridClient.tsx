@@ -139,7 +139,7 @@ export function ProductGridClient({ products }: Props) {
 
       {/* Live counter */}
       <div className="flex items-center justify-between">
-        <p className="text-xs uppercase tracking-[0.28em] text-[var(--muted)]">
+        <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
           {filtered.length} of {products.length} formula{products.length === 1 ? "" : "s"}
           {filter !== "all" ? ` · ${GOAL_LABEL[filter]}` : ""}
           {search.trim() ? ` · "${search.trim()}"` : ""}
@@ -148,7 +148,7 @@ export function ProductGridClient({ products }: Props) {
           <button
             type="button"
             onClick={reset}
-            className="text-xs uppercase tracking-[0.28em] text-[var(--muted)] transition hover:text-[var(--forest)]"
+            className="text-eyebrow tracking-[0.1em] text-[var(--muted)] transition hover:text-[var(--forest)]"
           >
             Reset
           </button>
@@ -158,8 +158,8 @@ export function ProductGridClient({ products }: Props) {
       {/* Grid (or empty state) */}
       {filtered.length === 0 ? (
         <div className="rounded-[1.6rem] border border-[var(--line)] bg-[var(--surface)] p-10 text-center">
-          <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">Empty zone</p>
-          <p className="mt-3 text-base text-[var(--text)]">
+          <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">Empty zone</p>
+          <p className="mt-3 text-body text-[var(--text)]">
             No formulas match the current filter.
           </p>
           <Pill variant="secondary" size="sm" className="mt-5" onClick={reset}>
@@ -204,7 +204,7 @@ function FilterChip({
       type="button"
       onClick={onClick}
       className={cn(
-        "shrink-0 rounded-full px-6 py-2.5 text-xs uppercase tracking-[0.24em] transition",
+        "shrink-0 rounded-full px-6 py-2.5 text-eyebrow tracking-[0.1em] transition",
         active
           ? "bg-[var(--primary)] text-[var(--on-primary)]"
           : "text-[var(--muted)] hover:text-[var(--forest)]",

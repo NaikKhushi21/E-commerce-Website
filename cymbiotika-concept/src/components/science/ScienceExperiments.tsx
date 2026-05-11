@@ -81,11 +81,11 @@ function ExperimentCard({
       />
 
       <div className="relative z-10 flex items-center gap-2">
-        <span className="text-[10px] uppercase tracking-[0.32em] text-[#d7c3a7]">
+        <span className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">
           0{index}
         </span>
         <span className="h-px flex-1 bg-[var(--line)]" />
-        <span className="text-[10px] uppercase tracking-[0.32em] text-[var(--muted)]">
+        <span className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
           {eyebrow}
         </span>
       </div>
@@ -260,7 +260,7 @@ function IngredientNetwork({
                 to the hovered node, so the synergy graph reads as the network
                 relationship instead of a dense word cloud. */}
             <motion.span
-              className="pointer-events-none absolute z-[2] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border bg-[var(--surface)]/85 px-2 py-0.5 text-[9px] uppercase tracking-[0.22em] backdrop-blur-sm"
+              className="pointer-events-none absolute z-[2] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border bg-[var(--surface)]/85 px-2 py-0.5 text-eyebrow tracking-[0.1em] backdrop-blur-sm"
               style={{
                 left: `${labelX}%`,
                 top: `${labelY}%`,
@@ -310,7 +310,7 @@ function IngredientNetwork({
       })}
 
       {/* Footer line */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 flex items-center justify-between text-[9px] uppercase tracking-[0.28em] text-[var(--muted)]">
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 flex items-center justify-between text-eyebrow tracking-[0.1em] text-[var(--muted)]">
         <span>{ingredients.length} compounds</span>
         <span>{edges.length} synergies</span>
       </div>
@@ -396,7 +396,7 @@ function ProtocolGravity() {
               type="button"
               onClick={() => setGoalKey(g.key)}
               className={cn(
-                "rounded-full border px-3 py-1 text-[9px] uppercase tracking-[0.22em] transition",
+                "rounded-full border px-3 py-1 text-eyebrow tracking-[0.1em] transition",
                 isActive
                   ? "border-transparent text-[var(--on-primary)]"
                   : "border-[var(--line)] bg-[var(--surface-elevated)] text-[var(--muted)] hover:text-[var(--text)]",
@@ -445,7 +445,7 @@ function ProtocolGravity() {
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
           <div
-            className="flex h-14 w-14 items-center justify-center rounded-full text-[10px] uppercase tracking-[0.22em]"
+            className="flex h-14 w-14 items-center justify-center rounded-full text-eyebrow tracking-[0.1em]"
             style={{
               background: `radial-gradient(circle at 35% 30%, ${goal.color}, ${goal.color}88)`,
               boxShadow: `0 0 30px ${goal.color}88`,
@@ -471,7 +471,7 @@ function ProtocolGravity() {
               transition={{ duration: 0.5, delay: i * 0.08 }}
             >
               <div
-                className="rounded-full border px-2.5 py-1 text-[9px] uppercase tracking-[0.18em]"
+                className="rounded-full border px-2.5 py-1 text-eyebrow tracking-[0.1em]"
                 style={{
                   background: "rgba(255,255,255,0.06)",
                   borderColor: `${goal.color}55`,
@@ -510,7 +510,7 @@ function AbsorptionFlow() {
           type="button"
           onClick={() => setMode("liposomal")}
           className={cn(
-            "rounded-full px-3 py-1 text-[9px] uppercase tracking-[0.22em] transition",
+            "rounded-full px-3 py-1 text-eyebrow tracking-[0.1em] transition",
             isLipo
               ? "bg-[var(--primary)] text-[var(--on-primary)]"
               : "text-[var(--muted)] hover:text-[var(--text)]",
@@ -522,7 +522,7 @@ function AbsorptionFlow() {
           type="button"
           onClick={() => setMode("traditional")}
           className={cn(
-            "rounded-full px-3 py-1 text-[9px] uppercase tracking-[0.22em] transition",
+            "rounded-full px-3 py-1 text-eyebrow tracking-[0.1em] transition",
             !isLipo
               ? "bg-[var(--primary)] text-[var(--on-primary)]"
               : "text-[var(--muted)] hover:text-[var(--text)]",
@@ -535,7 +535,7 @@ function AbsorptionFlow() {
       {/* Cross-section */}
       <div className="relative mt-4 flex-1 min-h-[200px] overflow-hidden rounded-2xl border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_80%,transparent)]">
         {/* Layers — labels on the right */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex flex-col justify-between py-3 pl-3 text-[8px] uppercase tracking-[0.22em] text-[var(--muted)]/70">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex flex-col justify-between py-3 pl-3 text-[8px] uppercase tracking-[0.1em] text-[var(--muted)]">
           <span>Stomach</span>
           <span>Gut wall</span>
           <span>Bloodstream</span>
@@ -597,7 +597,7 @@ function AbsorptionFlow() {
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="absolute bottom-3 right-3 rounded-xl border border-[var(--line)] bg-[var(--surface-elevated)] px-3 py-2 text-right"
         >
-          <p className="text-[9px] uppercase tracking-[0.22em] text-[var(--muted)]">
+          <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
             Bioavailability
           </p>
           <p

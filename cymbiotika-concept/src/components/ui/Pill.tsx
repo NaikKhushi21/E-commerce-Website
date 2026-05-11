@@ -46,9 +46,9 @@ const VARIANT_CLASSES: Record<Variant, string> = {
 };
 
 const SIZE_CLASSES: Record<Size, string> = {
-  sm: "px-4 py-2 text-[10px] tracking-[0.22em]",
-  md: "px-6 py-2.5 text-[11px] tracking-[0.24em]",
-  lg: "px-7 py-3.5 text-xs tracking-[0.24em]",
+  sm: "px-4 py-2 text-eyebrow",
+  md: "px-6 py-2.5 text-eyebrow",
+  lg: "px-7 py-3.5 text-eyebrow",
 };
 
 const BASE =

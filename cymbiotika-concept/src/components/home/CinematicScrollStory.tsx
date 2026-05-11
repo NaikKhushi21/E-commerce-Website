@@ -59,7 +59,7 @@ export function CinematicScrollStory({ product }: { product?: Product }) {
             <br />
             when motion tells the story.
           </motion.h3>
-          <p className="body-copy mt-5 max-w-xl text-base md:text-lg">
+          <p className="text-body mt-5 max-w-xl text-body md:text-lg">
             A cinematic progression that turns formulation logic into a sensory narrative instead of static sections.
           </p>
 
@@ -72,7 +72,7 @@ export function CinematicScrollStory({ product }: { product?: Product }) {
                   style={reduceMotion ? undefined : { opacity: stepOpacities[idx] }}
                 >
                   <span>{step}</span>
-                  <span className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">0{idx + 1}</span>
+                  <span className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">0{idx + 1}</span>
                 </motion.li>
               );
             })}

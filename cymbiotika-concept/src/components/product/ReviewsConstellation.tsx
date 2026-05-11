@@ -102,13 +102,13 @@ export function ReviewsConstellation({
         subhead="A few verified voices. Filter by sentiment to see what people lead with."
         right={
           <div>
-            <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--muted)]">
+            <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
               Average rating
             </p>
             <p className="mt-2 font-display text-5xl text-[var(--text)]">
               {avgRating.toFixed(2)}
             </p>
-            <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+            <p className="mt-1 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
               {product.title}
             </p>
           </div>
@@ -131,7 +131,7 @@ export function ReviewsConstellation({
               type="button"
               onClick={() => setFilter(f.key)}
               className={cn(
-                "inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[10px] uppercase tracking-[0.22em] transition",
+                "inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-eyebrow tracking-[0.1em] transition",
                 active
                   ? "border-transparent bg-[var(--surface-elevated)] text-[var(--text)]"
                   : "border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--text)]",
@@ -143,7 +143,7 @@ export function ReviewsConstellation({
                 style={{ background: color, boxShadow: `0 0 8px ${color}` }}
               />
               {f.label}
-              <span className="text-[var(--muted)]/85">· {count}</span>
+              <span className="text-[var(--muted)]">· {count}</span>
             </button>
           );
         })}
@@ -200,7 +200,7 @@ export function ReviewsConstellation({
                       style={{ background: color, boxShadow: `0 0 8px ${color}` }}
                     />
                     <p
-                      className="text-[10px] uppercase tracking-[0.28em]"
+                      className="text-eyebrow tracking-[0.1em]"
                       style={{ color }}
                     >
                       {review.tag}
@@ -208,7 +208,7 @@ export function ReviewsConstellation({
                   </div>
                   <p className="text-[10px] tabular-nums text-[var(--muted)]">
                     {"★".repeat(review.rating)}
-                    <span className="text-[var(--muted)]/40">
+                    <span className="text-[var(--muted)]">
                       {"★".repeat(5 - review.rating)}
                     </span>
                   </p>
@@ -218,7 +218,7 @@ export function ReviewsConstellation({
                   &ldquo;{review.quote}&rdquo;
                 </p>
 
-                <p className="relative z-10 mt-4 text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+                <p className="relative z-10 mt-4 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                   — {review.author}
                 </p>
               </motion.article>
@@ -228,7 +228,7 @@ export function ReviewsConstellation({
       </motion.div>
 
       {filtered.length === 0 ? (
-        <p className="relative z-10 mt-8 text-center text-[11px] uppercase tracking-[0.28em] text-[var(--muted)]">
+        <p className="relative z-10 mt-8 text-center text-eyebrow tracking-[0.1em] text-[var(--muted)]">
           No reviews in this sentiment.
         </p>
       ) : null}

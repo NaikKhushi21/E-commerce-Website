@@ -1,10 +1,23 @@
 import type { Metadata } from "next";
+import { Fraunces, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { VialChat } from "@/components/concierge/VialChat";
 import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-body",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  variable: "--font-display",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Cymbiotika Concept",
@@ -14,7 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full bg-[var(--bg)] text-[var(--text)]">
+      <body className={`${inter.variable} ${fraunces.variable} min-h-full bg-[var(--bg)] text-[var(--text)]`}>
         <AppProviders>
           <SmoothScroll />
           <Header />

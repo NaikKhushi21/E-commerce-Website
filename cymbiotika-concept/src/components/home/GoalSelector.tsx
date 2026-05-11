@@ -13,8 +13,8 @@ export function GoalSelector() {
     <FadeIn>
       <section className="rounded-[2rem] border border-[--brand-mint]/25 bg-white p-6 md:p-7">
         <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
-          <h2 className="font-display text-3xl text-[#1f3126]">Shop by benefit</h2>
-          <p className="text-xs uppercase tracking-[0.16em] text-[#5c7f66]">Feel the results</p>
+          <h2 className="text-h2 text-[#1f3126]">Shop by benefit</h2>
+          <p className="text-eyebrow tracking-[0.1em] text-[#5c7f66]">Feel the results</p>
         </div>
         <div className="grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
           {WELLNESS_GOALS.map((goal, index) => (

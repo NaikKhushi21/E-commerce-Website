@@ -31,7 +31,7 @@ export function SectionHeader({
   const heading = (
     <div className={cn("max-w-3xl", isCenter && "mx-auto text-center")}>
       {eyebrow ? (
-        <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--muted)]">{eyebrow}</p>
+        <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">{eyebrow}</p>
       ) : null}
       <Tag
         className={cn(
@@ -45,7 +45,7 @@ export function SectionHeader({
         {title}
       </Tag>
       {subhead ? (
-        <p className="mt-4 max-w-xl text-sm leading-relaxed text-[var(--muted)] md:text-base">
+        <p className="mt-4 max-w-xl text-body leading-relaxed text-[var(--muted)] md:text-body">
           {subhead}
         </p>
       ) : null}

@@ -455,7 +455,15 @@ export async function getSanityBlogPosts(): Promise<BlogPost[]> {
 
   const rows = (await sanityQuery<SanityBlogDoc[]>(query)) ?? [];
   const mapped = rows.map(mapDoc).filter((entry): entry is BlogPost => Boolean(entry));
-  return mapped;
+  // De-dupe by slug. The query unions three document types and the CMS can
+  // hold the same slug across them — without this the React "duplicate key"
+  // warning fires anywhere we render a list of posts.
+  const seen = new Set<string>();
+  return mapped.filter((post) => {
+    if (seen.has(post.slug)) return false;
+    seen.add(post.slug);
+    return true;
+  });
 }
 
 export async function getSanityBlogPostBySlug(slug: string): Promise<BlogPost | null> {

@@ -53,13 +53,13 @@ export function ArticleCard({ post, compact = false, index = 0 }: ArticleCardPro
             <div className="h-full w-full bg-[radial-gradient(circle_at_52%_18%,rgba(255,255,255,0.28),transparent_34%)]" />
           </div>
 
-          <div className="absolute left-5 right-5 top-5 flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.16em] text-white/78">
+          <div className="absolute left-5 right-5 top-5 flex items-center justify-between gap-3 text-eyebrow tracking-[0.1em] text-white/78">
             <span>{displayCategory(post.category)}</span>
             <span>{formatCardDate(post.publishedAt)}</span>
           </div>
 
           <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
-            <div className="mb-5 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.14em] text-white/76">
+            <div className="mb-5 flex flex-wrap items-center gap-2 text-eyebrow tracking-[0.1em] text-white/76">
               <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1">{intentTag(post)}</span>
               <span>{post.readTime}</span>
             </div>
@@ -79,7 +79,7 @@ export function ArticleCard({ post, compact = false, index = 0 }: ArticleCardPro
               {post.excerpt}
             </p>
             <p
-              className="mt-5 text-xs uppercase tracking-[0.16em] text-white underline underline-offset-4 md:mt-6"
+              className="mt-5 text-eyebrow tracking-[0.1em] text-white underline underline-offset-4 md:mt-6"
               style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}
             >
               Open cover story

@@ -77,7 +77,7 @@ export function BlogArticleClient({ post, related, ingredientAtlas }: BlogArticl
       <ReadingProgress />
 
       <div>
-        <Link href="/blog" className="text-xs uppercase tracking-[0.12em] text-[var(--forest)] underline underline-offset-4">
+        <Link href="/blog" className="text-eyebrow tracking-[0.12em] text-[var(--forest)] underline underline-offset-4">
           Back to Journal
         </Link>
       </div>
@@ -115,7 +115,7 @@ export function BlogArticleClient({ post, related, ingredientAtlas }: BlogArticl
                 {post.bullets.map((bullet, index) => (
                   <article key={bullet} className="grid gap-2 border-b border-[var(--line)] pb-3 md:grid-cols-[auto_1fr] md:gap-4">
                     <p className="text-2xl text-[var(--forest)]">{String(index + 1).padStart(2, "0")}</p>
-                    <p className="text-base leading-relaxed text-[var(--muted)] md:text-lg">{bullet}</p>
+                    <p className="text-body leading-relaxed text-[var(--muted)] md:text-lg">{bullet}</p>
                   </article>
                 ))}
               </div>

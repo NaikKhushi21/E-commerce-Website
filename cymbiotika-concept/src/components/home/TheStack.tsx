@@ -135,11 +135,11 @@ export function TheStack({ products }: { products: Product[] }) {
         {/* Header */}
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-xl">
-            <p className="text-[10px] uppercase tracking-[0.36em] text-white/55">The Stack</p>
+            <p className="text-eyebrow tracking-[0.1em] text-white/78">The Stack</p>
             <h2 className="display-title mt-4 text-[clamp(2.2rem,5vw,4.4rem)] leading-[0.98] text-white">
               Drag formulas in. Watch them work together.
             </h2>
-            <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
+            <p className="mt-5 max-w-md text-body leading-relaxed text-white/65 md:text-body">
               A routine mixer. Drop any combination into the tray — synergy threads draw between
               compatible pairs, coverage bars show what your stack delivers.
             </p>
@@ -147,18 +147,18 @@ export function TheStack({ products }: { products: Product[] }) {
           {stack.length > 0 && (
             <div className="flex flex-col items-end gap-3 text-right">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.32em] text-white/45">Stack value</p>
+                <p className="text-eyebrow tracking-[0.1em] text-white/78">Stack value</p>
                 <p className="mt-2 font-display text-3xl text-white md:text-4xl">
                   ${totalPrice.toFixed(0)}
                 </p>
-                <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-white/35">
+                <p className="mt-1 text-eyebrow tracking-[0.1em] text-white/78">
                   {stack.length} formula{stack.length === 1 ? "" : "s"} stacked
                 </p>
               </div>
               <button
                 type="button"
                 onClick={addStackToCart}
-                className="rounded-full bg-white px-6 py-3 text-[11px] uppercase tracking-[0.22em] text-[var(--on-primary)] transition hover:scale-[1.02]"
+                className="rounded-full bg-white px-6 py-3 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition hover:scale-[1.02]"
               >
                 Add stack to cart
               </button>
@@ -168,7 +168,7 @@ export function TheStack({ products }: { products: Product[] }) {
 
         {/* Available row */}
         <div className="mt-10">
-          <p className="text-[10px] uppercase tracking-[0.32em] text-white/40">
+          <p className="text-eyebrow tracking-[0.1em] text-white/78">
             Available formulas — drag any in
           </p>
           <div className="mt-5 flex flex-wrap gap-3 md:gap-4">
@@ -192,12 +192,12 @@ export function TheStack({ products }: { products: Product[] }) {
               ))}
             </AnimatePresence>
             {remaining.length === 0 && (
-              <p className="text-[11px] uppercase tracking-[0.22em] text-white/35">
+              <p className="text-eyebrow tracking-[0.1em] text-white/78">
                 All formulas in your stack.
               </p>
             )}
           </div>
-          <p className="mt-3 text-[10px] uppercase tracking-[0.24em] text-white/30">
+          <p className="mt-3 text-eyebrow tracking-[0.1em] text-white/78">
             Drag into the tray below — or tap to add.
           </p>
         </div>
@@ -221,8 +221,8 @@ export function TheStack({ products }: { products: Product[] }) {
           {stack.length === 0 ? (
             <div className="flex h-[420px] items-center justify-center text-center md:h-[460px]">
               <div>
-                <p className="text-xs uppercase tracking-[0.32em] text-white/40">Drop formulas here</p>
-                <p className="mt-3 text-[11px] uppercase tracking-[0.22em] text-white/25">
+                <p className="text-eyebrow tracking-[0.1em] text-white/78">Drop formulas here</p>
+                <p className="mt-3 text-eyebrow tracking-[0.1em] text-white/78">
                   Synergy threads will appear between compatible pairs
                 </p>
               </div>
@@ -248,19 +248,19 @@ export function TheStack({ products }: { products: Product[] }) {
             className="mt-10"
           >
             <div className="flex items-end justify-between">
-              <p className="text-[10px] uppercase tracking-[0.32em] text-white/40">
+              <p className="text-eyebrow tracking-[0.1em] text-white/78">
                 Stack delivers
               </p>
               <button
                 type="button"
                 onClick={clearStack}
-                className="text-[10px] uppercase tracking-[0.28em] text-white/50 transition hover:text-white"
+                className="text-eyebrow tracking-[0.1em] text-white/78 transition hover:text-white"
               >
                 Clear stack
               </button>
             </div>
             {coverage.length === 0 ? (
-              <p className="mt-5 text-[11px] uppercase tracking-[0.22em] text-white/35">
+              <p className="mt-5 text-eyebrow tracking-[0.1em] text-white/78">
                 No tagged goals — drop more formulas to see coverage.
               </p>
             ) : (
@@ -349,7 +349,7 @@ function DraggablePuck({
             style={{ WebkitUserDrag: "none", userDrag: "none" } as React.CSSProperties}
           />
         </div>
-        <span className="absolute bottom-1.5 left-0 right-0 truncate px-2 text-center text-[9px] uppercase tracking-[0.18em] text-white/65">
+        <span className="absolute bottom-1.5 left-0 right-0 truncate px-2 text-center text-eyebrow tracking-[0.1em] text-white/65">
           {shortName(product.title)}
         </span>
       </div>
@@ -494,7 +494,7 @@ function StackTray({
                     className="select-none object-contain p-1"
                   />
                 </div>
-                <span className="pointer-events-none absolute bottom-1.5 left-0 right-0 truncate px-2 text-center text-[9px] uppercase tracking-[0.18em] text-white/65">
+                <span className="pointer-events-none absolute bottom-1.5 left-0 right-0 truncate px-2 text-center text-eyebrow tracking-[0.1em] text-white/65">
                   {shortName(product.title)}
                 </span>
 
@@ -503,14 +503,14 @@ function StackTray({
                   <button
                     type="button"
                     onClick={() => onAdd(product)}
-                    className="rounded-full bg-white px-3 py-1 text-[9px] uppercase tracking-[0.22em] text-[var(--on-primary)] transition hover:scale-[1.04]"
+                    className="rounded-full bg-white px-3 py-1 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition hover:scale-[1.04]"
                   >
                     Add
                   </button>
                   <button
                     type="button"
                     onClick={() => onRemove(product.id)}
-                    className="text-[9px] uppercase tracking-[0.22em] text-white/70 transition hover:text-white"
+                    className="text-eyebrow tracking-[0.1em] text-white/70 transition hover:text-white"
                   >
                     Remove
                   </button>
@@ -541,8 +541,8 @@ function CoverageBar({
   return (
     <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
       <div className="flex items-center justify-between">
-        <p className="text-[11px] uppercase tracking-[0.22em] text-white/75">{label}</p>
-        <span className="text-[10px] tabular-nums text-white/45">
+        <p className="text-eyebrow tracking-[0.1em] text-white/75">{label}</p>
+        <span className="text-[10px] tabular-nums text-white/78">
           {count}/{total}
         </span>
       </div>

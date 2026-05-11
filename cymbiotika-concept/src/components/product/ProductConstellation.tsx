@@ -186,7 +186,7 @@ export function ProductConstellation({ products }: { products: Product[] }) {
             onClick={() => setFilter(g)}
           />
         ))}
-        <span className="ml-auto text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+        <span className="ml-auto text-eyebrow tracking-[0.1em] text-[var(--muted)]">
           {filter === "all"
             ? `${products.length} formula${products.length === 1 ? "" : "s"}`
             : `${matchCount} matching`}
@@ -270,7 +270,7 @@ export function ProductConstellation({ products }: { products: Product[] }) {
               key={`label-${g}`}
               type="button"
               onClick={() => setFilter(filter === g ? "all" : g)}
-              className="absolute z-20 -translate-x-1/2 -translate-y-1/2 select-none rounded-full px-3 py-1.5 text-[10px] uppercase tracking-[0.28em] transition"
+              className="absolute z-20 -translate-x-1/2 -translate-y-1/2 select-none rounded-full px-3 py-1.5 text-eyebrow tracking-[0.1em] transition"
               style={{
                 left: `${a.x}%`,
                 top: `${a.y}%`,
@@ -305,10 +305,10 @@ export function ProductConstellation({ products }: { products: Product[] }) {
         {noResults ? (
           <div className="absolute inset-0 z-30 flex items-center justify-center">
             <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-elevated)] px-6 py-5 text-center">
-              <p className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+              <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                 Empty zone
               </p>
-              <p className="mt-2 text-sm text-[var(--text)]">
+              <p className="mt-2 text-body text-[var(--text)]">
                 No formulas tagged for {GOAL_ANCHORS[filter as WellnessGoal].label}.
               </p>
               <Pill
@@ -343,7 +343,7 @@ function FilterChip({
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-full border px-4 py-1.5 text-[10px] uppercase tracking-[0.24em] transition",
+        "rounded-full border px-4 py-1.5 text-eyebrow tracking-[0.1em] transition",
         active
           ? "border-transparent bg-[var(--primary)] text-[var(--on-primary)]"
           : "border-[var(--line)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--forest)]",
@@ -438,8 +438,8 @@ function ProductNode({
               className="pointer-events-none absolute left-1/2 top-full z-30 mt-3 -translate-x-1/2 whitespace-nowrap rounded-xl border border-[var(--line)] bg-[var(--surface-elevated)] px-3 py-2 text-center"
               style={{ boxShadow: "0 12px 30px rgba(0,0,0,0.55)" }}
             >
-              <p className="text-xs leading-none text-[var(--text)]">{product.title}</p>
-              <p className="mt-1 text-[9px] uppercase tracking-[0.24em] text-[var(--muted)]">
+              <p className="text-small leading-none text-[var(--text)]">{product.title}</p>
+              <p className="mt-1 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                 {formatMoney(product.price, product.currency)} · open →
               </p>
             </motion.div>

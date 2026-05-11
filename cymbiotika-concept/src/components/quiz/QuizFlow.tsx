@@ -71,7 +71,7 @@ export function QuizFlow({ products }: { products: Product[] }) {
       </div>
 
       <section className="relative z-10 mx-auto max-w-5xl space-y-3">
-        <div className="flex items-center justify-between text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+        <div className="flex items-center justify-between text-eyebrow tracking-[0.1em] text-[var(--muted)]">
           <p>Question {step + 1}</p>
           <p>{Math.round(progress)}%</p>
         </div>
@@ -97,7 +97,7 @@ export function QuizFlow({ products }: { products: Product[] }) {
         <button
           onClick={() => setStep((s) => Math.max(0, s - 1))}
           disabled={step === 0}
-          className="text-xs uppercase tracking-[0.14em] text-[var(--muted)] transition-opacity disabled:opacity-35"
+          className="text-eyebrow tracking-[0.1em] text-[var(--muted)] transition-opacity disabled:opacity-35"
         >
           Back
         </button>
@@ -106,12 +106,12 @@ export function QuizFlow({ products }: { products: Product[] }) {
           <button
             disabled={selected.length === 0}
             onClick={() => setStep((s) => s + 1)}
-            className="rounded-full bg-[var(--primary)] px-6 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--on-primary)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-45"
+            className="rounded-full bg-[var(--primary)] px-6 py-2.5 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-45"
           >
             Continue
           </button>
         ) : (
-          <span className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">Select one option to continue</span>
+          <span className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">Select one option to continue</span>
         )}
       </div>
     </motion.div>

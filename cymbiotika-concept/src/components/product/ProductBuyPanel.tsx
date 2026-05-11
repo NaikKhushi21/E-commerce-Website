@@ -113,7 +113,7 @@ export function ProductBuyPanel({
             return (
               <span
                 key={goal}
-                className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[var(--forest)]"
+                className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-eyebrow tracking-[0.1em] text-[var(--forest)]"
                 style={{ background: tone.tint, boxShadow: `inset 0 0 0 1px ${tone.dot}33` }}
               >
                 <span className="h-1.5 w-1.5 rounded-full" style={{ background: tone.dot, boxShadow: `0 0 6px ${tone.dot}` }} />
@@ -127,18 +127,18 @@ export function ProductBuyPanel({
       {/* Title */}
       <div>
         <p className="micro-copy text-[var(--muted)]">Formula</p>
-        <h1 className="display-title mt-2 text-4xl leading-[1.04] text-[var(--forest)] md:text-5xl">
+        <h1 className="text-h1 mt-2 leading-[1.04] text-[var(--forest)]">
           {product.title}
         </h1>
 
         {description ? (
-          <p className="body-copy mt-4 max-w-lg text-sm leading-relaxed md:text-base">
+          <p className="text-body mt-4 max-w-lg text-body leading-relaxed md:text-body">
             {showFullDesc ? description : compactDesc}{" "}
             {isLongDescription ? (
               <button
                 type="button"
                 onClick={() => setShowFullDesc((v) => !v)}
-                className="ml-1 text-xs uppercase tracking-[0.16em] text-[var(--muted)] underline underline-offset-4 transition hover:text-[var(--forest)]"
+                className="ml-1 text-eyebrow tracking-[0.1em] text-[var(--muted)] underline underline-offset-4 transition hover:text-[var(--forest)]"
                 aria-expanded={showFullDesc}
               >
                 {showFullDesc ? "less" : "more"}
@@ -154,7 +154,7 @@ export function ProductBuyPanel({
           {seals.map((seal) => (
             <li
               key={seal}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--surface-elevated)] px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-[var(--muted)]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-[var(--surface-elevated)] px-2.5 py-1 text-eyebrow tracking-[0.1em] text-[var(--muted)]"
             >
               <CheckIcon /> {seal}
             </li>
@@ -183,7 +183,7 @@ export function ProductBuyPanel({
           type="button"
           onClick={() => setSubscribe((v) => !v)}
           className={cn(
-            "flex w-full items-center justify-between rounded-full border px-4 py-2.5 text-xs uppercase tracking-[0.16em] transition",
+            "flex w-full items-center justify-between rounded-full border px-4 py-2.5 text-eyebrow tracking-[0.1em] transition",
             subscribe
               ? "border-[var(--accent)] bg-[var(--accent-soft)]/40 text-[var(--forest)]"
               : "border-[var(--line)] bg-[var(--surface-elevated)] text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--forest)]",
@@ -203,7 +203,7 @@ export function ProductBuyPanel({
             Subscribe & save 15%
           </span>
           {!subscribe ? (
-            <span className="text-[10px] tracking-[0.18em] text-[var(--accent)]">
+            <span className="text-small font-medium text-[var(--accent)]">
               −{formatMoney(product.price - subscribePrice, product.currency)}
             </span>
           ) : null}
@@ -217,7 +217,7 @@ export function ProductBuyPanel({
             addItem(product);
             openCart();
           }}
-          className="w-full rounded-full bg-[var(--forest)] py-3 text-xs uppercase tracking-[0.14em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.01] sm:w-auto sm:px-9"
+          className="w-full rounded-full bg-[var(--forest)] py-3 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.01] sm:w-auto sm:px-9"
         >
           Add to routine
         </button>
@@ -228,7 +228,7 @@ export function ProductBuyPanel({
         />
       </div>
 
-      <p className="text-xs text-[var(--muted)]">Free US shipping over $75 · 30-day support guarantee</p>
+      <p className="text-small text-[var(--muted)]">Free US shipping over $75 · 30-day support guarantee</p>
 
       {/* Tabbed detail */}
       {availableTabs.length > 0 ? (
@@ -245,7 +245,7 @@ export function ProductBuyPanel({
                     setActiveIngredient(null);
                   }}
                   className={cn(
-                    "rounded-full px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] transition",
+                    "rounded-full px-3 py-1.5 text-eyebrow tracking-[0.1em] transition",
                     isActive
                       ? "bg-[var(--forest)] text-[var(--on-primary)]"
                       : "text-[var(--muted)] hover:text-[var(--forest)]",
@@ -373,10 +373,10 @@ export function ProductBuyPanel({
 
                   {otherIngredients.length > 0 ? (
                     <details className="group">
-                      <summary className="cursor-pointer text-[10px] uppercase tracking-[0.18em] text-[var(--muted)] transition hover:text-[var(--forest)]">
+                      <summary className="cursor-pointer text-eyebrow tracking-[0.1em] text-[var(--muted)] transition hover:text-[var(--forest)]">
                         Other ingredients
                       </summary>
-                      <p className="mt-2 text-xs leading-relaxed text-[var(--muted)]">
+                      <p className="mt-2 text-small leading-relaxed text-[var(--muted)]">
                         {otherIngredients.join(", ")}
                       </p>
                     </details>
@@ -387,7 +387,7 @@ export function ProductBuyPanel({
                       href={product.coaUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] text-[var(--forest)] underline underline-offset-4 transition hover:text-[var(--accent)]"
+                      className="inline-flex items-center gap-1.5 text-eyebrow tracking-[0.1em] text-[var(--forest)] underline underline-offset-4 transition hover:text-[var(--accent)]"
                     >
                       Certificate of Analysis →
                     </a>
@@ -448,16 +448,16 @@ function IngredientCard({
       <div className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-3">
         <div className="flex items-center gap-2">
           <span aria-hidden="true" className="h-1 w-1 rounded-full" style={{ background: color, boxShadow: `0 0 6px ${color}` }} />
-          <p className="text-[9px] uppercase tracking-[0.24em]" style={{ color }}>
+          <p className="text-eyebrow tracking-[0.1em]" style={{ color }}>
             {atlas?.category ?? "Active compound"}
           </p>
         </div>
         <h4 className="mt-1 text-sm text-[var(--forest)]">{atlas?.name ?? label}</h4>
-        <p className="mt-1.5 text-xs leading-relaxed text-[var(--muted)]">
+        <p className="mt-1.5 text-small leading-relaxed text-[var(--muted)]">
           {atlas?.function ?? "See the Ingredient Atomizer below for the full breakdown."}
         </p>
         {atlas?.dose ? (
-          <p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-[var(--muted)]">
+          <p className="mt-2 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
             Dose · <span className="text-[var(--forest)]">{atlas.dose}</span>
           </p>
         ) : null}

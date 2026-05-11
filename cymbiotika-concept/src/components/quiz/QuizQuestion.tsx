@@ -33,7 +33,7 @@ export function QuizQuestion({ title, options, selected, multi = false, onSelect
             >
               <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.55),transparent_54%)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
               <span className="relative z-10">{option}</span>
-              {multi ? <span className="relative z-10 ml-2 text-[10px] uppercase tracking-[0.14em] opacity-65">multi</span> : null}
+              {multi ? <span className="relative z-10 ml-2 text-eyebrow tracking-[0.1em] opacity-65">multi</span> : null}
             </motion.button>
           );
         })}

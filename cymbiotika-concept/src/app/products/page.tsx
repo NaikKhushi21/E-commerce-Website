@@ -13,7 +13,7 @@ export default async function ProductsPage() {
         eyebrow="All Formulas"
         title="Every formula, arranged by what it does."
         right={
-          <p className="max-w-md text-sm leading-relaxed text-[var(--muted)] md:text-base">
+          <p className="max-w-md text-body leading-relaxed text-[var(--muted)] md:text-body">
             Liposomal delivery systems and targeted compounds. Filter by zone or search ingredients — the grid reorganizes live.
           </p>
         }

@@ -151,28 +151,28 @@ export function ProductCard({ product, index = 0, rotateModelOnHover = false }: 
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
               <p className="micro-copy text-[var(--muted)]">Museum Object {String(index + 1).padStart(2, "0")}</p>
-              <h3 className="mt-2 line-clamp-2 text-xl leading-tight text-[var(--text)] md:text-3xl md:leading-none">{product.title}</h3>
+              <h3 className="mt-2 line-clamp-2 text-h3 leading-tight text-[var(--text)]">{product.title}</h3>
             </div>
-            <p className="whitespace-nowrap text-sm text-[var(--muted)] opacity-0 transition-opacity duration-500 [transition-timing-function:var(--easing-premium)] group-hover:opacity-100">{formatMoney(product.price, product.currency)}</p>
+            <p className="whitespace-nowrap text-body text-[var(--muted)] opacity-0 transition-opacity duration-500 [transition-timing-function:var(--easing-premium)] group-hover:opacity-100">{formatMoney(product.price, product.currency)}</p>
           </div>
           {/* Benefit + CTAs reveal on card hover. max-h pairs with opacity so
               the panel grows smoothly instead of popping the layout. */}
           <div className="grid max-h-0 grid-rows-[0fr] opacity-0 transition-all duration-500 [transition-timing-function:var(--easing-premium)] group-hover:max-h-48 group-hover:grid-rows-[1fr] group-hover:opacity-100">
             <div className="overflow-hidden">
-              <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">{benefit}</p>
+              <p className="mt-3 line-clamp-2 text-body leading-relaxed text-[var(--muted)]">{benefit}</p>
               <div className="mt-4 flex flex-wrap gap-2.5">
                 <button
                   onClick={() => addItem(product)}
-                  className="rounded-full bg-[var(--primary)] px-4 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--on-primary)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.02]"
+                  className="rounded-full bg-[var(--primary)] px-4 py-2.5 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.02]"
                 >
                   Add
                 </button>
                 <ProductAskButton product={product} />
                 <Link
                   href={`/products/${product.handle}`}
-                  className="rounded-full border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-2.5 text-xs uppercase tracking-[0.14em] text-[var(--text)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:bg-[var(--surface-elevated)]"
+                  className="rounded-full border border-[var(--line-strong)] bg-[var(--surface)] px-4 py-2.5 text-eyebrow tracking-[0.1em] text-[var(--text)] transition duration-500 [transition-timing-function:var(--easing-premium)] hover:bg-[var(--surface-elevated)]"
                 >
-                  Study
+                  View
                 </Link>
               </div>
             </div>

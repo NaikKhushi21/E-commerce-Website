@@ -43,13 +43,13 @@ export function ReadingPathCards({ posts }: ReadingPathCardsProps) {
           return (
             <article key={path.id} className="rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)] p-5">
               <p className="micro-copy text-[var(--muted)]">{path.title}</p>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{path.blurb}</p>
+              <p className="mt-3 text-body leading-relaxed text-[var(--muted)]">{path.blurb}</p>
               {post ? (
-                <Link href={`/blog/${post.slug}`} className="mt-5 inline-block text-sm uppercase tracking-[0.13em] text-[var(--forest)] underline underline-offset-4">
+                <Link href={`/blog/${post.slug}`} className="mt-5 inline-block text-sm uppercase tracking-[0.1em] text-[var(--forest)] underline underline-offset-4">
                   Open route
                 </Link>
               ) : (
-                <p className="mt-5 text-xs uppercase tracking-[0.12em] text-[var(--muted)]">Upcoming</p>
+                <p className="mt-5 text-eyebrow tracking-[0.12em] text-[var(--muted)]">Upcoming</p>
               )}
             </article>
           );

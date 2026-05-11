@@ -9,7 +9,7 @@
   --surface: rgba(255, 255, 255, 0.78);
   --surface-elevated: #ffffff;
   --text: #0c1f1c;
-  --muted: rgba(12, 31, 28, 0.6);
+  --muted: rgba(12, 31, 28, 0.72);
 
   --primary: #0c1f1c;          /* deep forest green — used as button bg */
   --on-primary: #ffffff;        /* foreground when sat on --primary */
@@ -48,8 +48,25 @@
   --accent-titanium: var(--accent-mint);
   --accent-teal: var(--accent-mint);
 
-  --font-body: "Avenir Next", "Avenir", "Gill Sans", "Segoe UI", sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  /* --font-display and --font-body are set on <body> by next/font in
+     src/app/layout.tsx — Fraunces (display, variable) and Inter (body,
+     variable). Don't redeclare them here. */
+
+  /* Typography scale — single source of truth. Apply via .text-display,
+     .text-h1, .text-h2, .text-h3, .text-body, .text-large-body, .text-small,
+     .text-eyebrow. Fluid sizing keeps title-to-body ratio consistent. */
+  --fs-display:    clamp(3rem, 6vw, 4.5rem);       /* 48 → 72px */
+  --fs-h1:         clamp(2.25rem, 4.5vw, 3.5rem);  /* 36 → 56px */
+  --fs-h2:         clamp(1.75rem, 3vw, 2.5rem);    /* 28 → 40px */
+  --fs-h3:         clamp(1.125rem, 1.5vw, 1.375rem); /* 18 → 22px */
+  --fs-body:       1.0625rem;                      /* 17px */
+  --fs-large-body: 1.125rem;                       /* 18px */
+  --fs-small:      0.9375rem;                      /* 15px */
+  --fs-eyebrow:    0.8125rem;                      /* 13px */
+
+  /* Body weight: 400 globally. Use 500 only for emphasis/nav/buttons/labels,
+     600/650 only for eyebrow + strong UI labels. */
+  --fw-body: 400;
 }
 
 /* === AURORA (cinematic scope — wrap immersive sections in this class) =====
@@ -61,7 +78,7 @@
   --surface: rgba(255, 255, 255, 0.05);
   --surface-elevated: rgba(255, 255, 255, 0.10);
   --text: #ecf2ee;
-  --muted: rgba(236, 242, 238, 0.6);
+  --muted: rgba(236, 242, 238, 0.78);
 
   --primary: #ecf2ee;
   --on-primary: #0c1f1c;
@@ -117,6 +134,11 @@ body {
     var(--bg);
   color: var(--text);
   font-family: var(--font-body), sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-weight: var(--fw-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   transition:
     background var(--dur-heavy) var(--easing-premium),
     color var(--dur-base) var(--easing-premium);
@@ -205,21 +227,108 @@ html {
   color: var(--on-primary);
 }
 
+/* Legacy alias for .text-eyebrow — kept temporarily so existing usages still
+   render. New code should prefer .text-eyebrow. */
 .micro-copy {
-  font-size: 0.72rem;
-  letter-spacing: 0.19em;
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--fs-eyebrow);
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
 }
 
 .display-title {
   font-family: var(--font-display), serif;
   line-height: 0.98;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.028em;
 }
 
+/* Legacy alias for .text-body. Was previously double-dimmed (84% over
+   already-muted --text) — that's been removed. New code should prefer
+   .text-body. */
 .body-copy {
-  line-height: 1.56;
-  color: color-mix(in srgb, var(--text) 84%, transparent);
+  font-family: var(--font-body), sans-serif;
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.005em;
+  color: var(--text);
+}
+
+/* === Typography utility classes ============================================
+   Use these instead of ad-hoc text-[Npx]. Sizes are fluid via clamp() so the
+   ratio between display / h1 / h2 / h3 / body holds at every breakpoint.
+   Placed in @layer components so Tailwind utilities (font-sans, tracking-*,
+   font-medium) can still override individual properties when needed.
+
+   Family rules:
+   - Fraunces (display serif): heroes, h1, h2, prices/stats, brand moments
+   - Inter (body sans):        h3 (card titles), body, large-body, small, eyebrow */
+@layer components {
+  .text-display {
+    font-family: var(--font-display), serif;
+    font-size: var(--fs-display);
+    font-weight: 475;
+    line-height: 0.98;
+    letter-spacing: -0.028em;
+  }
+
+  .text-h1 {
+    font-family: var(--font-display), serif;
+    font-size: var(--fs-h1);
+    font-weight: 475;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+  }
+
+  .text-h2 {
+    font-family: var(--font-display), serif;
+    font-size: var(--fs-h2);
+    font-weight: 475;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .text-h3 {
+    font-family: var(--font-body), sans-serif;
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+  }
+
+  .text-body {
+    font-family: var(--font-body), sans-serif;
+    font-size: var(--fs-body);
+    font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+  }
+
+  .text-large-body {
+    font-family: var(--font-body), sans-serif;
+    font-size: var(--fs-large-body);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: -0.006em;
+  }
+
+  .text-small {
+    font-family: var(--font-body), sans-serif;
+    font-size: var(--fs-small);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .text-eyebrow {
+    font-family: var(--font-body), sans-serif;
+    font-size: var(--fs-eyebrow);
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
 }
 
 .no-scrollbar {

@@ -15,13 +15,13 @@ function buildRichTextComponents(
   return {
     block: {
       normal: ({ children }) => (
-        <p className="max-w-3xl text-base leading-relaxed text-[var(--muted)] md:text-lg">{children}</p>
+        <p className="max-w-3xl text-body leading-relaxed text-[var(--muted)] md:text-lg">{children}</p>
       ),
       h3: ({ children }) => (
-        <h3 className="mt-2 max-w-3xl text-2xl text-[var(--forest)] md:text-3xl">{children}</h3>
+        <h3 className="text-h2 mt-2 max-w-3xl text-[var(--forest)]">{children}</h3>
       ),
       h4: ({ children }) => (
-        <h4 className="mt-2 max-w-3xl text-lg uppercase tracking-[0.16em] text-[var(--forest)] md:text-xl">{children}</h4>
+        <h4 className="mt-2 max-w-3xl text-lg uppercase tracking-[0.1em] text-[var(--forest)] md:text-xl">{children}</h4>
       ),
       blockquote: ({ children }) => (
         <blockquote className="max-w-3xl border-l-2 border-[var(--forest)] pl-5 text-lg italic leading-relaxed text-[var(--forest)] md:text-xl">
@@ -116,7 +116,7 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
         {fallbackSections.map((section, index) => (
           <article key={`${section.heading}-${index}`} id={`story-${index + 1}`} className="space-y-3">
             <h2 className="text-2xl text-[var(--forest)] sm:text-3xl md:text-4xl lg:text-5xl">{section.heading}</h2>
-            <p className="max-w-3xl text-base leading-relaxed text-[var(--muted)] md:text-lg">{section.body}</p>
+            <p className="max-w-3xl text-body leading-relaxed text-[var(--muted)] md:text-lg">{section.body}</p>
           </article>
         ))}
       </section>
@@ -126,10 +126,10 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
   if (richBlocks.length === 0) {
     return (
       <section id="article-story" className="rounded-[1.4rem] border border-dashed border-[var(--line)] bg-[var(--surface-elevated)]/60 p-6 text-center">
-        <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--muted)]">
+        <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
           Nothing surfaces at this depth
         </p>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-2 text-body text-[var(--muted)]">
           Try Standard or Deep to read the full piece.
         </p>
       </section>
@@ -184,7 +184,7 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
         if (block.type === "comparison") {
           return (
             <section key={id} id={id} className="overflow-hidden rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)]">
-              <div className="grid grid-cols-3 border-b border-[var(--line)] bg-[var(--bg)] px-4 py-3 text-xs uppercase tracking-[0.12em] text-[var(--muted)]">
+              <div className="grid grid-cols-3 border-b border-[var(--line)] bg-[var(--bg)] px-4 py-3 text-eyebrow tracking-[0.12em] text-[var(--muted)]">
                 <span>Attribute</span>
                 <span>{block.leftTitle}</span>
                 <span>{block.rightTitle}</span>
@@ -216,7 +216,7 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
               {block.items.map((item) => (
                 <details key={item.question} className="rounded-[1rem] border border-[var(--line)] bg-[var(--surface-elevated)] px-4 py-3">
                   <summary className="cursor-pointer text-base text-[var(--forest)]">{item.question}</summary>
-                  <p className="mt-2 text-sm leading-relaxed text-[var(--muted)] md:text-base">{item.answer}</p>
+                  <p className="mt-2 text-body leading-relaxed text-[var(--muted)] md:text-body">{item.answer}</p>
                 </details>
               ))}
             </section>
@@ -236,15 +236,15 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
               }}
             >
               <p
-                className="text-[10px] uppercase tracking-[0.32em]"
+                className="text-eyebrow tracking-[0.1em]"
                 style={{ color: v.accent }}
               >
                 {block.eyebrow ?? v.label}
               </p>
-              <h3 className="mt-2 max-w-3xl text-xl text-[var(--forest)] md:text-2xl">
+              <h3 className="text-h3 mt-2 max-w-3xl text-[var(--forest)]">
                 {block.title}
               </h3>
-              <p className="mt-2 max-w-3xl whitespace-pre-line text-sm leading-relaxed text-[var(--muted)] md:text-base">
+              <p className="mt-2 max-w-3xl whitespace-pre-line text-body leading-relaxed text-[var(--muted)] md:text-body">
                 {block.body}
               </p>
             </aside>
@@ -271,7 +271,7 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
                 <figcaption className="flex flex-col gap-1 px-5 py-3 text-sm text-[var(--muted)] md:flex-row md:items-baseline md:justify-between">
                   {block.caption ? <span className="text-[var(--forest)]">{block.caption}</span> : <span />}
                   {block.credit ? (
-                    <span className="text-[10px] uppercase tracking-[0.28em] text-[var(--muted)]">
+                    <span className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                       {block.credit}
                     </span>
                   ) : null}
@@ -288,7 +288,7 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
               id={id}
               className="rounded-[1.4rem] border border-[var(--line)] bg-[var(--surface-elevated)] px-5 py-5 md:px-7 md:py-6"
             >
-              <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--muted)]">
+              <p className="text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                 {block.eyebrow ?? "References"}
               </p>
               <ol className="mt-4 space-y-3 text-sm text-[var(--muted)]">
@@ -312,7 +312,7 @@ export function ContentBlockRenderer({ post, ingredientAtlas, lens = "standard" 
                       )}
                       {item.authors ? <span className="text-[var(--muted)]"> — {item.authors}</span> : null}
                       {item.journal || item.year ? (
-                        <span className="block text-[11px] uppercase tracking-[0.2em] text-[var(--muted)]/80">
+                        <span className="block text-eyebrow tracking-[0.1em] text-[var(--muted)]">
                           {[item.journal, item.year].filter(Boolean).join(" · ")}
                         </span>
                       ) : null}

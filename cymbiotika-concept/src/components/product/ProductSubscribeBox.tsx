@@ -23,10 +23,10 @@ export function ProductSubscribeBox({ product }: { product: Product }) {
     <aside className="space-y-4 rounded-3xl border border-[--brand-mint]/25 bg-white p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.12em] text-[#5a7f68]">Price</p>
+          <p className="text-eyebrow tracking-[0.12em] text-[#5a7f68]">Price</p>
           <p className="font-display text-3xl text-[#1f3126]">{formatMoney(finalPrice, product.currency)}</p>
         </div>
-        <div className="rounded-xl border border-[--brand-gold]/45 bg-white px-2 py-1 text-[11px] font-medium text-[#8d5518]">
+        <div className="rounded-xl border border-[--brand-gold]/45 bg-white px-2 py-1 text-small font-medium text-[#8d5518]">
           Free shipping $120+
         </div>
       </div>

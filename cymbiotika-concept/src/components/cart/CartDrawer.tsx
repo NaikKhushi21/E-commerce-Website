@@ -154,7 +154,7 @@ export function CartDrawer() {
             {/* Header */}
             <div className="relative z-10 flex items-start justify-between gap-4 px-6 pt-6">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.32em] text-white/45">
+                <p className="text-eyebrow tracking-[0.1em] text-white/78">
                   Your Protocol
                 </p>
                 <p className="mt-1.5 font-display text-2xl leading-none text-white">
@@ -190,7 +190,7 @@ export function CartDrawer() {
 
                   {/* Constellation */}
                   <div className="mt-7">
-                    <p className="text-[10px] uppercase tracking-[0.32em] text-white/40">
+                    <p className="text-eyebrow tracking-[0.1em] text-white/78">
                       Synergy field
                     </p>
                     <Constellation
@@ -204,7 +204,7 @@ export function CartDrawer() {
                   {/* Coverage */}
                   {coverage.length > 0 ? (
                     <div className="mt-5">
-                      <p className="text-[10px] uppercase tracking-[0.32em] text-white/40">
+                      <p className="text-eyebrow tracking-[0.1em] text-white/78">
                         Stack delivers
                       </p>
                       <div className="mt-3 grid grid-cols-2 gap-2">
@@ -223,7 +223,7 @@ export function CartDrawer() {
 
                   {/* Line items */}
                   <div className="mt-6 pb-4">
-                    <p className="text-[10px] uppercase tracking-[0.32em] text-white/40">Items</p>
+                    <p className="text-eyebrow tracking-[0.1em] text-white/78">Items</p>
                     <ul className="mt-3 space-y-2">
                       {items.map((item) => (
                         <CartLine
@@ -245,7 +245,7 @@ export function CartDrawer() {
               <div className="relative z-10 border-t border-white/8 px-6 py-5">
                 <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-[10px] uppercase tracking-[0.32em] text-white/45">
+                    <p className="text-eyebrow tracking-[0.1em] text-white/78">
                       Subtotal
                     </p>
                   </div>
@@ -259,7 +259,7 @@ export function CartDrawer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={closeCart}
-                    className="mt-4 block w-full rounded-full bg-white py-3.5 text-center text-xs uppercase tracking-[0.24em] text-[var(--on-primary)] transition hover:scale-[1.01]"
+                    className="mt-4 block w-full rounded-full bg-white py-3.5 text-center text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition hover:scale-[1.01]"
                   >
                     Checkout →
                   </a>
@@ -267,7 +267,7 @@ export function CartDrawer() {
                 <Link
                   href="/quiz"
                   onClick={closeCart}
-                  className="mt-3 block text-center text-[10px] uppercase tracking-[0.28em] text-white/45 transition hover:text-white"
+                  className="mt-3 block text-center text-eyebrow tracking-[0.1em] text-white/78 transition hover:text-white"
                 >
                   Build a different protocol →
                 </Link>
@@ -312,8 +312,8 @@ function EmptyState({ onClose }: { onClose: () => void }) {
           strokeDasharray="1 4"
         />
       </svg>
-      <p className="mt-2 text-[10px] uppercase tracking-[0.32em] text-white/45">No formulas yet</p>
-      <p className="mt-3 max-w-[260px] text-sm leading-relaxed text-white/60">
+      <p className="mt-2 text-eyebrow tracking-[0.1em] text-white/78">No formulas yet</p>
+      <p className="mt-3 max-w-[260px] text-body leading-relaxed text-white/60">
         Light up zones in the Protocol Quiz, drop formulas into The Stack on the home page, or
         browse the catalog.
       </p>
@@ -321,14 +321,14 @@ function EmptyState({ onClose }: { onClose: () => void }) {
         <Link
           href="/quiz"
           onClick={onClose}
-          className="rounded-full bg-white px-5 py-2.5 text-[10px] uppercase tracking-[0.24em] text-[var(--on-primary)] transition hover:scale-[1.02]"
+          className="rounded-full bg-white px-5 py-2.5 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition hover:scale-[1.02]"
         >
           Take the quiz
         </Link>
         <Link
           href="/products"
           onClick={onClose}
-          className="rounded-full border border-white/20 px-5 py-2.5 text-[10px] uppercase tracking-[0.24em] text-white transition hover:border-white/45"
+          className="rounded-full border border-white/20 px-5 py-2.5 text-eyebrow tracking-[0.1em] text-white transition hover:border-white/45"
         >
           Browse formulas
         </Link>
@@ -351,7 +351,7 @@ function ShippingMeter({
   const reached = remaining === 0 && subtotal > 0;
   return (
     <div>
-      <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.28em] text-white/45">
+      <div className="flex items-center justify-between text-eyebrow tracking-[0.1em] text-white/78">
         <span>{reached ? "Free shipping unlocked" : "Free shipping"}</span>
         <span className="text-white/65">
           {reached ? "✓" : `$${remaining.toFixed(0)} away`}
@@ -489,8 +489,8 @@ function CoverageBar({
   return (
     <div className="rounded-xl border border-white/8 bg-white/[0.03] px-3 py-2.5">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] uppercase tracking-[0.22em] text-white/75">{label}</p>
-        <span className="text-[10px] tabular-nums text-white/45">
+        <p className="text-eyebrow tracking-[0.1em] text-white/75">{label}</p>
+        <span className="text-[10px] tabular-nums text-white/78">
           {count}/{total}
         </span>
       </div>
@@ -540,7 +540,7 @@ function CartLine({
       </div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-[13px] text-white">{item.product.title}</p>
-        <p className="mt-0.5 text-[10px] uppercase tracking-[0.22em] text-white/45">
+        <p className="mt-0.5 text-eyebrow tracking-[0.1em] text-white/78">
           {formatMoney(item.product.price * item.quantity)}
           {item.subscription ? " · subscribed" : ""}
         </p>
@@ -568,7 +568,7 @@ function CartLine({
         <button
           type="button"
           onClick={onRemove}
-          className="ml-1 text-[14px] leading-none text-white/35 transition hover:text-white"
+          className="ml-1 text-[14px] leading-none text-white/78 transition hover:text-white"
           aria-label="Remove from cart"
         >
           ×

@@ -140,7 +140,7 @@ function CopyOverlay({ progress, productTitle }: { progress: MotionValue<number>
 
   return (
     <div className="pointer-events-none absolute inset-y-0 left-0 z-30 flex w-full flex-col justify-start px-6 pt-16 md:left-12 md:max-w-md md:justify-center md:px-0 md:pt-0">
-      <p className="text-[10px] uppercase tracking-[0.32em] text-white/45">{productTitle}</p>
+      <p className="text-eyebrow tracking-[0.1em] text-white/78">{productTitle}</p>
       <AnimatePresence mode="wait">
         <motion.div
           key={stageIdx}
@@ -150,9 +150,9 @@ function CopyOverlay({ progress, productTitle }: { progress: MotionValue<number>
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="mt-5"
         >
-          <p className="text-[10px] uppercase tracking-[0.32em] text-[#d7c3a7]">{stage.eyebrow}</p>
-          <h2 className="display-title mt-3 text-4xl leading-[0.96] text-white md:text-6xl">{stage.title}</h2>
-          <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65 md:text-base">{stage.body}</p>
+          <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">{stage.eyebrow}</p>
+          <h2 className="text-display mt-3 leading-[0.96] text-white">{stage.title}</h2>
+          <p className="mt-5 max-w-sm text-body leading-relaxed text-white/65 md:text-body">{stage.body}</p>
         </motion.div>
       </AnimatePresence>
     </div>
@@ -165,7 +165,7 @@ function ProgressIndicator({ progress }: { progress: MotionValue<number> }) {
   const fillHeight = useTransform(progress, [0, 1], ["0%", "100%"]);
   return (
     <div className="pointer-events-none absolute right-6 top-1/2 z-30 hidden -translate-y-1/2 md:flex md:flex-col md:items-end md:gap-3">
-      <p className="text-[9px] uppercase tracking-[0.32em] text-white/35">Liquid Lab</p>
+      <p className="text-eyebrow tracking-[0.1em] text-white/78">Liquid Lab</p>
       <div className="relative h-48 w-px overflow-hidden bg-white/15">
         <motion.div
           className="absolute left-0 top-0 w-px bg-[#d7c3a7]"
@@ -853,9 +853,9 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
         className="pointer-events-auto absolute bottom-12 right-6 z-30 max-w-xs rounded-[1.6rem] border border-white/12 bg-white/[0.04] p-6 md:bottom-16 md:right-12 md:-translate-x-[10vw]"
         style={{ opacity: statsOpacity }}
       >
-        <p className="text-[10px] uppercase tracking-[0.32em] text-[#d7c3a7]">Bioavailability</p>
+        <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">Bioavailability</p>
         <p className="mt-3 font-display text-5xl text-white">8×</p>
-        <p className="mt-2 text-xs leading-relaxed text-white/55">
+        <p className="mt-2 text-small leading-relaxed text-white/78">
           Estimated absorption uplift vs. uncoated equivalent — measured by serum concentration over time.
         </p>
         {product ? (
@@ -865,7 +865,7 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
               addItem(product);
               openCart();
             }}
-            className="mt-5 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-white transition hover:gap-3"
+            className="mt-5 inline-flex items-center gap-2 text-eyebrow tracking-[0.1em] text-white transition hover:gap-3"
           >
             Add to routine
             <span aria-hidden>→</span>
@@ -873,7 +873,7 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
         ) : (
           <a
             href="/products"
-            className="mt-5 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-white transition hover:gap-3"
+            className="mt-5 inline-flex items-center gap-2 text-eyebrow tracking-[0.1em] text-white transition hover:gap-3"
           >
             Explore formulas
             <span aria-hidden>→</span>
@@ -889,17 +889,17 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
 function LiquidLabReducedMotion({ product }: { product?: Product }) {
   return (
     <section className="theme-aurora relative overflow-hidden rounded-[2.4rem] border border-[var(--line)] bg-[var(--bg)] p-10 text-[var(--text)] md:p-14">
-      <p className="text-[10px] uppercase tracking-[0.32em] text-white/45">{product?.title ?? "Liposomal Delivery"}</p>
-      <h2 className="display-title mt-4 text-4xl text-white md:text-6xl">Inside the formula.</h2>
-      <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
+      <p className="text-eyebrow tracking-[0.1em] text-white/78">{product?.title ?? "Liposomal Delivery"}</p>
+      <h2 className="text-display mt-4 text-white">Inside the formula.</h2>
+      <p className="mt-5 max-w-md text-body leading-relaxed text-white/65 md:text-body">
         Pouch → seal → molecule → liposome → bloodstream → cell. The full delivery journey, summarised.
       </p>
       <ul className="mt-10 grid gap-4 md:grid-cols-2">
         {STAGES.map((s) => (
           <li key={s.eyebrow} className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <p className="text-[10px] uppercase tracking-[0.32em] text-[#d7c3a7]">{s.eyebrow}</p>
+            <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">{s.eyebrow}</p>
             <p className="mt-2 font-display text-xl text-white">{s.title}</p>
-            <p className="mt-2 text-xs text-white/55">{s.body}</p>
+            <p className="mt-2 text-small text-white/78">{s.body}</p>
           </li>
         ))}
       </ul>

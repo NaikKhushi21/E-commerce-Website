@@ -23,7 +23,7 @@ export function CartLineItem({ item }: { item: CartItem }) {
               <Trash2 size={16} />
             </button>
           </div>
-          <p className="mt-1 text-xs text-[#4a6a57]">{variant?.title ?? "Default"}</p>
+          <p className="mt-1 text-small text-[#4a6a57]">{variant?.title ?? "Default"}</p>
           <label className="mt-2 flex items-center gap-2 text-xs text-[#35533f]">
             <input type="checkbox" className="accent-[--brand-gold]" checked={item.subscription} onChange={() => toggleSubscription(item.id)} />
             Subscribe & save 10%
@@ -38,7 +38,7 @@ export function CartLineItem({ item }: { item: CartItem }) {
                 <Plus size={14} />
               </button>
             </div>
-            <p className="text-sm font-semibold text-[#1f3126]">{formatMoney(price * item.quantity * (item.subscription ? 0.9 : 1))}</p>
+            <p className="text-body font-semibold text-[#1f3126]">{formatMoney(price * item.quantity * (item.subscription ? 0.9 : 1))}</p>
           </div>
         </div>
       </div>

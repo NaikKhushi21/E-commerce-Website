@@ -48,7 +48,7 @@ export function AbsorptionJourney() {
         <div>
           <p className="micro-copy text-[var(--muted)]">Absorption Journey</p>
           <h3 className="display-title mt-4 max-w-2xl text-[clamp(2rem,5.2vw,4.5rem)]">A biological pathway, rendered as art.</h3>
-          <p className="body-copy mt-5 max-w-xl text-base md:text-lg">
+          <p className="text-body mt-5 max-w-xl text-body md:text-lg">
             Nutrient transport visualized as a responsive system so users feel sequence, timing, and flow.
           </p>
           <ol className="mt-8 grid gap-2 text-sm text-[var(--forest-soft)] md:max-w-[30rem]">

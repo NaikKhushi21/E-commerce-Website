@@ -14,7 +14,7 @@ export function ProtocolStack({
 }) {
   return (
     <section className="space-y-3">
-      <h2 className="font-display text-4xl text-[var(--primary)]">{title}</h2>
+      <h2 className="text-h1 text-[var(--primary)]">{title}</h2>
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {products.length > 0 ? (
           products.map((product, idx) => (
@@ -27,7 +27,7 @@ export function ProtocolStack({
             />
           ))
         ) : (
-          <p className="rounded-2xl border border-[var(--line)] bg-white p-4 text-sm text-[var(--muted)]">No products selected yet.</p>
+          <p className="rounded-2xl border border-[var(--line)] bg-white p-4 text-body text-[var(--muted)]">No products selected yet.</p>
         )}
       </div>
     </section>

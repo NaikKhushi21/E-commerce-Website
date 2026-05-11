@@ -33,7 +33,7 @@ export function ReviewsModule({ reviews }: { reviews: Review[] }) {
           >
             <div>
               <div className="flex items-center justify-between gap-3">
-                <span className="rounded-full border border-[var(--line)] bg-[var(--bg)] px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-[var(--forest)]">
+                <span className="rounded-full border border-[var(--line)] bg-[var(--bg)] px-3 py-1 text-eyebrow tracking-[0.1em] text-[var(--forest)]">
                   {review.tag}
                 </span>
                 <Stars rating={review.rating} />
@@ -42,7 +42,7 @@ export function ReviewsModule({ reviews }: { reviews: Review[] }) {
                 &ldquo;{review.quote}&rdquo;
               </blockquote>
             </div>
-            <p className="mt-6 text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+            <p className="mt-6 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
               — {review.author}
             </p>
           </article>

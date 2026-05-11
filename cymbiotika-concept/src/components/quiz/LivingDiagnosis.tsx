@@ -181,7 +181,7 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
       <div className="relative min-h-[88svh] space-y-8 px-6 py-12 md:grid md:grid-cols-[0.46fr_0.54fr] md:items-center md:gap-4 md:space-y-0 md:px-12 md:py-14">
         {/* LEFT — copy + controls */}
         <div className="relative z-20 max-w-xl">
-          <p className="text-[10px] uppercase tracking-[0.36em] text-white/55">
+          <p className="text-eyebrow tracking-[0.1em] text-white/78">
             Cymbiotika · Start Routine
           </p>
 
@@ -198,7 +198,7 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                   <h1 className="display-title mt-6 text-[clamp(2.6rem,5.6vw,5.5rem)] leading-[0.96] text-white">
                     Tap where you want to feel different.
                   </h1>
-                  <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
+                  <p className="mt-5 max-w-md text-body leading-relaxed text-white/65 md:text-body">
                     Your body is the input. Light up any zones — one or all eight — and your routine assembles.
                   </p>
                 </>
@@ -207,7 +207,7 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                   <h1 className="display-title mt-6 text-[clamp(2.6rem,5.6vw,5.5rem)] leading-[0.96] text-white">
                     Your routine.
                   </h1>
-                  <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65 md:text-base">
+                  <p className="mt-5 max-w-md text-body leading-relaxed text-white/65 md:text-body">
                     {recommended.length} formulas matched to{" "}
                     <span className="text-[#d7c3a7]">{selectedZones.length}</span> active zone
                     {selectedZones.length === 1 ? "" : "s"}.
@@ -219,7 +219,7 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
 
           {/* Selected zones list */}
           <div className="mt-9 max-w-md">
-            <p className="text-[10px] uppercase tracking-[0.32em] text-white/40">
+            <p className="text-eyebrow tracking-[0.1em] text-white/78">
               {phase === "input" ? "Active zones" : "Listening to"}
             </p>
             <ul className="mt-3 flex flex-wrap gap-2">
@@ -232,7 +232,7 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.85 }}
                     transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 text-[11px] uppercase tracking-[0.22em] text-white/85"
+                    className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 text-eyebrow tracking-[0.1em] text-white/85"
                   >
                     <span
                       className="h-1.5 w-1.5 rounded-full"
@@ -247,7 +247,7 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex items-center gap-2 rounded-full border border-[#d7c3a7]/40 bg-[#d7c3a7]/[0.06] px-3.5 py-1.5 text-[11px] uppercase tracking-[0.22em] text-[#d7c3a7]"
+                  className="flex items-center gap-2 rounded-full border border-[#d7c3a7]/40 bg-[#d7c3a7]/[0.06] px-3.5 py-1.5 text-eyebrow tracking-[0.1em] text-[#d7c3a7]"
                 >
                   <motion.span
                     animate={{ x: [0, 4, 0] }}
@@ -270,11 +270,11 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                   type="button"
                   onClick={reveal}
                   disabled={selected.size === 0}
-                  className="rounded-full bg-white px-7 py-3.5 text-xs uppercase tracking-[0.22em] text-[var(--on-primary)] transition disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/30 hover:scale-[1.02]"
+                  className="rounded-full bg-white px-7 py-3.5 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/30 hover:scale-[1.02]"
                 >
                   Reveal routine
                 </button>
-                <span className="text-[10px] uppercase tracking-[0.28em] text-white/40">
+                <span className="text-eyebrow tracking-[0.1em] text-white/78">
                   {selected.size} / {ZONES.length} lit
                 </span>
               </>
@@ -284,20 +284,20 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                   type="button"
                   onClick={() => recommended.forEach((p) => addItem(p))}
                   disabled={recommended.length === 0}
-                  className="rounded-full bg-white px-7 py-3.5 text-xs uppercase tracking-[0.22em] text-[var(--on-primary)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/30"
+                  className="rounded-full bg-white px-7 py-3.5 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/30"
                 >
                   Add full routine
                 </button>
                 <button
                   type="button"
                   onClick={refine}
-                  className="rounded-full border border-white/25 bg-white/[0.04] px-7 py-3.5 text-xs uppercase tracking-[0.22em] text-white transition hover:border-white/55 hover:bg-white/10"
+                  className="rounded-full border border-white/25 bg-white/[0.04] px-7 py-3.5 text-eyebrow tracking-[0.1em] text-white transition hover:border-white/55 hover:bg-white/10"
                 >
                 Clear
                 </button>
                 <Link
                   href="/products"
-                  className="text-[10px] uppercase tracking-[0.28em] text-white/55 hover:text-white"
+                  className="text-eyebrow tracking-[0.1em] text-white/78 hover:text-white"
                 >
                   Browse all →
                 </Link>
@@ -461,9 +461,9 @@ function BodyStage({
                 />
               </Link>
               <div className="min-w-0 flex-1">
-                <p className="text-[9px] uppercase tracking-[0.28em] text-[#d7c3a7]">Match</p>
+                <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">Match</p>
                 <Link href={`/products/${product.handle}`} className="block">
-                  <p className="mt-1 truncate font-display text-sm leading-tight text-white">
+                  <p className="mt-1 truncate font-display text-body leading-tight text-white">
                     {product.title}
                   </p>
                 </Link>
@@ -471,7 +471,7 @@ function BodyStage({
               <button
                 type="button"
                 onClick={() => onAddProduct(product)}
-                className="shrink-0 rounded-full bg-white/95 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-[var(--on-primary)] transition hover:bg-white"
+                className="shrink-0 rounded-full bg-white/95 px-3 py-2 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition hover:bg-white"
               >
                 Add
               </button>
@@ -670,7 +670,7 @@ function ZoneMarker({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.25 }}
-            className={`pointer-events-none absolute top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-white/12 bg-black/70 px-3 py-1 text-[10px] uppercase tracking-[0.24em] ${
+            className={`pointer-events-none absolute top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-white/12 bg-black/70 px-3 py-1 text-eyebrow tracking-[0.1em] ${
               zone.side === "right" ? "left-[calc(100%+10px)]" : "right-[calc(100%+10px)]"
             }`}
             style={{ color: active ? zone.color : "rgba(255,255,255,0.9)" }}
@@ -726,9 +726,9 @@ function ProductOrbit({
           />
         </div>
         <div className="mt-3">
-          <p className="text-[9px] uppercase tracking-[0.28em] text-[#d7c3a7]">Match</p>
-          <p className="mt-1.5 font-display text-base leading-tight text-white">{product.title}</p>
-          <p className="mt-1.5 line-clamp-2 text-[11px] leading-relaxed text-white/55">
+          <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">Match</p>
+          <p className="mt-1.5 font-display text-body leading-tight text-white">{product.title}</p>
+          <p className="mt-1.5 line-clamp-2 text-small leading-relaxed text-white/65">
             {product.benefits[0] ?? "Liposomal delivery for daily support."}
           </p>
         </div>
@@ -736,7 +736,7 @@ function ProductOrbit({
       <button
         type="button"
         onClick={onAdd}
-        className="mt-3 w-full rounded-full bg-white/95 px-3 py-2 text-[10px] uppercase tracking-[0.24em] text-[var(--on-primary)] transition hover:bg-white"
+        className="mt-3 w-full rounded-full bg-white/95 px-3 py-2 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition hover:bg-white"
       >
         Add to cart
       </button>
