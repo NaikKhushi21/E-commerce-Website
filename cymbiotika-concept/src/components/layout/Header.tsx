@@ -159,7 +159,7 @@ export function Header() {
             href="/quiz"
             className="hidden rounded-full bg-[var(--primary)] px-4 py-2 text-sm uppercase tracking-[0.1em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.015] sm:inline-flex"
           >
-            Start Routine
+            Take the Quiz
           </Link>
           <button
             onClick={openCart}
@@ -249,7 +249,7 @@ export function Header() {
               onClick={() => setMobileOpen(false)}
               className="flex w-full items-center justify-center rounded-full bg-[var(--primary)] px-5 py-3 text-sm uppercase tracking-[0.1em] text-[var(--on-primary)]"
             >
-              Start Routine
+              Take the Quiz
             </Link>
           </div>
         </aside>

@@ -27,7 +27,7 @@ export function InteractiveVideoReel({ clips: allClips }: { clips: ProductVideoC
       <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
         <div>
           <p className="micro-copy text-[var(--muted)]">Interactive Product Story</p>
-          <h2 className="text-display mt-3 max-w-3xl text-[var(--forest)]">Discover formulas as objects, not tiles.</h2>
+          <h2 className="text-display mt-3 max-w-3xl text-[var(--forest)]">Discover formulas.</h2>
         </div>
         <div className="flex flex-wrap gap-2">
           {FILTERS.map((filter) => (

@@ -4,7 +4,7 @@
   /* === LAB PEARL (default — editorial / reading sections) ====================
      Cool, clean, scientific calm. Eggshell + sky + mint + amber accent. */
 
-  --bg: #ffffff;
+  --bg: #f7f3ec;
   --card: rgba(255, 255, 255, 0.85);
   --surface: rgba(255, 255, 255, 0.78);
   --surface-elevated: #ffffff;
@@ -157,6 +157,21 @@ body::before {
   opacity: 0.06;
   background-image: radial-gradient(rgba(28, 39, 48, 0.4) 0.45px, transparent 0.45px);
   background-size: 3px 3px;
+  mix-blend-mode: multiply;
+}
+
+/* Soft sage water-ripple atmosphere layer. Sits below page content (main
+   has z-10) but above body bg + gradients. Multiply blend tints the warm
+   cream --bg instead of overlaying as a flat image. Aurora dark sections
+   cover this naturally because they paint their own opaque background. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: url("/brand/screen.jpeg") center/cover no-repeat;
+  opacity: 0.06;
   mix-blend-mode: multiply;
 }
 

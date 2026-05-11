@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { Product } from "@/data/products";
@@ -8,6 +8,7 @@ import type { WellnessGoal } from "@/data/goals";
 import { getRecommendedProtocolFromCatalog } from "@/lib/recommendations";
 import { SafeImage } from "@/components/ui/SafeImage";
 import { useCart } from "@/components/cart/CartProvider";
+import { cn } from "@/lib/cn";
 
 type Zone = {
   id: string;
@@ -105,11 +106,35 @@ const ZONES: Zone[] = [
 
 type Phase = "input" | "revealed";
 
-export function LivingDiagnosis({ products }: { products: Product[] }) {
+type LivingDiagnosisProps = {
+  products: Product[];
+  /** When true, locks to the input phase, hides the "Reveal routine" controls,
+   *  and reports selection upward via onSelectionChange. Used by QuizRunner
+   *  to embed the picker as one step of a multi-step quiz. */
+  embedded?: boolean;
+  /** Initial / controlled selection (zone ids) when embedded. */
+  value?: Set<string>;
+  /** Fires whenever the user toggles a zone. Provides both raw zone ids and
+   *  the derived WellnessGoal[] so the parent can branch off either. */
+  onSelectionChange?: (zoneIds: string[], goals: WellnessGoal[]) => void;
+  /** Optional title override (only used when embedded). */
+  title?: string;
+  /** Optional subtitle override (only used when embedded). */
+  subtitle?: string;
+};
+
+export function LivingDiagnosis({
+  products,
+  embedded = false,
+  value,
+  onSelectionChange,
+  title,
+  subtitle,
+}: LivingDiagnosisProps) {
   const reduceMotion = useReducedMotion();
   const { addItem } = useCart();
   const [phase, setPhase] = useState<Phase>("input");
-  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [selected, setSelected] = useState<Set<string>>(value ?? new Set());
   const [hovered, setHovered] = useState<string | null>(null);
 
   const selectedZones = useMemo(() => ZONES.filter((z) => selected.has(z.id)), [selected]);
@@ -157,8 +182,25 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
     });
   }
 
+  // Notify parent of selection changes via effect — calling onSelectionChange
+  // synchronously inside the setSelected updater would trip React's "setState
+  // during render" warning. The callback is held in a ref so a parent passing
+  // an inline arrow each render doesn't re-fire this effect (which would
+  // infinitely loop: parent setState → re-render → new callback → effect
+  // fires → parent setState …).
+  const onSelectionChangeRef = useRef(onSelectionChange);
+  useEffect(() => {
+    onSelectionChangeRef.current = onSelectionChange;
+  });
+  useEffect(() => {
+    if (!onSelectionChangeRef.current) return;
+    const goalSet = new Set<WellnessGoal>();
+    selectedZones.forEach((z) => z.goals.forEach((g) => goalSet.add(g)));
+    onSelectionChangeRef.current(Array.from(selected), Array.from(goalSet));
+  }, [selected, selectedZones]);
+
   function reveal() {
-    if (selected.size === 0) return;
+    if (selected.size === 0 || embedded) return;
     setPhase("revealed");
   }
 
@@ -167,7 +209,13 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
   }
 
   return (
-    <section className="theme-aurora relative isolate min-h-[88svh] overflow-hidden rounded-[2.4rem] border border-[var(--line)] bg-[var(--bg)] text-[var(--text)] shadow-[0_40px_140px_rgba(7,6,8,0.45)]">
+    <section
+      className={
+        embedded
+          ? "relative isolate overflow-hidden text-[var(--text)]"
+          : "theme-aurora relative isolate min-h-[88svh] overflow-hidden rounded-[2.4rem] border border-[var(--line)] bg-[var(--bg)] text-[var(--text)] shadow-[0_40px_140px_rgba(7,6,8,0.45)]"
+      }
+    >
       {/* Atmosphere */}
       <div
         className="pointer-events-none absolute inset-0"
@@ -178,12 +226,19 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
       />
       <div className="pointer-events-none absolute inset-0 mix-blend-soft-light opacity-[0.18] bg-[radial-gradient(rgba(255,255,255,0.6)_0.5px,transparent_0.5px)] [background-size:3px_3px]" />
 
-      <div className="relative min-h-[88svh] space-y-8 px-6 py-12 md:grid md:grid-cols-[0.46fr_0.54fr] md:items-center md:gap-4 md:space-y-0 md:px-12 md:py-14">
+      <div
+        className={cn(
+          "relative space-y-6 md:grid md:grid-cols-[0.46fr_0.54fr] md:gap-4 md:space-y-0",
+          embedded ? "py-0 md:items-start md:py-0" : "min-h-[88svh] px-6 py-12 md:items-center md:px-12 md:py-14",
+        )}
+      >
         {/* LEFT — copy + controls */}
         <div className="relative z-20 max-w-xl">
-          <p className="text-eyebrow tracking-[0.1em] text-white/78">
-            Cymbiotika · Start Routine
-          </p>
+          {!embedded ? (
+            <p className="text-eyebrow tracking-[0.1em] text-white/78">
+              Cymbiotika · Take the Quiz
+            </p>
+          ) : null}
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -195,11 +250,24 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
             >
               {phase === "input" ? (
                 <>
-                  <h1 className="display-title mt-6 text-[clamp(2.6rem,5.6vw,5.5rem)] leading-[0.96] text-white">
-                    Tap where you want to feel different.
+                  <h1
+                    className={cn(
+                      "display-title leading-[0.98] text-white",
+                      embedded
+                        ? "mt-2 text-[clamp(1.75rem,3.6vw,2.75rem)]"
+                        : "mt-6 text-[clamp(2.6rem,5.6vw,5.5rem)] leading-[0.96]",
+                    )}
+                  >
+                    {title ?? "Tap where you want to feel different."}
                   </h1>
-                  <p className="mt-5 max-w-md text-body leading-relaxed text-white/65 md:text-body">
-                    Your body is the input. Light up any zones — one or all eight — and your routine assembles.
+                  <p
+                    className={cn(
+                      "max-w-md leading-relaxed text-white/65",
+                      embedded ? "mt-3 text-small" : "mt-5 text-body md:text-body",
+                    )}
+                  >
+                    {subtitle ??
+                      "Your body is the input. Light up any zones — one or all eight — and your routine assembles."}
                   </p>
                 </>
               ) : (
@@ -262,9 +330,10 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
             </ul>
           </div>
 
-          {/* Controls */}
+          {/* Controls — hidden in embedded mode (parent QuizRunner provides
+              its own Back/Next navigation). */}
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            {phase === "input" ? (
+            {phase === "input" && !embedded ? (
               <>
                 <button
                   type="button"
@@ -278,6 +347,10 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
                   {selected.size} / {ZONES.length} lit
                 </span>
               </>
+            ) : phase === "input" && embedded ? (
+              <span className="text-eyebrow tracking-[0.1em] text-white/78">
+                {selected.size} / {ZONES.length} lit
+              </span>
             ) : (
               <>
                 <button
@@ -306,8 +379,14 @@ export function LivingDiagnosis({ products }: { products: Product[] }) {
           </div>
         </div>
 
-        {/* RIGHT — body */}
-        <div className="relative">
+        {/* RIGHT — body. In embedded mode, cap the figure width so it fits
+            inside the runner shell without crowding the question column. */}
+        <div
+          className={cn(
+            "relative",
+            embedded && "mx-auto -mt-10 w-full max-w-[420px] md:-mt-36",
+          )}
+        >
           <BodyStage
             phase={phase}
             selected={selected}

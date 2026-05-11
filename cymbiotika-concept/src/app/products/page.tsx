@@ -11,10 +11,10 @@ export default async function ProductsPage() {
       <SectionHeader
         as="h1"
         eyebrow="All Formulas"
-        title="Every formula, arranged by what it does."
+        title="Take a look at the Products."
         right={
           <p className="max-w-md text-body leading-relaxed text-[var(--muted)] md:text-body">
-            Liposomal delivery systems and targeted compounds. Filter by zone or search ingredients — the grid reorganizes live.
+            Liposomal delivery systems and targeted compounds.
           </p>
         }
       />

@@ -15,14 +15,14 @@ function Stars({ rating }: { rating: number }) {
 
 export function ReviewsModule({ reviews }: { reviews: Review[] }) {
   if (reviews.length === 0) return null;
-  const top = reviews.slice(0, 6);
+  const top = reviews.slice(0, 3);
 
   return (
     <section className="space-y-8">
       <SectionHeader
         eyebrow="What our community says"
         title="Routines that actually stick."
-        subhead="Real responses from people who built a daily routine around our formulas. No paid placements."
+        subhead="Real responses from people who built a daily routine around our formulas."
       />
 
       <div className="grid gap-5 md:grid-cols-3 md:gap-6">

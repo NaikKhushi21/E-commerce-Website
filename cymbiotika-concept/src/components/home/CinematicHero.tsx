@@ -101,7 +101,7 @@ export function CinematicHero({ products }: { products: Product[] }) {
               onClick={() => router.push("/quiz")}
               className="rounded-full bg-[var(--primary)] px-6 py-3 text-sm uppercase tracking-[0.1em] text-[var(--on-primary)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] hover:scale-[1.02]"
             >
-              Start your routine
+              Take the Quiz
             </MagneticButton>
             <MagneticButton
               onClick={() => router.push("/products")}

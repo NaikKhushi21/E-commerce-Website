@@ -1,4 +1,4 @@
-import { LivingDiagnosis } from "@/components/quiz/LivingDiagnosis";
+import { QuizRunner } from "@/components/quiz/QuizRunner";
 import { getShopifyProducts } from "@/lib/shopify-products";
 
 export default async function QuizPage() {
@@ -6,7 +6,7 @@ export default async function QuizPage() {
 
   return (
     <div className="pb-14">
-      <LivingDiagnosis products={products} />
+      <QuizRunner products={products} />
     </div>
   );
 }

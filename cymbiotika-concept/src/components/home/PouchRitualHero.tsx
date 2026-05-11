@@ -188,7 +188,7 @@ export function PouchRitualHero() {
               onClick={() => router.push("/quiz")}
               className="rounded-full bg-white px-7 py-3.5 text-eyebrow tracking-[0.1em] text-[var(--on-primary)] transition hover:scale-[1.02]"
             >
-              Start your routine
+              Take the Quiz
             </MagneticButton>
             <MagneticButton
               onClick={() => router.push("/products")}

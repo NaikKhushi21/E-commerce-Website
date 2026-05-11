@@ -22,7 +22,7 @@ export default async function SciencePage() {
 
       <IngredientCloud atlas={atlas} />
 
-      <ScienceExperiments atlas={atlas} />
+      <ScienceExperiments />
 
       <LiquidLab />
     </div>

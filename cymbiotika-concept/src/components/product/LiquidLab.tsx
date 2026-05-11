@@ -854,7 +854,7 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
         style={{ opacity: statsOpacity }}
       >
         <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">Bioavailability</p>
-        <p className="mt-3 font-display text-5xl text-white">8×</p>
+        <p className="mt-3 font-display text-5xl text-white">3×</p>
         <p className="mt-2 text-small leading-relaxed text-white/78">
           Estimated absorption uplift vs. uncoated equivalent — measured by serum concentration over time.
         </p>

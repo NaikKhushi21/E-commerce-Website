@@ -8,7 +8,7 @@ export function NewsletterCTA() {
       <h2 className="mt-3 max-w-3xl text-4xl md:text-6xl">Get weekly editorial insights or build your personalized stack now.</h2>
       <div className="mt-7 flex flex-wrap gap-3">
         <Link href="/quiz" className="rounded-full bg-white px-5 py-3 text-eyebrow tracking-[0.1em] text-[var(--forest)]">
-          Start Routine
+          Take the Quiz
         </Link>
         <Link href="/science" className="rounded-full border border-white/45 px-5 py-3 text-eyebrow tracking-[0.1em] text-white">
           Explore science

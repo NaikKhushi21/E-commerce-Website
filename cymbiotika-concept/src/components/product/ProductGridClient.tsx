@@ -100,7 +100,7 @@ export function ProductGridClient({ products }: Props) {
       <div className="sticky top-[68px] z-30 -mx-5 md:-mx-12">
         <div className="px-5 md:px-12">
           <div className="flex items-center gap-3 overflow-hidden rounded-full border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg)_82%,white)]/88 p-2.5">
-            <div data-lenis-prevent className="no-scrollbar flex flex-1 items-center gap-1.5 overflow-x-auto">
+            <div data-lenis-prevent className="no-scrollbar flex flex-1 items-center gap-0.5 overflow-x-auto">
               <FilterChip label="All" active={filter === "all"} onClick={() => setFilter("all")} />
               {ALL_GOALS.map((g) => (
                 <FilterChip
@@ -204,7 +204,7 @@ function FilterChip({
       type="button"
       onClick={onClick}
       className={cn(
-        "shrink-0 rounded-full px-6 py-2.5 text-eyebrow tracking-[0.1em] transition",
+        "shrink-0 rounded-full px-3.5 py-2.5 text-eyebrow tracking-[0.1em] transition",
         active
           ? "bg-[var(--primary)] text-[var(--on-primary)]"
           : "text-[var(--muted)] hover:text-[var(--forest)]",
