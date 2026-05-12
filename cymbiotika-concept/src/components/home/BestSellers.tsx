@@ -35,7 +35,7 @@ export function BestSellers({ featured }: { featured: Product[] }) {
       >
         <div className="flex w-max gap-5 md:gap-7">
           {featured.map((product, idx) => (
-            <div key={product.id} className="w-[min(82vw,420px)] md:w-[min(44vw,470px)] xl:w-[430px]">
+            <div key={product.id} className="w-[min(82vw,420px)] md:w-[min(44vw,470px)] xl:w-[430px] 2xl:w-[460px]">
               <ProductCard product={product} index={idx} rotateModelOnHover />
             </div>
           ))}

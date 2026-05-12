@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SafeImage } from "@/components/ui/SafeImage";
 import { useCart } from "@/components/cart/CartProvider";
+import { useAnyOverlayOpen } from "@/components/providers/OverlayContext";
 import { formatMoney } from "@/lib/money";
 import type { Product } from "@/data/products";
 
@@ -29,6 +30,7 @@ const ATTENTION_DISMISSED_KEY = "cymborg-attention-dismissed";
 export function VialChat() {
   const [open, setOpen] = useState(false);
   const [attentionOpen, setAttentionOpen] = useState(false);
+  const overlayOpen = useAnyOverlayOpen();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
@@ -125,6 +127,11 @@ export function VialChat() {
     setOpen(true);
   }
 
+  // Hide the entire Cymborg UI (FAB + attention bubble + modal) whenever any
+  // full-screen overlay is open (cart drawer, mobile nav). Prevents the green
+  // FAB from overlapping with drawer content.
+  if (overlayOpen) return null;
+
   return (
     <>
       <AnimatePresence>
@@ -137,7 +144,7 @@ export function VialChat() {
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             role="dialog"
             aria-label="Cymborg introduction"
-            className="fixed bottom-[88px] right-6 z-[60] w-44 rounded-xl border border-[var(--forest)] bg-[var(--surface-elevated)] py-2.5 pl-3 pr-5 shadow-[0_14px_30px_rgba(12,31,28,0.20)]"
+            className="fixed bottom-[78px] right-4 z-[60] w-44 rounded-xl border border-[var(--forest)] bg-[var(--surface-elevated)] py-2.5 pl-3 pr-5 shadow-[0_14px_30px_rgba(12,31,28,0.20)] md:bottom-[112px] md:right-6"
           >
             <button
               type="button"
@@ -174,15 +181,15 @@ export function VialChat() {
             exit={{ opacity: 0, y: 24, scale: 0.85 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             onClick={openChat}
-            className="group fixed bottom-6 right-6 z-[60] cursor-pointer"
+            className="group fixed bottom-4 right-4 z-[60] cursor-pointer md:bottom-6 md:right-6"
             aria-label="Open Cymbiotika routine concierge"
           >
-            <span className="relative block h-28 w-28 drop-shadow-[0_14px_32px_rgba(12,31,28,0.32)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] group-hover:scale-[1.05]">
+            <span className="relative block h-20 w-20 drop-shadow-[0_14px_32px_rgba(12,31,28,0.32)] transition-transform duration-500 [transition-timing-function:var(--easing-premium)] group-hover:scale-[1.05] md:h-28 md:w-28">
               <Image
                 src="/brand/cymborg-avatar.png"
                 alt="Cymborg"
                 fill
-                sizes="112px"
+                sizes="(max-width: 768px) 80px, 112px"
                 className="object-contain"
                 priority
               />
@@ -202,7 +209,7 @@ export function VialChat() {
             animate={{ opacity: 1, scale: 1, y: 0, x: 0, borderRadius: "32px" }}
             exit={{ opacity: 0, scale: 0.6, y: 40, x: 40 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-6 right-6 z-[60] flex w-[min(380px,calc(100vw-2rem))] flex-col"
+            className="fixed bottom-4 right-4 z-[60] flex w-[min(380px,calc(100vw-2rem))] flex-col md:bottom-6 md:right-6"
             style={{
               height: "min(580px, calc(100svh - 2rem))",
               background:

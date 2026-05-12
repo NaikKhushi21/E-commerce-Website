@@ -143,12 +143,6 @@ export function ProductFormulaBlock({
               </span>
             </button>
           ) : null}
-
-          {botanical?.credit ? (
-            <p className="mt-6 text-eyebrow tracking-[0.1em] text-[var(--muted)]">
-              Botanical photo · {botanical.credit}
-            </p>
-          ) : null}
         </div>
       </div>
     </section>

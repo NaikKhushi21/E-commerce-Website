@@ -111,9 +111,9 @@ export function PouchRitualHero() {
         ))}
       </div>
 
-      <div className="relative grid min-h-[92svh] gap-10 px-6 py-14 md:grid-cols-[0.52fr_0.48fr] md:items-center md:gap-6 md:px-12 md:py-16">
+      <div className="relative grid min-h-[92svh] gap-10 px-5 py-14 md:grid-cols-[0.52fr_0.48fr] md:items-center md:gap-6 md:px-12 md:py-16">
         {/* LEFT — copy */}
-        <div className="relative z-10 max-w-xl">
+        <div className="relative z-10 min-w-0 max-w-xl">
           <motion.p
             className="text-eyebrow tracking-[0.1em] text-white/78"
             initial={reduceMotion ? undefined : { opacity: 0, y: 10 }}
@@ -124,7 +124,7 @@ export function PouchRitualHero() {
           </motion.p>
 
           <motion.h1
-            className="display-title mt-6 text-[clamp(3rem,7.6vw,7.5rem)] leading-[0.94] text-white"
+            className="display-title mt-6 break-words text-[clamp(1.875rem,7vw,7rem)] leading-[1] text-white md:leading-[0.94]"
             initial={reduceMotion ? undefined : { opacity: 0, y: 18 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             transition={reduceMotion ? undefined : { duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -142,7 +142,7 @@ export function PouchRitualHero() {
           </motion.p>
 
           {/* Beat narration */}
-          <div className="mt-10 max-w-md border-l border-white/15 pl-5">
+          <div className="mt-10 max-w-md border-l border-white/15 pl-4 md:pl-5">
             <AnimatePresence mode="wait">
               <motion.div
                 key={beat}
@@ -152,13 +152,13 @@ export function PouchRitualHero() {
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               >
                 <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">{currentBeat.label}</p>
-                <p className="mt-3 text-body leading-relaxed text-white/82 md:text-[15px]">{currentBeat.copy}</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/82 md:text-[15px]">{currentBeat.copy}</p>
               </motion.div>
             </AnimatePresence>
           </div>
 
           {/* Beat progress dots */}
-          <div className="mt-8 flex items-center gap-2">
+          <div className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-3">
             {BEATS.map((_, idx) => {
               const isActive = idx === beat;
               return (
@@ -170,7 +170,7 @@ export function PouchRitualHero() {
                   className="group relative h-3 px-1"
                 >
                   <span
-                    className={`block h-px w-9 rounded-full transition-all duration-500 ${
+                    className={`block h-px w-6 rounded-full transition-all duration-500 md:w-9 ${
                       isActive ? "bg-[#d7c3a7]" : "bg-white/20 group-hover:bg-white/45"
                     }`}
                     style={isActive ? { boxShadow: "0 0 14px rgba(215,195,167,0.6)" } : undefined}
@@ -178,7 +178,7 @@ export function PouchRitualHero() {
                 </button>
               );
             })}
-            <span className="ml-3 text-eyebrow tracking-[0.1em] text-white/78">
+            <span className="ml-2 whitespace-nowrap text-eyebrow tracking-[0.1em] text-white/78 md:ml-3">
               {String(beat + 1).padStart(2, "0")} / {String(BEATS.length).padStart(2, "0")}
             </span>
           </div>
@@ -200,7 +200,7 @@ export function PouchRitualHero() {
         </div>
 
         {/* RIGHT — the ritual */}
-        <div className="relative h-[460px] w-full md:h-[640px] lg:h-[720px]">
+        <div className="relative h-[460px] w-full min-w-0 md:h-[640px] lg:h-[720px]">
           <PouchRitualScene beat={beat} reduceMotion={!!reduceMotion} />
         </div>
       </div>

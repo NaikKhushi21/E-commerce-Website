@@ -9,6 +9,7 @@ import type { Product } from "@/data/products";
 import type { WellnessGoal } from "@/data/goals";
 import { SafeImage } from "@/components/ui/SafeImage";
 import { useCart } from "@/components/cart/CartProvider";
+import { useOverlay } from "@/components/providers/OverlayContext";
 
 const FREE_SHIPPING_THRESHOLD = 75;
 
@@ -44,6 +45,14 @@ export function CartDrawer() {
   const reduceMotion = useReducedMotion();
   const { isOpen, closeCart, items, subtotal, removeItem, updateQuantity, shopifyCartUrl } =
     useCart();
+  const { acquire } = useOverlay();
+
+  // Register with the global overlay registry so floating UI (VialChat)
+  // hides while the cart is open.
+  useEffect(() => {
+    if (!isOpen) return;
+    return acquire();
+  }, [isOpen, acquire]);
 
   // Lock the underlying page scroll while the cart is open. Compensates for
   // the disappearing scrollbar so the page doesn't shift behind the drawer.
@@ -386,6 +395,11 @@ function Constellation({
   positions: Array<{ x: number; y: number }>;
   pairs: Array<{ a: number; b: number; shared: WellnessGoal[]; color: string }>;
 }) {
+  // Scale the node size inversely with count so a solo product feels
+  // anchored and large stacks stay legible without overlapping.
+  const n = cartProducts.length;
+  const nodeSize = n <= 1 ? 128 : n === 2 ? 96 : n === 3 ? 80 : n === 4 ? 72 : n <= 6 ? 60 : 52;
+  const badgeSize = nodeSize >= 96 ? 18 : nodeSize >= 72 ? 16 : 14;
   return (
     <div className="relative mt-3 h-[240px] w-full overflow-hidden rounded-2xl border border-white/8 bg-white/[0.02]">
       {/* Soft halo behind constellation */}
@@ -445,8 +459,12 @@ function Constellation({
           >
             <div className="relative">
               <div
-                className="relative h-14 w-14 overflow-hidden rounded-xl border border-white/15 bg-white/[0.06]"
-                style={{ boxShadow: "0 8px 22px rgba(0,0,0,0.45), 0 0 18px rgba(215,195,167,0.12)" }}
+                className="relative overflow-hidden rounded-xl border border-white/15 bg-white/[0.06]"
+                style={{
+                  height: nodeSize,
+                  width: nodeSize,
+                  boxShadow: "0 8px 22px rgba(0,0,0,0.45), 0 0 18px rgba(215,195,167,0.12)",
+                }}
               >
                 <SafeImage
                   src={product.featuredImage}
@@ -458,7 +476,12 @@ function Constellation({
               </div>
               {item.quantity > 1 ? (
                 <span
-                  className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full border border-white/30 bg-black/85 px-1 text-[9px] tabular-nums text-white"
+                  className="absolute -right-1 -top-1 flex items-center justify-center rounded-full border border-white/30 bg-black/85 px-1 tabular-nums text-white"
+                  style={{
+                    height: badgeSize,
+                    minWidth: badgeSize,
+                    fontSize: badgeSize >= 18 ? 11 : badgeSize >= 16 ? 10 : 9,
+                  }}
                   aria-label={`Quantity ${item.quantity}`}
                 >
                   {item.quantity}

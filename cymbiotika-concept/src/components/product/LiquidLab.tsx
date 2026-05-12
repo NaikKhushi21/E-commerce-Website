@@ -139,7 +139,7 @@ function CopyOverlay({ progress, productTitle }: { progress: MotionValue<number>
   const stage = STAGES[stageIdx];
 
   return (
-    <div className="pointer-events-none absolute inset-y-0 left-0 z-30 flex w-full flex-col justify-start px-6 pt-16 md:left-12 md:max-w-md md:justify-center md:px-0 md:pt-0">
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-30 flex w-full flex-col justify-start px-5 pt-6 md:inset-y-0 md:left-12 md:right-auto md:max-w-md md:justify-center md:px-0 md:pt-0">
       <p className="text-eyebrow tracking-[0.1em] text-white/78">{productTitle}</p>
       <AnimatePresence mode="wait">
         <motion.div
@@ -148,11 +148,11 @@ function CopyOverlay({ progress, productTitle }: { progress: MotionValue<number>
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5"
+          className="mt-3 md:mt-5"
         >
           <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">{stage.eyebrow}</p>
-          <h2 className="text-display mt-3 leading-[0.96] text-white">{stage.title}</h2>
-          <p className="mt-5 max-w-sm text-body leading-relaxed text-white/65 md:text-body">{stage.body}</p>
+          <h2 className="mt-2 font-display text-[2rem] leading-[0.98] text-white md:text-display md:mt-3 md:leading-[0.96]">{stage.title}</h2>
+          <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/65 md:mt-5 md:text-body">{stage.body}</p>
         </motion.div>
       </AnimatePresence>
     </div>
@@ -189,9 +189,9 @@ function Stage1Pouch({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity, scale, y }}
-      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-end justify-center pb-[calc(10vh+2.5rem)] md:items-center md:pb-0 md:translate-x-[10vw]"
     >
-      <svg viewBox="0 0 600 800" className="h-[80vh] max-h-[700px] w-auto" aria-hidden="true">
+      <svg viewBox="0 0 600 800" className="h-[48vh] max-h-[400px] w-auto md:h-[80vh] md:max-h-[700px]" aria-hidden="true">
         <defs>
           <linearGradient id="ll-pouch-fill" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="#e26b2e" />
@@ -253,11 +253,11 @@ function Stage2Tear({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-end justify-center pb-[calc(10vh+2.5rem)] md:items-center md:pb-0 md:translate-x-[10vw]"
     >
       <motion.svg
         viewBox="0 0 600 800"
-        className="h-[80vh] max-h-[700px] w-auto"
+        className="h-[48vh] max-h-[400px] w-auto md:h-[80vh] md:max-h-[700px]"
         aria-hidden="true"
         style={{ scale }}
       >
@@ -378,7 +378,7 @@ function Stage3Molecule({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-end justify-center pb-[calc(10vh+2.5rem)] md:items-center md:pb-0 md:translate-x-[10vw]"
     >
       {/* Warm liquid background */}
       <div
@@ -413,7 +413,7 @@ function Stage3Molecule({ progress }: { progress: MotionValue<number> }) {
 
       <motion.svg
         viewBox="-200 -200 400 400"
-        className="relative h-[60vh] w-auto"
+        className="relative h-[48vh] w-auto max-w-[80vw] md:h-[60vh] md:max-w-none"
         aria-hidden="true"
         style={{ scale: moleculeScale, rotate: ringRotate }}
       >
@@ -480,9 +480,9 @@ function Stage4Liposome({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-end justify-center pb-[calc(8vh+2.5rem)] md:items-center md:pb-0 md:translate-x-[10vw]"
     >
-      <svg viewBox="-200 -200 400 400" className="h-[70vh] w-auto" aria-hidden="true">
+      <svg viewBox="-200 -200 400 400" className="h-[52vh] w-auto max-w-[82vw] md:h-[70vh] md:max-w-none" aria-hidden="true">
         <defs>
           <radialGradient id="ll-liposome-fill" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="rgba(245,212,168,0)" />
@@ -608,9 +608,9 @@ function Stage5Bloodstream({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-end justify-center pb-[calc(17vh+2.5rem)] md:items-center md:pb-0 md:translate-x-[10vw]"
     >
-      <svg viewBox="-400 -200 800 400" className="h-[36vh] max-h-[320px] w-auto max-w-[min(44vw,640px)]" aria-hidden="true">
+      <svg viewBox="-400 -200 800 400" className="h-[34vh] max-h-[320px] w-full max-w-[min(92vw,640px)] md:max-w-[min(44vw,640px)]" aria-hidden="true">
         <defs>
           <linearGradient id="ll-bs-vessel-fill" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="rgba(180,40,55,0)" />
@@ -798,9 +798,9 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
   return (
     <motion.div
       style={{ opacity }}
-      className="absolute inset-0 z-10 flex items-center justify-center md:translate-x-[10vw]"
+      className="absolute inset-0 z-10 flex items-end justify-center pb-[calc(13vh+2.5rem)] md:items-center md:pb-0 md:translate-x-[10vw]"
     >
-      <svg viewBox="-300 -260 600 520" className="h-[54vh] max-h-[480px] w-auto max-w-[min(40vw,480px)]" aria-hidden="true">
+      <svg viewBox="-300 -260 600 520" className="h-[42vh] max-h-[440px] w-auto max-w-[min(86vw,480px)] md:h-[54vh] md:max-h-[480px] md:max-w-[min(40vw,480px)]" aria-hidden="true">
         <defs>
           <radialGradient id="ll-cell-fill" cx="50%" cy="40%" r="60%">
             <stop offset="0%" stopColor="rgba(140,224,214,0.10)" />
@@ -850,12 +850,12 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
       {/* Stats overlay — counter-translates the parent's right shift so it stays
           anchored to the viewport's actual right edge, not past it. */}
       <motion.div
-        className="pointer-events-auto absolute bottom-12 right-6 z-30 max-w-xs rounded-[1.6rem] border border-white/12 bg-white/[0.04] p-6 md:bottom-16 md:right-12 md:-translate-x-[10vw]"
+        className="pointer-events-auto absolute bottom-1 left-3 right-3 z-30 mx-auto max-w-[300px] rounded-[1.2rem] border border-white/12 bg-[var(--bg)]/85 p-3 backdrop-blur-md md:bottom-16 md:left-auto md:right-12 md:max-w-xs md:rounded-[1.6rem] md:bg-white/[0.04] md:p-6 md:backdrop-blur-0 md:-translate-x-[10vw]"
         style={{ opacity: statsOpacity }}
       >
-        <p className="text-eyebrow tracking-[0.1em] text-[#d7c3a7]">Bioavailability</p>
-        <p className="mt-3 font-display text-5xl text-white">3×</p>
-        <p className="mt-2 text-small leading-relaxed text-white/78">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#d7c3a7] md:text-eyebrow">Bioavailability</p>
+        <p className="mt-1 font-display text-3xl text-white md:mt-3 md:text-5xl">3×</p>
+        <p className="mt-1 line-clamp-2 text-[10.5px] leading-[1.35] text-white/78 md:mt-2 md:line-clamp-none md:text-small md:leading-relaxed">
           Estimated absorption uplift vs. uncoated equivalent — measured by serum concentration over time.
         </p>
         {product ? (
@@ -865,7 +865,7 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
               addItem(product);
               openCart();
             }}
-            className="mt-5 inline-flex items-center gap-2 text-eyebrow tracking-[0.1em] text-white transition hover:gap-3"
+            className="mt-2 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-white transition hover:gap-3 md:mt-5 md:text-eyebrow"
           >
             Add to routine
             <span aria-hidden>→</span>
@@ -873,7 +873,7 @@ function Stage6Cell({ progress, product }: { progress: MotionValue<number>; prod
         ) : (
           <a
             href="/products"
-            className="mt-5 inline-flex items-center gap-2 text-eyebrow tracking-[0.1em] text-white transition hover:gap-3"
+            className="mt-2 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-white transition hover:gap-3 md:mt-5 md:text-eyebrow"
           >
             Explore formulas
             <span aria-hidden>→</span>
