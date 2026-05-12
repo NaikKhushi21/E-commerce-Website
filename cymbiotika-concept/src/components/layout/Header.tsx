@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, ShoppingBag, X } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from "react";
 import { useCart } from "@/components/cart/CartProvider";
+import { useOverlay } from "@/components/providers/OverlayContext";
 import { cn } from "@/lib/cn";
 
 const subscribeNoop = () => () => {};
@@ -25,6 +26,15 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const searchFormRef = useRef<HTMLFormElement | null>(null);
+  const { acquire } = useOverlay();
+
+  // Register the mobile drawer with the global overlay registry so floating
+  // UI (e.g. VialChat) hides while the drawer is open. acquire() returns a
+  // release fn we run on close/unmount.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    return acquire();
+  }, [mobileOpen, acquire]);
 
   function handleNavSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -120,15 +130,15 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-2.5">
-          {/* Collapses to an icon-only pill by default; clicking expands it
-              into a full search field. Width animation keeps the surrounding
-              nav items from jumping. */}
+          {/* Desktop: collapses to an icon-only pill by default; clicking
+              expands into a full search field. Hidden on mobile — replaced
+              by an always-visible second row below the header. */}
           <form
             ref={searchFormRef}
             onSubmit={handleNavSearch}
             role="search"
             className={cn(
-              "flex items-center overflow-hidden rounded-full border border-[var(--line-strong)] bg-[var(--surface-elevated)] transition-[width,border-color] duration-400 [transition-timing-function:var(--easing-premium)] focus-within:border-[var(--forest)]",
+              "hidden md:flex items-center overflow-hidden rounded-full border border-[var(--line-strong)] bg-[var(--surface-elevated)] transition-[width,border-color] duration-400 [transition-timing-function:var(--easing-premium)] focus-within:border-[var(--forest)]",
               searchOpen ? "w-60 lg:w-72" : "w-11",
             )}
           >
@@ -174,6 +184,27 @@ export function Header() {
             ) : null}
           </button>
         </div>
+      </div>
+
+      {/* Mobile: always-visible search row below the header content. */}
+      <div className="border-t border-[var(--line)] px-5 pb-3 pt-2 md:hidden">
+        <form
+          onSubmit={handleNavSearch}
+          role="search"
+          className="flex w-full items-center gap-2 overflow-hidden rounded-full border border-[var(--line-strong)] bg-[var(--surface-elevated)] focus-within:border-[var(--forest)]"
+        >
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center text-[var(--forest)]">
+            <Search size={16} aria-hidden />
+          </span>
+          <input
+            type="search"
+            value={navSearch}
+            onChange={(event) => setNavSearch(event.target.value)}
+            placeholder="Search formulas…"
+            aria-label="Search formulas"
+            className="w-full min-w-0 bg-transparent pr-4 text-sm text-[var(--text)] outline-none placeholder:text-[var(--muted)]"
+          />
+        </form>
       </div>
     </header>
 

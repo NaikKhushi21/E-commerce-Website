@@ -32,7 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <SmoothScroll />
           <Header />
           <main className="relative z-10 min-h-screen w-full">
-            <div className="mx-auto w-full max-w-[1680px] px-5 py-12 md:px-12 md:py-16">{children}</div>
+            <div className="mx-auto w-full max-w-[1920px] px-5 py-12 md:px-12 md:py-16">{children}</div>
           </main>
           <Footer />
           <VialChat />

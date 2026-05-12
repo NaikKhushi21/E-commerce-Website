@@ -167,7 +167,7 @@ export function ProductGridClient({ products }: Props) {
           </Pill>
         </div>
       ) : (
-        <motion.section layout className="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
+        <motion.section layout className="grid gap-7 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           <AnimatePresence mode="popLayout">
             {filtered.map((product, index) => (
               <motion.div

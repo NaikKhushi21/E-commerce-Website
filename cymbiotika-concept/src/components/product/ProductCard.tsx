@@ -153,11 +153,11 @@ export function ProductCard({ product, index = 0, rotateModelOnHover = false }: 
               <p className="micro-copy text-[var(--muted)]">Museum Object {String(index + 1).padStart(2, "0")}</p>
               <h3 className="mt-2 line-clamp-2 text-h3 leading-tight text-[var(--text)]">{product.title}</h3>
             </div>
-            <p className="whitespace-nowrap text-body text-[var(--muted)] opacity-0 transition-opacity duration-500 [transition-timing-function:var(--easing-premium)] group-hover:opacity-100">{formatMoney(product.price, product.currency)}</p>
+            <p className="whitespace-nowrap text-body text-[var(--muted)] opacity-100 transition-opacity duration-500 [transition-timing-function:var(--easing-premium)] lg:opacity-0 lg:group-hover:opacity-100">{formatMoney(product.price, product.currency)}</p>
           </div>
-          {/* Benefit + CTAs reveal on card hover. max-h pairs with opacity so
-              the panel grows smoothly instead of popping the layout. */}
-          <div className="grid max-h-0 grid-rows-[0fr] opacity-0 transition-all duration-500 [transition-timing-function:var(--easing-premium)] group-hover:max-h-48 group-hover:grid-rows-[1fr] group-hover:opacity-100">
+          {/* Benefit + CTAs: always visible on touch screens, reveal on hover
+              for pointer devices. */}
+          <div className="grid max-h-48 grid-rows-[1fr] opacity-100 transition-all duration-500 [transition-timing-function:var(--easing-premium)] lg:max-h-0 lg:grid-rows-[0fr] lg:opacity-0 lg:group-hover:max-h-48 lg:group-hover:grid-rows-[1fr] lg:group-hover:opacity-100">
             <div className="overflow-hidden">
               <p className="mt-3 line-clamp-2 text-body leading-relaxed text-[var(--muted)]">{benefit}</p>
               <div className="mt-4 flex flex-wrap gap-2.5">

@@ -566,6 +566,11 @@ function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
   return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)] as const;
 }
 
+// Round to 3 decimals so SVG path strings serialize identically on the server
+// and the client. Without this, Math.cos/sin can differ by the last 1–2 ULPs
+// between Node and the browser and trip React's hydration mismatch warning.
+const n = (v: number) => v.toFixed(3);
+
 function donutSlicePath(
   cx: number,
   cy: number,
@@ -579,7 +584,7 @@ function donutSlicePath(
   const [x3, y3] = polarToCartesian(cx, cy, rInner, endAngle);
   const [x4, y4] = polarToCartesian(cx, cy, rInner, startAngle);
   const largeArc = endAngle - startAngle > 180 ? 1 : 0;
-  return `M ${x1} ${y1} A ${rOuter} ${rOuter} 0 ${largeArc} 1 ${x2} ${y2} L ${x3} ${y3} A ${rInner} ${rInner} 0 ${largeArc} 0 ${x4} ${y4} Z`;
+  return `M ${n(x1)} ${n(y1)} A ${rOuter} ${rOuter} 0 ${largeArc} 1 ${n(x2)} ${n(y2)} L ${n(x3)} ${n(y3)} A ${rInner} ${rInner} 0 ${largeArc} 0 ${n(x4)} ${n(y4)} Z`;
 }
 
 function MobileChart({
